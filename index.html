@@ -1492,9 +1492,103 @@ function renderApp(){
   else if(STATE.tab==="settings") html=renderSettings();
   document.getElementById("root").innerHTML=html;
   if(!document.getElementById("toast")){
-    const t=document.createElement("div");t.id="toast";t.className="toast";t.style.display="none";document.body.appendChild(t);
-  }
+  const t=document.createElement("div");
+  t.id="toast";
+  t.className="toast";
+  t.style.display="none";
+  document.body.appendChild(t);
 }
+}
+
+
+// ════════════════════════════════════
+// FIREBASE HYBRID SYNC
+// ════════════════════════════════════
+const FIREBASE_CONFIG={
+  apiKey:"AIzaSyCHvejeBH3qXf51FO2q7s7M4yGbpE8XfZU",
+  authDomain:"dudcloset-54f96.firebaseapp.com",
+  projectId:"dudcloset-54f96",
+  storageBucket:"dudcloset-54f96.firebasestorage.app",
+  messagingSenderId:"820051748470",
+  appId:"1:820051748470:web:162b720363dfe68e3fe157",
+  measurementId:"G-DZYBGE4HPH"
+};
+
+async function initFirebaseSync(){
+ try{
+   const {initializeApp}=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+   const {getFirestore,doc,setDoc,getDoc}=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+
+   const app=initializeApp(FIREBASE_CONFIG);
+   const db=getFirestore(app);
+
+   window.cloudSync=async function(){
+      const payload={
+        products:STATE.products,
+        sales:STATE.sales,
+        customers:STATE.customers,
+        invCounter:STATE.invCounter,
+        settings:STATE.settings,
+        expenses:STATE.expenses,
+        vendors:STATE.vendors,
+        returns:STATE.returns,
+        updatedAt:Date.now()
+      };
+      await setDoc(doc(db,"store","main"),payload);
+      console.log("Cloud sync complete");
+   };
+
+   window.cloudRestore=async function(){
+      const snap=await getDoc(doc(db,"store","main"));
+      if(!snap.exists()) return;
+
+      const d=snap.data();
+      if(d.products) STATE.products=d.products;
+      if(d.sales) STATE.sales=d.sales;
+      if(d.customers) STATE.customers=d.customers;
+      if(d.invCounter) STATE.invCounter=d.invCounter;
+      if(d.settings) STATE.settings=d.settings;
+      if(d.expenses) STATE.expenses=d.expenses;
+      if(d.vendors) STATE.vendors=d.vendors;
+      if(d.returns) STATE.returns=d.returns;
+
+      saveP();saveS();saveC();saveIC();saveST();saveEX();saveVN();saveRT();
+      console.log("Cloud restore complete");
+   };
+
+   await window.cloudRestore();
+
+   const originalSaveP=saveP;
+   saveP=function(){ originalSaveP(); window.cloudSync().catch(()=>{}); };
+
+   const originalSaveS=saveS;
+   saveS=function(){ originalSaveS(); window.cloudSync().catch(()=>{}); };
+
+   const originalSaveC=saveC;
+   saveC=function(){ originalSaveC(); window.cloudSync().catch(()=>{}); };
+
+   const originalSaveIC=saveIC;
+   saveIC=function(){ originalSaveIC(); window.cloudSync().catch(()=>{}); };
+
+   const originalSaveST=saveST;
+   saveST=function(){ originalSaveST(); window.cloudSync().catch(()=>{}); };
+
+   const originalSaveEX=saveEX;
+   saveEX=function(){ originalSaveEX(); window.cloudSync().catch(()=>{}); };
+
+   const originalSaveVN=saveVN;
+   saveVN=function(){ originalSaveVN(); window.cloudSync().catch(()=>{}); };
+
+   const originalSaveRT=saveRT;
+   saveRT=function(){ originalSaveRT(); window.cloudSync().catch(()=>{}); };
+
+ }catch(e){
+   console.error("Firebase sync error",e);
+ }
+}
+
+initFirebaseSync();
+
 
 // Boot
 if(isLoggedIn()){renderApp();}else{renderLogin(false);}
