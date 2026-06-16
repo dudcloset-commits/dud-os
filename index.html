@@ -54,23 +54,23 @@ const PAY_MODES = ["Cash","UPI","Card","Online"];
 const SEED_PRODUCTS = [
   {id:"p01",name:"T-Shirt",sku:"DC-TSH",hsn:"6109",cat:"Tops",cost:200,sell:400,mrp:500,gst:5,stock:100,minStock:10,offer:"₹100 off MRP"},
   {id:"p02",name:"Tops",sku:"DC-TOP",hsn:"6106",cat:"Tops",cost:150,sell:300,mrp:400,gst:5,stock:100,minStock:10,offer:""},
-  {id:"p03",name:"Denim Pant",sku:"DC-DNP",hsn:"6203",cat:"Bottoms",cost:250,sell:700,mrp:800,gst:12,stock:100,minStock:10,offer:""},
-  {id:"p04",name:"Formal Pant",sku:"DC-FMP",hsn:"6203",cat:"Bottoms",cost:200,sell:500,mrp:600,gst:12,stock:40,minStock:5,offer:""},
+  {id:"p03",name:"Denim Pant",sku:"DC-DNP",hsn:"6203",cat:"Bottoms",cost:250,sell:700,mrp:800,gst:5,stock:100,minStock:10,offer:""},
+  {id:"p04",name:"Formal Pant",sku:"DC-FMP",hsn:"6203",cat:"Bottoms",cost:200,sell:500,mrp:600,gst:5,stock:40,minStock:5,offer:""},
   {id:"p05",name:"Night Pant",sku:"DC-NGP",hsn:"6207",cat:"Bottoms",cost:100,sell:200,mrp:300,gst:5,stock:100,minStock:10,offer:""},
   {id:"p06",name:"Nylon Pant",sku:"DC-NYP",hsn:"6203",cat:"Bottoms",cost:50,sell:100,mrp:100,gst:5,stock:50,minStock:5,offer:""},
-  {id:"p07",name:"Footwear",sku:"DC-FTW",hsn:"6402",cat:"Footwear",cost:200,sell:500,mrp:600,gst:18,stock:50,minStock:5,offer:""},
-  {id:"p08",name:"Belt",sku:"DC-BLT",hsn:"4203",cat:"Accessories",cost:100,sell:200,mrp:250,gst:12,stock:50,minStock:5,offer:""},
+  {id:"p07",name:"Footwear",sku:"DC-FTW",hsn:"6402",cat:"Footwear",cost:200,sell:500,mrp:600,gst:5,stock:50,minStock:5,offer:""},
+  {id:"p08",name:"Belt",sku:"DC-BLT",hsn:"4203",cat:"Accessories",cost:100,sell:200,mrp:250,gst:5,stock:50,minStock:5,offer:""},
   {id:"p09",name:"Socks",sku:"DC-SOC",hsn:"6115",cat:"Accessories",cost:50,sell:100,mrp:200,gst:5,stock:50,minStock:10,offer:"Buy 3 @ ₹499"},
   {id:"p10",name:"Cosmic Saree",sku:"DC-CSR",hsn:"5208",cat:"Sarees",cost:200,sell:500,mrp:600,gst:5,stock:50,minStock:5,offer:""},
   {id:"p11",name:"Cotton Saree",sku:"DC-CTR",hsn:"5208",cat:"Sarees",cost:200,sell:500,mrp:600,gst:5,stock:50,minStock:5,offer:""},
   {id:"p12",name:"Kurti 1pc",sku:"DC-K1P",hsn:"6211",cat:"Kurtis",cost:150,sell:250,mrp:350,gst:5,stock:50,minStock:5,offer:""},
   {id:"p13",name:"Kurti 2pc Set",sku:"DC-K2P",hsn:"6211",cat:"Kurtis",cost:350,sell:500,mrp:600,gst:5,stock:20,minStock:3,offer:""},
   {id:"p14",name:"Kurti 3pc Set",sku:"DC-K3P",hsn:"6211",cat:"Kurtis",cost:450,sell:600,mrp:700,gst:5,stock:20,minStock:3,offer:""},
-  {id:"p15",name:"Co-ord Set",sku:"DC-COO",hsn:"6211",cat:"Sets",cost:300,sell:800,mrp:700,gst:12,stock:30,minStock:5,offer:""},
-  {id:"p16",name:"Sharara Set",sku:"DC-SHA",hsn:"6211",cat:"Sets",cost:700,sell:1300,mrp:1400,gst:12,stock:300,minStock:10,offer:""},
-  {id:"p17",name:"Tote Bag",sku:"DC-TOT",hsn:"4202",cat:"Bags",cost:100,sell:200,mrp:300,gst:18,stock:25,minStock:5,offer:""},
-  {id:"p18",name:"Gift Basket S",sku:"DC-GBS",hsn:"4602",cat:"Gifts",cost:50,sell:100,mrp:100,gst:18,stock:50,minStock:5,offer:""},
-  {id:"p19",name:"Gift Basket L",sku:"DC-GBL",hsn:"4602",cat:"Gifts",cost:100,sell:200,mrp:200,gst:18,stock:100,minStock:5,offer:""},
+  {id:"p15",name:"Co-ord Set",sku:"DC-COO",hsn:"6211",cat:"Sets",cost:300,sell:800,mrp:700,gst:5,stock:30,minStock:5,offer:""},
+  {id:"p16",name:"Sharara Set",sku:"DC-SHA",hsn:"6211",cat:"Sets",cost:700,sell:1300,mrp:1400,gst:5,stock:300,minStock:10,offer:""},
+  {id:"p17",name:"Tote Bag",sku:"DC-TOT",hsn:"4202",cat:"Bags",cost:100,sell:200,mrp:300,gst:5,stock:25,minStock:5,offer:""},
+  {id:"p18",name:"Gift Basket S",sku:"DC-GBS",hsn:"4602",cat:"Gifts",cost:50,sell:100,mrp:100,gst:5,stock:50,minStock:5,offer:""},
+  {id:"p19",name:"Gift Basket L",sku:"DC-GBL",hsn:"4602",cat:"Gifts",cost:100,sell:200,mrp:200,gst:5,stock:100,minStock:5,offer:""},
 ];
 
 const DEFAULT_SETTINGS = {
@@ -179,6 +179,16 @@ let STATE = {
   vendors: dbLoad(DB_KEY.VN) || [],
   returns: dbLoad(DB_KEY.RT) || [],
 };
+
+// ── Auto-migrate: force all products to 5% GST ──
+(function migrationV1(){
+  let changed=false;
+  STATE.products=STATE.products.map(p=>{
+    if(p.gst!==5){changed=true;return{...p,gst:5};}
+    return p;
+  });
+  if(changed){dbSave(DB_KEY.P,STATE.products);console.log("Migration v1: all products set to 5% GST");}
+})();
 
 function saveP(){ dbSave(DB_KEY.P, STATE.products); }
 function saveS(){ dbSave(DB_KEY.S, STATE.sales); }
@@ -973,11 +983,6 @@ function renderSales(){
 }
 
 // ════════════════════════════════════
-// GST REPORT
-// ════════════════════════════════════
-let GST_MONTH=todayStr().slice(0,7);
-
-// ════════════════════════════════════
 // SETTINGS
 // ════════════════════════════════════
 function renderSettings(){
@@ -1342,7 +1347,7 @@ function markOrderReceived(vi,oi){STATE.vendors[vi].orders[oi].received=true;STA
 // ════════════════════════════════════
 // GST ENHANCED
 // ════════════════════════════════════
-let GST_MONTH=todayStr().slice(0,7);
+var GST_MONTH=todayStr().slice(0,7);
 function renderGST(){
   const mSales=STATE.sales.filter(s=>s.date.startsWith(GST_MONTH));
   const outRows=mSales.flatMap(sale=>sale.items.map(item=>{
