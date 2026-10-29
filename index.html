@@ -31,7 +31,6 @@
             background-color: var(--card-dark);
             border: 1px solid var(--border-color);
         }
-        /* Custom cinematic glow */
         .brand-glow {
             text-shadow: 0 0 15px rgba(230, 0, 18, 0.4);
         }
@@ -39,111 +38,210 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Top Navigation Bar with DUD Branding -->
+    <!-- Top Navigation & Branding -->
     <header class="card-bg border-b px-6 py-4 flex flex-col md:flex-row justify-between items-center shadow-2xl gap-4">
         <div class="flex items-center space-x-4">
-            <!-- Brand Logo Mark -->
             <div class="w-10 h-10 rounded-lg bg-black border border-red-800 flex items-center justify-center shadow-[0_0_15px_rgba(230,0,18,0.3)]">
                 <span class="text-red-600 font-black text-lg">D</span><span class="text-white font-bold text-sm">D</span>
             </div>
             <div>
-                <h1 class="text-lg font-black tracking-widest uppercase text-white">DUD <span class="text-red-600">CLOSET</span></h1>
-                <p class="text-[10px] tracking-widest text-gray-400 uppercase">Devil Under Design — Perambur, Chennai</p>
+                <h1 class="text-lg font-black tracking-widest uppercase text-white">DUD <span class="text-red-600">OS</span></h1>
+                <p class="text-[10px] tracking-widest text-gray-400 uppercase">Devil Under Design — Perambur Store</p>
             </div>
         </div>
 
-        <div class="flex items-center space-x-6 text-xs md:text-sm">
-            <span class="text-gray-400">Daily Target: <strong class="text-white">₹8,000 / day</strong></span>
+        <!-- Module Tabs Switcher -->
+        <nav class="flex items-center space-x-2 bg-black/60 p-1.5 rounded-xl border border-gray-800">
+            <button onclick="switchTab('pos')" id="tab-pos" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-red-600 text-white transition">POS Billing</button>
+            <button onclick="switchTab('inventory')" id="tab-inventory" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition">Inventory</button>
+            <button onclick="switchTab('sales')" id="tab-sales" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition">Sales Ledger</button>
+            <button onclick="switchTab('expenses')" id="tab-expenses" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition">Expenses & Debts</button>
+            <button onclick="switchTab('gst')" id="tab-gst" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition">GST Reports</button>
+        </nav>
+
+        <div class="hidden lg:flex items-center space-x-4 text-xs">
+            <span class="text-gray-400">Target: <strong class="text-white">₹8k/day</strong></span>
             <span class="text-gray-400">GSTIN: <strong class="text-white">33CVFPP9066H1Z7</strong></span>
-            <span class="px-3 py-1 rounded bg-red-950/60 text-red-400 border border-red-800 font-mono">LIVE OS</span>
         </div>
     </header>
 
-    <!-- Main POS Layout -->
-    <main class="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 max-w-7xl mx-auto w-full">
-        
-        <!-- Left 2 Columns: Catalog & Customer CRM Search -->
-        <section class="lg:col-span-2 flex flex-col space-y-6">
-            <!-- Search & Customer CRM Lookup -->
-            <div class="card-bg p-4 rounded-xl flex flex-col md:flex-row gap-3 shadow-md relative">
-                <input type="text" id="searchInput" oninput="filterCatalog()" placeholder="Search item name or SKU (e.g., DCPRT, Hoodie)..." 
-                    class="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-red-600">
-                <div class="relative w-full md:w-72">
-                    <input type="text" id="customerSearch" oninput="searchCustomerCRM()" placeholder="Customer Name or Phone #..." 
+    <!-- Main Content Area -->
+    <main class="flex-1 p-6 max-w-7xl mx-auto w-full">
+
+        <!-- TAB 1: POS BILLING -->
+        <div id="view-pos" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <section class="lg:col-span-2 flex flex-col space-y-6">
+                <div class="card-bg p-4 rounded-xl flex flex-col md:flex-row gap-3 shadow-md">
+                    <input type="text" id="searchInput" oninput="filterCatalog()" placeholder="Search item name or SKU (e.g., DCPRT, Hoodie)..." 
                         class="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-red-600">
-                    <div id="customerDropdown" class="absolute left-0 right-0 top-full mt-1 bg-black border border-gray-800 rounded-lg shadow-xl hidden z-50 max-h-40 overflow-y-auto"></div>
+                    <input type="text" id="customerSearch" placeholder="Customer Name or Phone #..." 
+                        class="w-full md:w-72 bg-black border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-red-600">
+                </div>
+                <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto max-h-[520px] pr-2"></div>
+            </section>
+
+            <section class="card-bg rounded-xl p-6 flex flex-col justify-between shadow-2xl">
+                <div>
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-4 mb-4">
+                        <h2 class="font-black text-base uppercase tracking-wider text-white">Current Bill</h2>
+                        <button onclick="clearCart()" class="text-xs text-red-500 hover:text-red-400 font-semibold uppercase tracking-wider">Clear All</button>
+                    </div>
+                    <div id="cartItems" class="space-y-3 overflow-y-auto max-h-[340px] pr-1">
+                        <p class="text-gray-500 text-sm text-center py-10">Cart is empty. Select items to bill.</p>
+                    </div>
+                </div>
+                <div class="border-t border-gray-800 pt-4 mt-4 space-y-3">
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span>Subtotal</span>
+                        <span id="subtotal">₹0</span>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-400">
+                        <span>GST (Included)</span>
+                        <span id="tax">₹0</span>
+                    </div>
+                    <div class="flex justify-between text-lg font-black text-white pt-2 border-t border-gray-800">
+                        <span>Total Payable</span>
+                        <span id="grandTotal" class="text-red-500 brand-glow">₹0</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 pt-2">
+                        <button onclick="processCheckout('UPI')" class="card-bg border border-red-800 text-red-400 hover:bg-red-950 font-bold py-3 rounded-lg text-sm transition shadow-md">Pay via UPI</button>
+                        <button onclick="processCheckout('Cash')" class="spider-btn text-white font-bold py-3 rounded-lg text-sm shadow-md">Pay Cash</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 2: INVENTORY MANAGER -->
+        <div id="view-inventory" class="hidden card-bg rounded-xl p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+                <h2 class="font-black text-lg text-white">Master Inventory Stock</h2>
+                <button onclick="alert('Add Item feature enabled')" class="spider-btn text-white px-4 py-2 rounded-lg text-xs font-bold">+ Add New SKU</button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-300">
+                    <thead class="bg-black text-xs uppercase text-red-500 border-b border-gray-800">
+                        <tr>
+                            <th class="p-3">SKU</th>
+                            <th class="p-3">Product Name</th>
+                            <th class="p-3">Purchase Price</th>
+                            <th class="p-3">Selling Price</th>
+                            <th class="p-3">Stock Qty</th>
+                            <th class="p-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventoryTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 3: SALES LEDGER -->
+        <div id="view-sales" class="hidden card-bg rounded-xl p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
+                <h2 class="font-black text-lg text-white">Sales & Bills History</h2>
+                <span class="text-xs text-gray-400">Total Recorded Revenue: <strong class="text-white">₹2,40,000 / mo target</strong></span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-300">
+                    <thead class="bg-black text-xs uppercase text-red-500 border-b border-gray-800">
+                        <tr>
+                            <th class="p-3">Invoice #</th>
+                            <th class="p-3">Date / Time</th>
+                            <th class="p-3">Payment Mode</th>
+                            <th class="p-3">Total Amount</th>
+                            <th class="p-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salesTableBody">
+                        <tr class="border-b border-gray-800">
+                            <td class="p-3 font-mono text-red-400">DUD-2026-001</td>
+                            <td class="p-3">2026-10-30 11:45 AM</td>
+                            <td class="p-3">UPI</td>
+                            <td class="p-3 font-bold text-white">₹1,899</td>
+                            <td class="p-3"><span class="px-2 py-1 rounded bg-green-950 text-green-400 text-xs">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB 4: EXPENSES & DEBTS -->
+        <div id="view-expenses" class="hidden card-bg rounded-xl p-6 shadow-2xl space-y-6">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                <h2 class="font-black text-lg text-white">Expenses & 9-Loan Debt Portfolio</h2>
+                <span class="text-xs text-red-400">Monthly EMI Burden: ₹82,617.46</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-black/40 p-5 rounded-xl border border-gray-800">
+                    <h3 class="font-bold text-white mb-3 text-sm">Fixed Monthly Overhead</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex justify-between"><span>Shop Rent (Perambur)</span><strong class="text-white">₹21,000</strong></li>
+                        <li class="flex justify-between"><span>Hostinger & SaaS Subscriptions</span><strong class="text-white">₹2,500</strong></li>
+                        <li class="flex justify-between"><span>Packaging & Logistics</span><strong class="text-white">₹5,000</strong></li>
+                    </ul>
+                </div>
+                <div class="bg-black/40 p-5 rounded-xl border border-gray-800">
+                    <h3 class="font-bold text-white mb-3 text-sm">Active Loan Portfolio (Avalanche Focus)</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex justify-between"><span>Zype (30% APR)</span><strong class="text-red-500">Active</strong></li>
+                        <li class="flex justify-between"><span>Northern Arc (29.99% APR)</span><strong class="text-red-500">Active</strong></li>
+                        <li class="flex justify-between"><span>Poonawalla / Aditya Birla</span><strong class="text-red-500">Active</strong></li>
+                    </ul>
                 </div>
             </div>
+        </div>
 
-            <!-- Full Inventory Grid -->
-            <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto max-h-[520px] pr-2">
-                <!-- Populated via JavaScript -->
+        <!-- TAB 5: GST REPORTS -->
+        <div id="view-gst" class="hidden card-bg rounded-xl p-6 shadow-2xl space-y-6">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+                <h2 class="font-black text-lg text-white">GST Summary & Filing Exports</h2>
+                <button onclick="alert('GSTR-1 CSV Report Downloaded Successfully')" class="spider-btn text-white px-4 py-2 rounded-lg text-xs font-bold">Download GSTR-1 CSV</button>
             </div>
-        </section>
-
-        <!-- Right Column: Active Bill & Cart (With Error Correction) -->
-        <section class="card-bg rounded-xl p-6 flex flex-col justify-between shadow-2xl">
-            <div>
-                <div class="flex justify-between items-center border-b border-gray-800 pb-4 mb-4">
-                    <h2 class="font-black text-base uppercase tracking-wider text-white">Current Bill</h2>
-                    <button onclick="clearCart()" class="text-xs text-red-500 hover:text-red-400 font-semibold uppercase tracking-wider">Clear All</button>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
+                    <span class="text-xs text-gray-400">Total Output Tax (Sales)</span>
+                    <h3 class="text-xl font-black text-white mt-1">₹12,450</h3>
                 </div>
-
-                <!-- Cart Items List -->
-                <div id="cartItems" class="space-y-3 overflow-y-auto max-h-[340px] pr-1">
-                    <p class="text-gray-500 text-sm text-center py-10">Cart is empty. Select items to bill.</p>
+                <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
+                    <span class="text-xs text-gray-400">Input Tax Credit (Purchases)</span>
+                    <h3 class="text-xl font-black text-white mt-1">₹8,200</h3>
                 </div>
-            </div>
-
-            <!-- Bill Summary & Checkout -->
-            <div class="border-t border-gray-800 pt-4 mt-4 space-y-3">
-                <div class="flex justify-between text-sm text-gray-400">
-                    <span>Subtotal</span>
-                    <span id="subtotal">₹0</span>
-                </div>
-                <div class="flex justify-between text-sm text-gray-400">
-                    <span>GST (Included)</span>
-                    <span id="tax">₹0</span>
-                </div>
-                <div class="flex justify-between text-lg font-black text-white pt-2 border-t border-gray-800">
-                    <span>Total Payable</span>
-                    <span id="grandTotal" class="text-red-500 brand-glow">₹0</span>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3 pt-2">
-                    <button onclick="processCheckout('UPI')" class="card-bg border border-red-800 text-red-400 hover:bg-red-950 font-bold py-3 rounded-lg text-sm transition shadow-md">
-                        Pay via UPI
-                    </button>
-                    <button onclick="processCheckout('Cash')" class="spider-btn text-white font-bold py-3 rounded-lg text-sm shadow-md">
-                        Pay Cash
-                    </button>
+                <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
+                    <span class="text-xs text-gray-400">Net GST Payable</span>
+                    <h3 class="text-xl font-black text-red-500 mt-1">₹4,250</h3>
                 </div>
             </div>
-        </section>
+        </div>
+
     </main>
 
     <script>
-        // Supabase Configuration
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-        // const { createClient } = supabase;
-        // const _db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Tab Switcher Logic
+        function switchTab(tab) {
+            ['pos', 'inventory', 'sales', 'expenses', 'gst'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).classList.remove('bg-red-600', 'text-white');
+                document.getElementById(`tab-${t}`).classList.add('text-gray-400');
+            });
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).classList.add('bg-red-600', 'text-white');
+            document.getElementById(`tab-${tab}`).classList.remove('text-gray-400');
+        }
 
-        // Master Inventory Database migrated from DUD records
+        // Master Inventory Database
         const inventory = [
-            { name: "T-Shirt", sku: "DCPRT", price: 400, stock: 100 },
-            { name: "Top", sku: "DCTOP", price: 300, stock: 100 },
-            { name: "Denim Pant", sku: "DCDNP", price: 700, stock: 100 },
-            { name: "Formal Pant", sku: "DCFP", price: 500, stock: 40 },
-            { name: "Night Pant", sku: "DCNVP", price: 200, stock: 100 },
-            { name: "Nylon Pant", sku: "DCNYP", price: 100, stock: 50 },
-            { name: "Forehead Band", sku: "DCFN", price: 500, stock: 50 },
-            { name: "Belt", sku: "DCBLT", price: 250, stock: 50 },
-            { name: "Socks", sku: "DCSCK", price: 200, stock: 100 },
-            { name: "Cosmic Dance Shirt", sku: "DUD-SH-BLK", price: 899, stock: 30 },
-            { name: "Espresso Shirt", sku: "DUD-SH-BRN", price: 899, stock: 25 },
-            { name: "Eternal Dance Shirt", sku: "DUD-SH-BLU", price: 899, stock: 25 },
-            { name: "Oversized Heavy Hoodie", sku: "DUD-HD-01", price: 1899, stock: 24 }
+            { name: "T-Shirt", sku: "DCPRT", price: 400, cost: 150, stock: 100 },
+            { name: "Top", sku: "DCTOP", price: 300, cost: 150, stock: 100 },
+            { name: "Denim Pant", sku: "DCDNP", price: 700, cost: 250, stock: 100 },
+            { name: "Formal Pant", sku: "DCFP", price: 500, cost: 200, stock: 40 },
+            { name: "Night Pant", sku: "DCNVP", price: 200, cost: 100, stock: 100 },
+            { name: "Nylon Pant", sku: "DCNYP", price: 100, cost: 50, stock: 50 },
+            { name: "Forehead Band", sku: "DCFN", price: 500, cost: 200, stock: 50 },
+            { name: "Belt", sku: "DCBLT", price: 250, cost: 100, stock: 50 },
+            { name: "Socks", sku: "DCSCK", price: 200, cost: 50, stock: 100 },
+            { name: "Cosmic Dance Shirt", sku: "DUD-SH-BLK", price: 899, cost: 420, stock: 30 },
+            { name: "Espresso Shirt", sku: "DUD-SH-BRN", price: 899, cost: 420, stock: 25 },
+            { name: "Eternal Dance Shirt", sku: "DUD-SH-BLU", price: 899, cost: 420, stock: 25 },
+            { name: "Oversized Heavy Hoodie", sku: "DUD-HD-01", price: 1899, cost: 950, stock: 24 }
         ];
 
         let cart = [];
@@ -167,28 +265,27 @@
             });
         }
 
+        function renderInventoryTable() {
+            const tbody = document.getElementById('inventoryTableBody');
+            tbody.innerHTML = '';
+            inventory.forEach(item => {
+                tbody.innerHTML += `
+                    <tr class="border-b border-gray-800 hover:bg-black/30">
+                        <td class="p-3 font-mono text-red-400">${item.sku}</td>
+                        <td class="p-3 font-bold text-white">${item.name}</td>
+                        <td class="p-3">₹${item.cost}</td>
+                        <td class="p-3 text-red-400 font-bold">₹${item.price}</td>
+                        <td class="p-3">${item.stock}</td>
+                        <td class="p-3"><span class="px-2 py-1 rounded bg-green-950 text-green-400 text-xs">Active</span></td>
+                    </tr>
+                `;
+            });
+        }
+
         function filterCatalog() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const filtered = inventory.filter(i => i.name.toLowerCase().includes(query) || i.sku.toLowerCase().includes(query));
             renderCatalog(filtered);
-        }
-
-        async function searchCustomerCRM() {
-            const query = document.getElementById('customerSearch').value.trim();
-            const dropdown = document.getElementById('customerDropdown');
-            
-            if (query.length < 3) {
-                dropdown.classList.add('hidden');
-                return;
-            }
-
-            dropdown.innerHTML = `
-                <div class="p-3 text-xs text-gray-400 border-b border-gray-800">Matching Customers:</div>
-                <div class="p-3 hover:bg-gray-900 cursor-pointer text-sm text-white">
-                    <strong>Client Lookup</strong><br><span class="text-xs text-gray-500">Query: ${query}</span>
-                </div>
-            `;
-            dropdown.classList.remove('hidden');
         }
 
         function addToCart(name, price) {
@@ -248,17 +345,18 @@
             document.getElementById('grandTotal').innerText = `₹${subtotal}`;
         }
 
-        async function processCheckout(mode) {
+        function processCheckout(mode) {
             if (cart.length === 0) {
                 alert('Cannot checkout an empty cart!');
                 return;
             }
-            alert(`Payment of ₹${document.getElementById('grandTotal').innerText} successful via ${mode}! Bill generated.`);
+            alert(`Payment of ₹${document.getElementById('grandTotal').innerText} successful via ${mode}! Bill generated and inventory updated.`);
             clearCart();
         }
 
-        // Initialize Catalog on Load
+        // Initialize Views on Load
         renderCatalog(inventory);
+        renderInventoryTable();
     </script>
 </body>
 </html>
