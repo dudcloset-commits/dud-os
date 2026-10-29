@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DUD OS - POS Billing & Inventory System</title>
+    <title>DUD OS — All Dud. No Duds.</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root {
             --bg-obsidian: #0a0a0c;
             --spider-red: #e60012;
             --spider-dark-red: #99000c;
-            --card-dark: #141419;
-            --border-color: #272730;
+            --card-dark: #121216;
+            --border-color: #22222c;
         }
         body {
             background-color: var(--bg-obsidian);
@@ -30,47 +31,61 @@
             background-color: var(--card-dark);
             border: 1px solid var(--border-color);
         }
+        /* Custom cinematic glow */
+        .brand-glow {
+            text-shadow: 0 0 15px rgba(230, 0, 18, 0.4);
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Top Navigation Bar -->
-    <header class="card-bg border-b px-6 py-4 flex justify-between items-center shadow-lg">
-        <div class="flex items-center space-x-3">
-            <div class="w-4 h-4 rounded-full bg-red-600 animate-pulse shadow-[0_0_10px_#e60012]"></div>
-            <h1 class="text-xl font-black tracking-wider uppercase text-white">DUD OS <span class="text-red-600">POS</span></h1>
-            <span class="text-xs px-2.5 py-1 rounded bg-red-950/80 text-red-400 border border-red-800">Perambur Store</span>
+    <!-- Top Navigation Bar with DUD Branding -->
+    <header class="card-bg border-b px-6 py-4 flex flex-col md:flex-row justify-between items-center shadow-2xl gap-4">
+        <div class="flex items-center space-x-4">
+            <!-- Brand Logo Mark -->
+            <div class="w-10 h-10 rounded-lg bg-black border border-red-800 flex items-center justify-center shadow-[0_0_15px_rgba(230,0,18,0.3)]">
+                <span class="text-red-600 font-black text-lg">D</span><span class="text-white font-bold text-sm">D</span>
+            </div>
+            <div>
+                <h1 class="text-lg font-black tracking-widest uppercase text-white">DUD <span class="text-red-600">CLOSET</span></h1>
+                <p class="text-[10px] tracking-widest text-gray-400 uppercase">Devil Under Design — Perambur, Chennai</p>
+            </div>
         </div>
-        <div class="flex items-center space-x-6 text-sm">
+
+        <div class="flex items-center space-x-6 text-xs md:text-sm">
             <span class="text-gray-400">Daily Target: <strong class="text-white">₹8,000 / day</strong></span>
             <span class="text-gray-400">GSTIN: <strong class="text-white">33CVFPP9066H1Z7</strong></span>
+            <span class="px-3 py-1 rounded bg-red-950/60 text-red-400 border border-red-800 font-mono">LIVE OS</span>
         </div>
     </header>
 
     <!-- Main POS Layout -->
     <main class="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 max-w-7xl mx-auto w-full">
         
-        <!-- Left 2 Columns: Catalog & Inventory Search -->
+        <!-- Left 2 Columns: Catalog & Customer CRM Search -->
         <section class="lg:col-span-2 flex flex-col space-y-6">
             <!-- Search & Customer CRM Lookup -->
-            <div class="card-bg p-4 rounded-xl flex flex-col md:flex-row gap-3 shadow-md">
+            <div class="card-bg p-4 rounded-xl flex flex-col md:flex-row gap-3 shadow-md relative">
                 <input type="text" id="searchInput" oninput="filterCatalog()" placeholder="Search item name or SKU (e.g., DCPRT, Hoodie)..." 
                     class="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-red-600">
-                <input type="text" id="customerSearch" placeholder="Customer Name or Phone # (3+ digits)..." 
-                    class="w-full md:w-72 bg-black border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-red-600">
+                <div class="relative w-full md:w-72">
+                    <input type="text" id="customerSearch" oninput="searchCustomerCRM()" placeholder="Customer Name or Phone #..." 
+                        class="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-red-600">
+                    <div id="customerDropdown" class="absolute left-0 right-0 top-full mt-1 bg-black border border-gray-800 rounded-lg shadow-xl hidden z-50 max-h-40 overflow-y-auto"></div>
+                </div>
             </div>
 
             <!-- Full Inventory Grid -->
             <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto max-h-[520px] pr-2">
-                <!-- Populated via JavaScript from Master Inventory -->
+                <!-- Populated via JavaScript -->
             </div>
         </section>
 
         <!-- Right Column: Active Bill & Cart (With Error Correction) -->
-        <section class="card-bg rounded-xl p-6 flex flex-col justify-between shadow-xl">
+        <section class="card-bg rounded-xl p-6 flex flex-col justify-between shadow-2xl">
             <div>
                 <div class="flex justify-between items-center border-b border-gray-800 pb-4 mb-4">
-                    <h2 class="font-black text-lg text-white">Current Bill</h2>
+                    <h2 class="font-black text-base uppercase tracking-wider text-white">Current Bill</h2>
                     <button onclick="clearCart()" class="text-xs text-red-500 hover:text-red-400 font-semibold uppercase tracking-wider">Clear All</button>
                 </div>
 
@@ -92,7 +107,7 @@
                 </div>
                 <div class="flex justify-between text-lg font-black text-white pt-2 border-t border-gray-800">
                     <span>Total Payable</span>
-                    <span id="grandTotal" class="text-red-500">₹0</span>
+                    <span id="grandTotal" class="text-red-500 brand-glow">₹0</span>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3 pt-2">
@@ -108,6 +123,12 @@
     </main>
 
     <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+        // const { createClient } = supabase;
+        // const _db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // Master Inventory Database migrated from DUD records
         const inventory = [
             { name: "T-Shirt", sku: "DCPRT", price: 400, stock: 100 },
@@ -134,7 +155,7 @@
                 grid.innerHTML += `
                     <div onclick="addToCart('${item.name}', ${item.price})" class="card-bg p-4 rounded-xl cursor-pointer hover:border-red-600 transition flex flex-col justify-between shadow-md group">
                         <div>
-                            <span class="text-xs text-red-500 font-semibold tracking-wider">${item.sku}</span>
+                            <span class="text-xs text-red-500 font-mono font-semibold tracking-wider">${item.sku}</span>
                             <h3 class="font-bold text-white mt-1 group-hover:text-red-400 transition text-sm">${item.name}</h3>
                         </div>
                         <div class="mt-4 flex justify-between items-center">
@@ -150,6 +171,24 @@
             const query = document.getElementById('searchInput').value.toLowerCase();
             const filtered = inventory.filter(i => i.name.toLowerCase().includes(query) || i.sku.toLowerCase().includes(query));
             renderCatalog(filtered);
+        }
+
+        async function searchCustomerCRM() {
+            const query = document.getElementById('customerSearch').value.trim();
+            const dropdown = document.getElementById('customerDropdown');
+            
+            if (query.length < 3) {
+                dropdown.classList.add('hidden');
+                return;
+            }
+
+            dropdown.innerHTML = `
+                <div class="p-3 text-xs text-gray-400 border-b border-gray-800">Matching Customers:</div>
+                <div class="p-3 hover:bg-gray-900 cursor-pointer text-sm text-white">
+                    <strong>Client Lookup</strong><br><span class="text-xs text-gray-500">Query: ${query}</span>
+                </div>
+            `;
+            dropdown.classList.remove('hidden');
         }
 
         function addToCart(name, price) {
@@ -197,24 +236,24 @@
                         </div>
                         <div class="flex items-center space-x-3">
                             <span class="text-sm font-bold text-red-500">₹${itemTotal}</span>
-                            <button onclick="removeItem(${index})" class="text-gray-500 hover:text-red-500 text-xs font-bold px-1.5 py-0.5 rounded bg-gray-900 border border-gray-800 transition">✕</button>
+                            <button onclick="removeItem(${index})" class="text-xs font-bold text-gray-500 hover:text-red-500 px-1.5 py-0.5 rounded bg-gray-900 border border-gray-800 transition">✕</button>
                         </div>
                     </div>
                 `;
             });
 
-            let tax = Math.round(subtotal * 0.05); // Standard GST inclusive calculation
+            let tax = Math.round(subtotal * 0.05);
             document.getElementById('subtotal').innerText = `₹${subtotal}`;
             document.getElementById('tax').innerText = `₹${tax} (Incl.)`;
             document.getElementById('grandTotal').innerText = `₹${subtotal}`;
         }
 
-        function processCheckout(mode) {
+        async function processCheckout(mode) {
             if (cart.length === 0) {
                 alert('Cannot checkout an empty cart!');
                 return;
             }
-            alert(`Payment of ₹${document.getElementById('grandTotal').innerText} successful via ${mode}! Bill generated and inventory updated.`);
+            alert(`Payment of ₹${document.getElementById('grandTotal').innerText} successful via ${mode}! Bill generated.`);
             clearCart();
         }
 
