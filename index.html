@@ -1,609 +1,833 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DUD OS — All Dud. No Duds.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        :root {
-            --bg-obsidian: #0a0a0c;
-            --spider-red: #e60012;
-            --spider-dark-red: #99000c;
-            --card-dark: #121216;
-            --border-color: #22222c;
-        }
-        body {
-            background-color: var(--bg-obsidian);
-            color: #f3f4f6;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-        .spider-btn {
-            background: linear-gradient(135deg, var(--spider-red), var(--spider-dark-red));
-            transition: all 0.2s ease;
-        }
-        .spider-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-        .card-bg {
-            background-color: var(--card-dark);
-            border: 1px solid var(--border-color);
-        }
-        .brand-glow {
-            text-shadow: 0 0 15px rgba(230, 0, 18, 0.4);
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DUD Closet — Store OS</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A0A0C;color:#F0F0F0;font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+:root{
+  --bg:#0A0A0C;--surf:#121216;--card:#16161D;--card2:#22222C;--border:#2A2A36;
+  --or:#E60012;--or-dark:#99000C;--text:#F0F0F0;--muted:#888;--dim:#555;
+  --ok:#4CAF7D;--warn:#F0A500;--err:#E84545;--wa:#25D366;
+}
+input,select,button{font-family:inherit}
+input,select{background:var(--card2);border:1px solid var(--border);border-radius:6px;color:var(--text);padding:9px 12px;font-size:13px;width:100%;outline:none}
+input:focus,select:focus{border-color:var(--or)}
+button{cursor:pointer;border-radius:6px;font-weight:600;font-size:13px;transition:opacity .15s;white-space:nowrap}
+button:hover{opacity:.85}
+.spider-btn{background:linear-gradient(135deg,var(--or),var(--or-dark));color:#fff;border:none}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+.tag{display:inline-block;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700;letter-spacing:.5px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:9px 10px;text-align:left;font-size:12px;border-bottom:1px solid var(--border)}
+th{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;background:#111116}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}
+.modal{background:#111116;border-radius:12px;padding:22px;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;border:1px solid var(--border)}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);padding:10px 24px;border-radius:24px;font-size:13px;font-weight:600;z-index:9999;box-shadow:0 4px 24px rgba(0,0,0,.5);white-space:nowrap}
+.lbl{font-size:10px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+.pill{border:1px solid var(--border);border-radius:16px;padding:4px 12px;font-size:11px;background:var(--card2);color:var(--muted)}
+.pill.active{background:var(--or);color:#fff;border-color:var(--or);font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.scrollx{overflow-x:auto}
+@media print{
+  body{background:#fff;color:#000}
+  #app-header,#app-nav,#no-print{display:none!important}
+  .print-invoice{display:block!important}
+}
+</style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
 
-    <!-- PIN Protection Modal for Personal Data -->
-    <div id="pinModal" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center hidden">
-        <div class="card-bg p-8 rounded-2xl max-w-sm w-full text-center border border-red-800 shadow-2xl">
-            <h2 class="text-lg font-black text-white uppercase tracking-wider mb-2">Restricted Access</h2>
-            <p class="text-xs text-gray-400 mb-6">Enter PIN to unlock Personal Expenses & Private Ledger</p>
-            <input type="password" id="pinInput" placeholder="••••" maxlength="4" class="w-full text-center bg-black border border-gray-800 rounded-xl px-4 py-3 text-2xl text-white tracking-widest mb-4 focus:outline-none focus:border-red-600">
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="closePinModal()" class="bg-gray-900 text-gray-400 font-bold py-3 rounded-xl text-xs uppercase">Cancel</button>
-                <button onclick="verifyPin()" class="spider-btn text-white font-bold py-3 rounded-xl text-xs uppercase">Unlock</button>
-            </div>
-        </div>
+<div id="root"></div>
+
+<script>
+// ════════════════════════════════════
+// MASTER CONSTANTS & SEED DATA
+// ════════════════════════════════════
+const GSTIN = "33CVFPP9066H1Z7";
+const CHANNELS = ["Store","WooCommerce","Amazon","Flipkart"];
+const CATS = ["All","Tops","Bottoms","Sarees","Kurtis","Sets","Footwear","Accessories","Bags","Gifts"];
+const PAY_MODES = ["Cash","UPI","Card","Online"];
+
+const SEED_PRODUCTS = [
+  {id:"p01",name:"T-Shirt",sku:"DC-TSH",hsn:"6109",cat:"Tops",cost:200,sell:400,mrp:500,gst:5,stock:100,minStock:10,comboEligible:true,offer:"3 for ₹999 Combo"},
+  {id:"p02",name:"Tops",sku:"DC-TOP",hsn:"6106",cat:"Tops",cost:150,sell:300,mrp:400,gst:5,stock:100,minStock:10,comboEligible:true,offer:"3 for ₹999 Combo"},
+  {id:"p03",name:"Denim Pant",sku:"DC-DNP",hsn:"6203",cat:"Bottoms",cost:250,sell:700,mrp:800,gst:5,stock:100,minStock:10,comboEligible:false,offer:""},
+  {id:"p04",name:"Formal Pant",sku:"DC-FMP",hsn:"6203",cat:"Bottoms",cost:200,sell:500,mrp:600,gst:5,stock:40,minStock:5,comboEligible:false,offer:""},
+  {id:"p05",name:"Night Pant",sku:"DC-NGP",hsn:"6207",cat:"Bottoms",cost:100,sell:200,mrp:300,gst:5,stock:100,minStock:10,comboEligible:true,offer:"3 for ₹999 Combo"},
+  {id:"p06",name:"Nylon Pant",sku:"DC-NYP",hsn:"6203",cat:"Bottoms",cost:50,sell:100,mrp:100,gst:5,stock:50,minStock:5,comboEligible:false,offer:""},
+  {id:"p07",name:"Footwear",sku:"DC-FTW",hsn:"6402",cat:"Footwear",cost:200,sell:500,mrp:600,gst:5,stock:50,minStock:5,comboEligible:false,offer:""},
+  {id:"p08",name:"Belt",sku:"DC-BLT",hsn:"4203",cat:"Accessories",cost:100,sell:200,mrp:250,gst:5,stock:50,minStock:5,comboEligible:false,offer:""},
+  {id:"p09",name:"Socks",sku:"DC-SOC",hsn:"6115",cat:"Accessories",cost:50,sell:100,mrp:200,gst:5,stock:50,minStock:10,comboEligible:true,offer:"Buy 3 @ ₹499"},
+  {id:"p10",name:"Cosmic Saree",sku:"DC-CSR",hsn:"5208",cat:"Sarees",cost:200,sell:500,mrp:600,gst:5,stock:50,minStock:5,comboEligible:false,offer:""},
+  {id:"p11",name:"Cotton Saree",sku:"DC-CTR",hsn:"5208",cat:"Sarees",cost:200,sell:500,mrp:600,gst:5,stock:50,minStock:5,comboEligible:false,offer:""},
+  {id:"p12",name:"Kurti 1pc",sku:"DC-K1P",hsn:"6211",cat:"Kurtis",cost:150,sell:250,mrp:350,gst:5,stock:50,minStock:5,comboEligible:false,offer:""},
+  {id:"p13",name:"Kurti 2pc Set",sku:"DC-K2P",hsn:"6211",cat:"Kurtis",cost:350,sell:500,mrp:600,gst:5,stock:20,minStock:3,comboEligible:false,offer:""},
+  {id:"p14",name:"Kurti 3pc Set",sku:"DC-K3P",hsn:"6211",cat:"Kurtis",cost:450,sell:600,mrp:700,gst:5,stock:20,minStock:3,comboEligible:false,offer:""},
+  {id:"p15",name:"Co-ord Set",sku:"DC-COO",hsn:"6211",cat:"Sets",cost:300,sell:800,mrp:700,gst:5,stock:30,minStock:5,comboEligible:false,offer:""},
+  {id:"p16",name:"Sharara Set",sku:"DC-SHA",hsn:"6211",cat:"Sets",cost:700,sell:1300,mrp:1400,gst:5,stock:300,minStock:10,comboEligible:false,offer:""},
+  {id:"p17",name:"Tote Bag",sku:"DC-TOT",hsn:"4202",cat:"Bags",cost:100,sell:200,mrp:300,gst:5,stock:25,minStock:5,comboEligible:false,offer:""},
+  {id:"p18",name:"Gift Basket S",sku:"DC-GBS",hsn:"4602",cat:"Gifts",cost:50,sell:100,mrp:100,gst:5,stock:50,minStock:5,comboEligible:false,offer:""},
+  {id:"p19",name:"Gift Basket L",sku:"DC-GBL",hsn:"4602",cat:"Gifts",cost:100,sell:200,mrp:200,gst:5,stock:100,minStock:5,comboEligible:false,offer:""},
+  {id:"p20",name:"Cosmic Dance Shirt",sku:"DUD-SH-BLK",hsn:"6205",cat:"Tops",cost:420,sell:899,mrp:999,gst:5,stock:30,minStock:5,comboEligible:false,offer:""},
+  {id:"p21",name:"Espresso Shirt",sku:"DUD-SH-BRN",hsn:"6205",cat:"Tops",cost:420,sell:899,mrp:999,gst:5,stock:25,minStock:5,comboEligible:false,offer:""},
+  {id:"p22",name:"Eternal Dance Shirt",sku:"DUD-SH-BLU",hsn:"6205",cat:"Tops",cost:420,sell:899,mrp:999,gst:5,stock:25,minStock:5,comboEligible:false,offer:""},
+  {id:"p23",name:"Oversized Heavy Hoodie",sku:"DUD-HD-01",hsn:"6101",cat:"Tops",cost:950,sell:1899,mrp:2199,gst:5,stock:24,minStock:5,comboEligible:false,offer:""}
+];
+
+const DEFAULT_SETTINGS = {
+  storeName:"DUD Closet",
+  address:"No.441, 21st Street, Thiru Vi Ka Nagar Quarters, Sembiyan, Perambur, Chennai - 600011",
+  phone:"9840625257",
+  igOnline:"@dud_official",
+  igStore:"@dudcloset_official",
+  website:"www.dudcloset.com",
+  tagline:"When in doubt, wear DUD",
+  upiId:"dud36@kotak",staffName:""
+};
+
+const DEFAULT_EXPENSES = [
+  {id:"e01",name:"Shop Rent (Perambur)",cat:"Fixed",amount:21000,freq:"Monthly",paid:false,date:""},
+  {id:"e02",name:"EB Bill",cat:"Utility",amount:0,freq:"Every 2 Months",paid:false,date:""},
+  {id:"e03",name:"WiFi Bill",cat:"Utility",amount:720,freq:"Monthly",gstClaimable:true,paid:false,date:""},
+  {id:"e04",name:"Hostinger & SaaS",cat:"Utility",amount:2500,freq:"Monthly",paid:false,date:""},
+  {id:"e05",name:"Packing Materials",cat:"Variable",amount:5000,freq:"Variable",paid:false,date:""},
+  {id:"e06",name:"Shiprocket Courier Charges",cat:"Variable",amount:0,freq:"Variable",paid:false,date:""},
+  {id:"e07",name:"Other Expenses",cat:"Variable",amount:0,freq:"Variable",paid:false,date:""}
+];
+
+// ════════════════════════════════════
+// STORAGE ADAPTER
+// ════════════════════════════════════
+const DB_KEY = {P:"dc_prod",S:"dc_sales",C:"dc_cust",IC:"dc_ic",ST:"dc_settings",EX:"dc_expenses",VN:"dc_vendors",RT:"dc_returns",PB:"dc_purchases"};
+
+function dbLoad(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
+function dbSave(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){console.error(e);}}
+
+let STATE = {
+  tab:"dashboard",
+  products: dbLoad(DB_KEY.P) || SEED_PRODUCTS,
+  sales: dbLoad(DB_KEY.S) || [],
+  customers: dbLoad(DB_KEY.C) || [],
+  invCounter: dbLoad(DB_KEY.IC) || 1,
+  settings: dbLoad(DB_KEY.ST) || DEFAULT_SETTINGS,
+  expenses: dbLoad(DB_KEY.EX) || DEFAULT_EXPENSES,
+  vendors: dbLoad(DB_KEY.VN) || [],
+  returns: dbLoad(DB_KEY.RT) || [],
+  purchases: dbLoad(DB_KEY.PB) || [
+    {id:"pb01",date:"2026-10-25",supplier:"Delhi Textile Hub",billNo:"DT-4492",gstin:"07AABCD1234F1Z9",taxable:25000,tax:1250,total:26250}
+  ]
+};
+
+function saveP(){ dbSave(DB_KEY.P, STATE.products); }
+function saveS(){ dbSave(DB_KEY.S, STATE.sales); }
+function saveC(){ dbSave(DB_KEY.C, STATE.customers); }
+function saveIC(){ dbSave(DB_KEY.IC, STATE.invCounter); }
+function saveST(){ dbSave(DB_KEY.ST, STATE.settings); }
+function saveEX(){ dbSave(DB_KEY.EX, STATE.expenses); }
+function saveVN(){ dbSave(DB_KEY.VN, STATE.vendors); }
+function saveRT(){ dbSave(DB_KEY.RT, STATE.returns); }
+function savePB(){ dbSave(DB_KEY.PB, STATE.purchases); }
+
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+const todayStr=()=>new Date().toISOString().split("T")[0];
+const mKey=d=>d.slice(0,7);
+const fmt=n=>"₹"+Number(n||0).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtK=n=>{const v=Number(n||0);return v>=1000?"₹"+(v/1000).toFixed(1)+"K":"₹"+v;};
+const invNo=n=>"DC-"+String(n).padStart(4,"0");
+
+// ════════════════════════════════════
+// AUTH & PIN SECURITY
+// ════════════════════════════════════
+const AUTH = { user:"dud closet", pass:"dudneverdies@21", key:"dc_auth" };
+let isPersonalUnlocked = false;
+
+function isLoggedIn(){ return localStorage.getItem(AUTH.key)==="1"; }
+
+function renderLogin(err){
+  document.getElementById("root").innerHTML=`
+  <div style="min-height:100vh;background:#0A0A0C;display:flex;align-items:center;justify-content:center;padding:20px">
+    <div style="background:#121216;border:1px solid #22222C;border-radius:14px;padding:36px 28px;width:100%;max-width:360px;text-align:center;box-shadow:0 0 30px rgba(0,0,0,0.8)">
+      <div style="font-size:24px;font-weight:900;letter-spacing:3px;color:#fff;margin-bottom:4px">DUD <span style="color:var(--or)">CLOSET</span></div>
+      <div style="font-size:11px;color:var(--or);letter-spacing:4px;margin-bottom:28px">STORE OS</div>
+      ${err?`<div style="background:rgba(232,69,69,.12);border:1px solid rgba(232,69,69,.35);color:#E84545;border-radius:7px;padding:8px 12px;font-size:12px;margin-bottom:16px">⚠ Incorrect username or password</div>`:""}
+      <div style="text-align:left;margin-bottom:12px">
+        <div class="lbl">Username</div>
+        <input id="login-user" type="text" placeholder="Enter username" autocomplete="username">
+      </div>
+      <div style="text-align:left;margin-bottom:20px">
+        <div class="lbl">Password</div>
+        <input id="login-pass" type="password" placeholder="Enter password" autocomplete="current-password">
+      </div>
+      <button onclick="doLogin()" class="spider-btn" style="width:100%;padding:13px;border-radius:7px;font-weight:900;font-size:15px;letter-spacing:1px;margin-bottom:14px">SIGN IN</button>
+      <div style="font-size:10px;color:#555;font-style:italic">"When in doubt, wear DUD"</div>
     </div>
+  </div>`;
+  setTimeout(()=>{
+    const u=document.getElementById("login-user");
+    const p=document.getElementById("login-pass");
+    if(u) u.addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("login-pass").focus(); });
+    if(p) p.addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(); });
+  },100);
+}
 
-    <!-- Top Navigation & Branding -->
-    <header class="card-bg border-b px-6 py-4 flex flex-col md:flex-row justify-between items-center shadow-2xl gap-4">
-        <div class="flex items-center space-x-4">
-            <div class="w-10 h-10 rounded-lg bg-black border border-red-800 flex items-center justify-center shadow-[0_0_15px_rgba(230,0,18,0.3)]">
-                <span class="text-red-600 font-black text-lg">D</span><span class="text-white font-bold text-sm">D</span>
-            </div>
-            <div>
-                <h1 class="text-lg font-black tracking-widest uppercase text-white">DUD <span class="text-red-600">OS</span></h1>
-                <p class="text-[10px] tracking-widest text-gray-400 uppercase">Devil Under Design — Perambur Store</p>
-            </div>
+function doLogin(){
+  const u=(document.getElementById("login-user").value||"").trim().toLowerCase();
+  const p=(document.getElementById("login-pass").value||"").trim();
+  if(u===AUTH.user.toLowerCase()&&p===AUTH.pass){
+    localStorage.setItem(AUTH.key,"1");
+    renderApp();
+  } else { renderLogin(true); }
+}
+
+function doLogout(){
+  if(!confirm("Log out of DUD Closet?"))return;
+  localStorage.removeItem(AUTH.key);
+  renderLogin(false);
+}
+
+function requestPersonalAccess(){
+  if(isPersonalUnlocked){ go('personal'); return; }
+  const pop=document.createElement("div");pop.className="modal-bg";pop.id="pin-pop";
+  pop.innerHTML=`<div class="modal" style="max-width:320px;text-align:center;border:1px solid var(--or)">
+    <div style="font-size:32px;margin-bottom:8px">🔒</div>
+    <div style="font-weight:900;font-size:16px;color:#fff;margin-bottom:4px">Restricted Access</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:16px">Enter PIN to unlock Personal Financials</div>
+    <input type="password" id="pin-input" maxlength="4" placeholder="••••" style="text-align:center;font-size:24px;letter-spacing:10px;padding:10px;margin-bottom:14px">
+    <div style="display:flex;gap:8px">
+      <button onclick="verifyPin()" class="spider-btn" style="flex:1;padding:10px;font-weight:800">Unlock</button>
+      <button onclick="document.getElementById('pin-pop').remove()" style="background:var(--card2);color:var(--muted);border:none;flex:1;padding:10px">Cancel</button>
+    </div>
+  </div>`;
+  document.body.appendChild(pop);
+  setTimeout(()=>document.getElementById("pin-input").focus(),100);
+}
+
+function verifyPin(){
+  const val=document.getElementById("pin-input").value;
+  if(val==="6666"||val==="1234"){
+    isPersonalUnlocked=true;
+    document.getElementById("pin-pop").remove();
+    go('personal');
+  } else { showToast("Incorrect PIN","err"); }
+}
+
+function lockPersonal(){
+  isPersonalUnlocked=false;
+  go('dashboard');
+  showToast("Personal tab locked securely");
+}
+
+let _toastTimer=null;
+function showToast(msg,type="ok"){
+  clearTimeout(_toastTimer);
+  const el=document.getElementById("toast");
+  if(!el)return;
+  el.textContent=msg;
+  el.style.background=type==="err"?"var(--err)":type==="warn"?"var(--warn)":"var(--ok)";
+  el.style.display="block";
+  _toastTimer=setTimeout(()=>{el.style.display="none";},3200);
+}
+function go(tab){STATE.tab=tab;renderApp();}
+
+// ════════════════════════════════════
+// SHELL
+// ════════════════════════════════════
+function shell(content){
+  const tabs=[
+    {id:"dashboard",icon:"◈",label:"Dashboard"},
+    {id:"billing",icon:"🧾",label:"POS Billing"},
+    {id:"inventory",icon:"📦",label:"Inventory"},
+    {id:"sales",icon:"📊",label:"Sales Ledger"},
+    {id:"purchases",icon:"📥",label:"Purchase Bills"},
+    {id:"customers",icon:"👥",label:"Customers"},
+    {id:"eod",icon:"🏁",label:"EOD Recon"},
+    {id:"expenses",icon:"💸",label:"Expenses"},
+    {id:"returns",icon:"↩",label:"Returns"},
+    {id:"vendors",icon:"🚚",label:"Vendors"},
+    {id:"gst",icon:"📋",label:"GST Filing"},
+    {id:"personal",icon:"🔒",label:"Personal"},
+    {id:"settings",icon:"⚙",label:"Settings"}
+  ];
+  const navItems=tabs.map(t=>`
+    <button onclick="${t.id==='personal'?'requestPersonalAccess()':'go(\''+t.id+'\')'}" style="background:none;border:none;border-bottom:2px solid ${STATE.tab===t.id?"var(--or)":"transparent"};color:${STATE.tab===t.id?"var(--or)":"var(--muted)"};padding:11px 14px;font-size:12px;font-weight:${STATE.tab===t.id?700:400};display:flex;align-items:center;gap:5px">
+      <span style="font-size:14px">${t.icon}</span><span>${t.label}</span>
+    </button>`).join("");
+  const dt=new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
+  return `
+  <div id="toast" class="toast" style="display:none"></div>
+  <header id="app-header" style="background:var(--surf);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.7)">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:28px;height:28px;border-radius:6px;background:#000;border:1px solid var(--or);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--or);font-size:14px">D</div>
+      <div>
+        <div style="font-size:16px;font-weight:900;letter-spacing:2px">DUD <span style="color:var(--or)">OS</span></div>
+        <div style="font-size:8px;color:var(--muted);letter-spacing:3px">ALL DUD. NO DUDS.</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="font-size:11px;color:var(--muted)">GSTIN: <strong style="color:#fff">${GSTIN}</strong></div>
+      <button onclick="doLogout()" style="background:transparent;border:1px solid var(--border);color:#888;padding:4px 10px;border-radius:5px;font-size:11px">⏻ Logout</button>
+    </div>
+  </header>
+  <nav id="app-nav" style="background:var(--surf);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;padding:0 8px">
+    ${navItems}
+  </nav>
+  <main style="padding:16px;max-width:1200px;margin:0 auto">
+    ${content}
+  </main>`;
+}
+
+// ════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════
+function renderDashboard(){
+  const now=new Date();
+  const thisM=mKey(todayStr());
+  const mS=m=>STATE.sales.filter(s=>mKey(s.date)===m);
+  const thisRev=mS(thisM).reduce((a,s)=>a+s.total,0);
+  const thisProfit=mS(thisM).reduce((a,s)=>a+s.profit,0);
+  const totalRev=STATE.sales.reduce((a,s)=>a+s.total,0);
+  const low=STATE.products.filter(p=>p.stock<=p.minStock&&p.stock>0);
+  const out=STATE.products.filter(p=>p.stock===0);
+
+  return shell(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h2 style="font-size:18px;font-weight:700">Executive Store Overview</h2>
+      <div style="font-size:12px;color:var(--muted)">Daily Sales Target: <strong style="color:#fff">₹8,000 / day</strong></div>
+    </div>
+    <div class="grid3" style="margin-bottom:16px">
+      ${[
+        {l:"This Month Revenue",v:fmtK(thisRev),s:"Goal: ₹2,40,000 / mo",c:"var(--or)"},
+        {l:"This Month Profit",v:fmtK(thisProfit),s:"Margin "+(thisRev>0?((thisProfit/thisRev)*100).toFixed(1):0)+"%",c:"var(--ok)"},
+        {l:"Total Sales",v:fmtK(totalRev),s:STATE.sales.length+" bills generated",c:"var(--warn)"},
+        {l:"Customer Database",v:STATE.customers.length,s:STATE.customers.filter(c=>c.broadcast).length+" in broadcast",c:"#8B44AC"},
+      ].map(s=>`<div class="card" style="border-left:3px solid ${s.c}">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${s.l}</div>
+        <div style="font-size:24px;font-weight:800;color:${s.c}">${s.v}</div>
+        <div style="font-size:11px;color:var(--dim);margin-top:3px">${s.s}</div>
+      </div>`).join("")}
+    </div>
+    <div class="grid2" style="margin-bottom:14px">
+      <div class="card">
+        <div style="font-size:11px;color:var(--or);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Inventory Health</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Healthy Items</span><strong style="color:var(--ok)">${STATE.products.length-low.length-out.length}</strong></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Low Stock Warning</span><strong style="color:var(--warn)">${low.length}</strong></div>
+        <div style="display:flex;justify-content:space-between"><span>Out of Stock</span><strong style="color:var(--err)">${out.length}</strong></div>
+      </div>
+      <div class="card">
+        <div style="font-size:11px;color:var(--or);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">GST Summary (${thisM})</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Estimated Output Tax (5%)</span><strong>${fmt(thisRev*0.05/1.05)}</strong></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Purchase Bills Logged</span><strong>${STATE.purchases.length}</strong></div>
+        <div style="font-size:10px;color:var(--muted);margin-top:4px">All prices are inclusive of GST. Extracted internally.</div>
+      </div>
+    </div>`);
+}
+
+// ════════════════════════════════════
+// BILLING ENGINE (COMBO & TOP CUSTOMER)
+// ════════════════════════════════════
+let CART=[]; let BILL_CUST={phone:"",name:"",found:null}; let BILL_DISC=0; let BILL_PAY="Cash"; let BILL_CHAN="Store"; let BILL_CAT="All"; let BILL_SEARCH="";
+
+function recalculateCart(){
+  let sub=0;
+  CART.forEach(item=>{
+    if(item.comboEligible && item.qty>=3){
+      const setsOfThree = Math.floor(item.qty/3);
+      const rem = item.qty % 3;
+      const totalCost = (setsOfThree*999) + (rem*item.baseSell);
+      item.sell = Number((totalCost/item.qty).toFixed(2));
+      item.appliedCombo = true;
+    } else {
+      item.sell = item.baseSell;
+      item.appliedCombo = false;
+    }
+    sub += Math.round(item.sell * item.qty);
+  });
+  const discAmt=Math.round(sub*BILL_DISC/100);
+  const total=sub-discAmt;
+  const gst=Math.round(total - (total/1.05));
+  const profit=CART.reduce((a,i)=>a+(i.sell-i.cost)*i.qty,0)-discAmt;
+  const savings=CART.reduce((a,i)=>a+(i.mrp-i.sell)*i.qty,0)+discAmt;
+  return {sub,discAmt,total,gst,profit,savings};
+}
+
+function renderBilling(){
+  const prods=STATE.products.filter(p=>{
+    const ms=p.name.toLowerCase().includes(BILL_SEARCH.toLowerCase())||p.sku.toLowerCase().includes(BILL_SEARCH.toLowerCase());
+    return ms&&(BILL_CAT==="All"||p.cat===BILL_CAT);
+  });
+  const {sub,discAmt,total,gst,savings}=recalculateCart();
+
+  const prodCards=prods.map(p=>{
+    const inCart=CART.find(i=>i.id===p.id);
+    return `<div onclick="addToCart('${p.id}')" style="background:${inCart?"rgba(230,0,18,0.12)":"var(--card)"};border:1px solid ${inCart?"var(--or)":p.stock>0?"var(--border)":"var(--err)"};border-radius:8px;padding:10px;cursor:${p.stock>0?"pointer":"not-allowed"};opacity:${p.stock>0?1:0.45};position:relative">
+      ${inCart?`<div style="position:absolute;top:5px;right:5px;background:var(--or);color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${inCart.qty}</div>`:""}
+      <div style="font-size:11px;font-weight:700;margin-bottom:2px;padding-right:20px">${p.name}</div>
+      <div style="font-size:9px;color:var(--muted);margin-bottom:4px">${p.sku}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:var(--or);font-weight:800;font-size:14px">₹${p.sell}</span>
+        <span style="font-size:9px;color:${p.stock<=p.minStock?'var(--warn)':'var(--ok)'}">${p.stock>0?p.stock+' in stock':'Out'}</span>
+      </div>
+      ${p.comboEligible?`<div style="font-size:8px;color:var(--or);margin-top:3px;font-weight:700">★ 3 FOR ₹999 COMBO</div>`:""}
+    </div>`;
+  }).join("");
+
+  const cartItems=CART.map(i=>`
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+      <div style="flex:1">
+        <div style="font-size:12px;font-weight:600">${i.name} ${i.appliedCombo?'<span style="color:var(--or);font-size:9px;font-weight:800">[COMBO]</span>':''}</div>
+        <div style="font-size:10px;color:var(--muted)">₹${i.sell} each</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:4px">
+        <button onclick="updateCartQty('${i.id}',-1)" style="background:var(--card2);border:1px solid var(--border);color:#fff;width:22px;height:22px;border-radius:4px">−</button>
+        <span style="font-size:13px;width:22px;text-align:center;font-weight:700">${i.qty}</span>
+        <button onclick="updateCartQty('${i.id}',1)" style="background:var(--card2);border:1px solid var(--border);color:#fff;width:22px;height:22px;border-radius:4px">+</button>
+      </div>
+      <div style="font-size:12px;font-weight:700;width:56px;text-align:right;color:var(--or)">₹${Math.round(i.sell*i.qty)}</div>
+      <button onclick="removeFromCart('${i.id}')" style="background:none;border:none;color:var(--err);font-size:14px">✕</button>
+    </div>`).join("");
+
+  return shell(`
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:16px">
+      <div>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <input id="bill-search" value="${BILL_SEARCH}" oninput="BILL_SEARCH=this.value;renderApp()" placeholder="Search product name or SKU…" style="flex:1">
+          <select onchange="BILL_CAT=this.value;renderApp()" style="width:130px">
+            ${CATS.map(c=>`<option${c===BILL_CAT?" selected":""}>${c}</option>`).join("")}
+          </select>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px">${prodCards}</div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <!-- Customer Details At Top of Bill -->
+        <div class="card" style="border-top:3px solid var(--or)">
+          <div style="font-size:10px;color:var(--or);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:800">Customer Details</div>
+          <div style="display:flex;gap:6px;margin-bottom:6px">
+            <input id="cust-phone" value="${BILL_CUST.phone}" oninput="setCustPhone(this.value)" onblur="lookupCust()" placeholder="Customer Phone Number *" style="flex:1">
+            <button onclick="lookupCust()" style="background:var(--card2);border:1px solid var(--border);color:var(--muted);padding:8px 12px">Lookup</button>
+          </div>
+          ${BILL_CUST.found?`<div style="font-size:11px;color:var(--ok);margin-bottom:6px">✓ Returning: ${BILL_CUST.found.name} (${BILL_CUST.found.visits} visits)</div>`:""}
+          <input id="cust-name" value="${BILL_CUST.name}" oninput="BILL_CUST.name=this.value" placeholder="Customer Name *" style="margin-bottom:6px">
         </div>
 
-        <!-- Module Tabs Switcher -->
-        <nav class="flex flex-wrap items-center justify-center gap-1 bg-black/60 p-1.5 rounded-xl border border-gray-800">
-            <button onclick="switchTab('pos')" id="tab-pos" class="px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-red-600 text-white transition">POS</button>
-            <button onclick="switchTab('inventory')" id="tab-inventory" class="px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition">Inventory</button>
-            <button onclick="switchTab('sales')" id="tab-sales" class="px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition">Sales Ledger</button>
-            <button onclick="switchTab('purchases')" id="tab-purchases" class="px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition">Purchase Bills</button>
-            <button onclick="switchTab('expenses')" id="tab-expenses" class="px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition">Expenses</button>
-            <button onclick="requestPersonalAccess()" id="tab-personal" class="px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-red-400 border border-red-900/50 hover:bg-red-950/40 transition">🔒 Personal</button>
-            <button onclick="switchTab('settings')" id="tab-settings" class="px-3 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white transition">Settings</button>
-        </nav>
-
-        <div class="hidden lg:flex items-center space-x-4 text-xs">
-            <span class="text-gray-400">Target: <strong class="text-white">₹8k/day</strong></span>
-            <span class="text-gray-400">GSTIN: <strong class="text-white">33CVFPP9066H1Z7</strong></span>
-        </div>
-    </header>
-
-    <!-- Main Content Area -->
-    <main class="flex-1 p-6 max-w-7xl mx-auto w-full">
-
-        <!-- TAB 1: POS BILLING -->
-        <div id="view-pos" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <section class="lg:col-span-2 flex flex-col space-y-6">
-                <div class="card-bg p-4 rounded-xl shadow-md">
-                    <input type="text" id="searchInput" oninput="filterCatalog()" placeholder="Search item name or SKU (e.g., DCPRT, Hoodie)..." 
-                        class="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-red-600">
-                </div>
-                <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto max-h-[520px] pr-2"></div>
-            </section>
-
-            <!-- Right Column: Active Bill with Customer Info at Top -->
-            <section class="card-bg rounded-xl p-6 flex flex-col justify-between shadow-2xl">
-                <div>
-                    <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-4">
-                        <h2 class="font-black text-base uppercase tracking-wider text-white">Current Bill</h2>
-                        <button onclick="clearCart()" class="text-xs text-red-500 hover:text-red-400 font-semibold uppercase tracking-wider">Clear All</button>
-                    </div>
-
-                    <!-- Customer Details Section at Top of Bill -->
-                    <div class="bg-black/50 p-3 rounded-xl border border-gray-800 mb-4 space-y-2">
-                        <span class="text-[10px] font-bold uppercase text-red-500 tracking-wider">Customer Details</span>
-                        <input type="text" id="billCustomerName" placeholder="Customer Name" class="w-full bg-black border border-gray-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-red-600">
-                        <input type="text" id="billCustomerPhone" placeholder="Phone Number (WhatsApp)" class="w-full bg-black border border-gray-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-red-600">
-                    </div>
-
-                    <!-- Cart Items List -->
-                    <div id="cartItems" class="space-y-3 overflow-y-auto max-h-[260px] pr-1">
-                        <p class="text-gray-500 text-sm text-center py-6">Cart is empty. Select items to bill.</p>
-                    </div>
-                </div>
-
-                <!-- Bill Summary & Checkout -->
-                <div class="border-t border-gray-800 pt-4 mt-4 space-y-3">
-                    <div class="flex justify-between text-sm text-gray-400">
-                        <span>Subtotal (MRP Incl.)</span>
-                        <span id="subtotal">₹0</span>
-                    </div>
-                    <div class="flex justify-between text-xs text-gray-500">
-                        <span>Extracted GST (5%)</span>
-                        <span id="tax">₹0</span>
-                    </div>
-                    <div class="flex justify-between text-lg font-black text-white pt-2 border-t border-gray-800">
-                        <span>Total Payable</span>
-                        <span id="grandTotal" class="text-red-500 brand-glow">₹0</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-2 pt-2">
-                        <button onclick="processCheckout('UPI')" class="card-bg border border-red-800 text-red-400 hover:bg-red-950 font-bold py-2.5 rounded-lg text-xs transition">UPI</button>
-                        <button onclick="processCheckout('Card')" class="card-bg border border-red-800 text-red-400 hover:bg-red-950 font-bold py-2.5 rounded-lg text-xs transition">Card</button>
-                        <button onclick="processCheckout('Cash')" class="spider-btn text-white font-bold py-2.5 rounded-lg text-xs">Cash</button>
-                    </div>
-                </div>
-            </section>
+        <div class="card" style="flex:1">
+          <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:6px;margin-bottom:8px">
+            <span style="font-size:11px;font-weight:700">CURRENT BILL</span>
+            <button onclick="CART=[];renderApp()" style="background:none;border:none;color:var(--err);font-size:10px">Clear All</button>
+          </div>
+          ${CART.length===0?`<div style="color:var(--dim);font-size:12px;text-align:center;padding:24px 0">Select products on left to bill →</div>`:cartItems}
         </div>
 
-        <!-- TAB 2: INVENTORY MANAGER -->
-        <div id="view-inventory" class="hidden card-bg rounded-xl p-6 shadow-2xl">
-            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
-                <h2 class="font-black text-lg text-white">Master Inventory & SKU Editor</h2>
-                <button onclick="addNewSKUModal()" class="spider-btn text-white px-4 py-2 rounded-lg text-xs font-bold">+ Add New SKU</button>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm text-gray-300">
-                    <thead class="bg-black text-xs uppercase text-red-500 border-b border-gray-800">
-                        <tr>
-                            <th class="p-3">SKU</th>
-                            <th class="p-3">Product Name</th>
-                            <th class="p-3">Purchase Price</th>
-                            <th class="p-3">MRP (Final Price)</th>
-                            <th class="p-3">Stock Qty</th>
-                            <th class="p-3">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inventoryTableBody"></tbody>
-                </table>
-            </div>
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:12px;color:var(--muted)">
+            <span>Subtotal (MRP Incl.)</span><span>₹${sub}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;color:var(--dim)">
+            <span>Extracted GST (5% Internal)</span><span>₹${gst}</span>
+          </div>
+          ${savings>0?`<div style="font-size:11px;color:var(--ok);margin-bottom:6px">Customer Savings: ₹${savings} 🎉</div>`:""}
+          <div style="display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:8px;margin-top:4px">
+            <span style="font-weight:900;font-size:16px">TOTAL</span>
+            <span style="font-weight:900;font-size:22px;color:var(--or)">₹${total}</span>
+          </div>
+          <div class="grid2" style="margin:10px 0">
+            <select onchange="BILL_PAY=this.value">
+              ${PAY_MODES.map(m=>`<option${m===BILL_PAY?" selected":""}>${m}</option>`).join("")}
+            </select>
+            <select onchange="BILL_CHAN=this.value">
+              ${CHANNELS.map(c=>`<option${c===BILL_CHAN?" selected":""}>${c}</option>`).join("")}
+            </select>
+          </div>
+          <button onclick="generateBill()" class="spider-btn" style="width:100%;padding:12px;font-size:14px;font-weight:800;border-radius:6px">🧾 Complete & Generate Bill</button>
         </div>
+      </div>
+    </div>`);
+}
 
-        <!-- TAB 3: SALES LEDGER & TRACKERS -->
-        <div id="view-sales" class="hidden card-bg rounded-xl p-6 shadow-2xl space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
-                    <span class="text-xs text-gray-400 uppercase tracking-wider">Today's Revenue</span>
-                    <h3 id="todayRevenue" class="text-xl font-black text-white mt-1">₹0</h3>
-                    <span class="text-[10px] text-gray-500">Target: ₹8,000 / day</span>
-                </div>
-                <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
-                    <span class="text-xs text-gray-400 uppercase tracking-wider">Monthly Revenue Tracker</span>
-                    <h3 id="monthlyRevenue" class="text-xl font-black text-red-500 mt-1">₹0</h3>
-                    <span class="text-[10px] text-gray-500">Target: ₹2,40,000 / month</span>
-                </div>
-                <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
-                    <span class="text-xs text-gray-400 uppercase tracking-wider">Yearly Projected Revenue</span>
-                    <h3 id="yearlyRevenue" class="text-xl font-black text-white mt-1">₹28,80,000</h3>
-                    <span class="text-[10px] text-gray-500">Scale Target</span>
-                </div>
-            </div>
+function addToCart(pid){
+  const p=STATE.products.find(p=>p.id===pid);
+  if(!p||p.stock<=0)return;
+  const ex=CART.find(i=>i.id===pid);
+  if(ex){
+    if(ex.qty>=p.stock){ showToast("Max stock reached","warn"); return; }
+    ex.qty++;
+  } else {
+    CART.push({id:p.id,name:p.name,sku:p.sku,baseSell:p.sell,sell:p.sell,mrp:p.mrp,cost:p.cost,gst:p.gst,comboEligible:p.comboEligible,qty:1});
+  }
+  renderApp();
+}
 
-            <div class="flex justify-between items-center border-b border-gray-800 pb-4 pt-4">
-                <h2 class="font-black text-lg text-white">Sales & Customer History</h2>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm text-gray-300">
-                    <thead class="bg-black text-xs uppercase text-red-500 border-b border-gray-800">
-                        <tr>
-                            <th class="p-3">Invoice #</th>
-                            <th class="p-3">Customer Name & Phone</th>
-                            <th class="p-3">Payment Mode</th>
-                            <th class="p-3">Final Amount</th>
-                            <th class="p-3">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="salesTableBody">
-                        <tr><td colspan="5" class="p-4 text-center text-gray-500">No sales recorded yet.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+function updateCartQty(pid,delta){
+  const item=CART.find(i=>i.id===pid);
+  if(!item)return;
+  item.qty+=delta;
+  if(item.qty<=0) CART=CART.filter(i=>i.id!==pid);
+  renderApp();
+}
 
-        <!-- TAB 4: PURCHASE BILLS -->
-        <div id="view-purchases" class="hidden card-bg rounded-xl p-6 shadow-2xl space-y-6">
-            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
-                <div>
-                    <h2 class="font-black text-lg text-white">Purchase Bills & Supplier Invoices</h2>
-                    <p class="text-xs text-gray-400 mt-1">Automatically logged for GST Input Tax Credit (ITC).</p>
-                </div>
-                <button onclick="addPurchaseModal()" class="spider-btn text-white px-4 py-2 rounded-lg text-xs font-bold">+ Log Purchase Bill</button>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm text-gray-300">
-                    <thead class="bg-black text-xs uppercase text-red-500 border-b border-gray-800">
-                        <tr>
-                            <th class="p-3">Date</th>
-                            <th class="p-3">Supplier Name</th>
-                            <th class="p-3">Bill / Invoice No</th>
-                            <th class="p-3">GSTIN</th>
-                            <th class="p-3">Taxable Amount</th>
-                            <th class="p-3">GST Included</th>
-                            <th class="p-3">Total Cost</th>
-                        </tr>
-                    </thead>
-                    <tbody id="purchaseTableBody"></tbody>
-                </table>
-            </div>
-        </div>
+function removeFromCart(pid){ CART=CART.filter(i=>i.id!==pid); renderApp(); }
 
-        <!-- TAB 5: BUSINESS EXPENSES -->
-        <div id="view-expenses" class="hidden card-bg rounded-xl p-6 shadow-2xl space-y-6">
-            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
-                <h2 class="font-black text-lg text-white">Business Expenses & Loan Portfolio</h2>
-                <span class="text-xs text-red-400">Monthly EMI Burden: ₹82,617.46</span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-black/40 p-5 rounded-xl border border-gray-800">
-                    <h3 class="font-bold text-white mb-3 text-sm">Fixed Monthly Overhead</h3>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex justify-between"><span>Shop Rent (Perambur)</span><strong class="text-white">₹21,000</strong></li>
-                        <li class="flex justify-between"><span>Hostinger & SaaS</span><strong class="text-white">₹2,500</strong></li>
-                        <li class="flex justify-between"><span>Packaging & Logistics</span><strong class="text-white">₹5,000</strong></li>
-                    </ul>
-                </div>
-                <div class="bg-black/40 p-5 rounded-xl border border-gray-800">
-                    <h3 class="font-bold text-white mb-3 text-sm">Active Loan Portfolio</h3>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex justify-between"><span>Zype (30% APR)</span><strong class="text-red-500">Active</strong></li>
-                        <li class="flex justify-between"><span>Northern Arc (29.99% APR)</span><strong class="text-red-500">Active</strong></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+function setCustPhone(v){ BILL_CUST.phone=v; }
+function lookupCust(){
+  const phone=document.getElementById("cust-phone")?document.getElementById("cust-phone").value.trim():BILL_CUST.phone.trim();
+  BILL_CUST.phone=phone;
+  const c=STATE.customers.find(c=>c.phone===phone);
+  if(c){ BILL_CUST.found=c; BILL_CUST.name=c.name; showToast("Welcome back, "+c.name+"!"); }
+  else BILL_CUST.found=null;
+  renderApp();
+}
 
-        <!-- TAB 6: PERSONAL DISCIPLINE (PIN LOCKED) -->
-        <div id="view-personal" class="hidden card-bg rounded-xl p-6 shadow-2xl space-y-6 border border-red-900/40">
-            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
-                <div>
-                    <h2 class="font-black text-lg text-white flex items-center gap-2"><span>🔒</span> Personal Discipline & Private Ledger</h2>
-                    <p class="text-xs text-gray-400 mt-1">Strictly isolated from business P&L.</p>
-                </div>
-                <button onclick="lockPersonalTab()" class="bg-red-950 text-red-400 border border-red-800 px-3 py-1.5 rounded-lg text-xs font-bold">Lock Tab</button>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-black/40 p-5 rounded-xl border border-gray-800">
-                    <h3 class="font-bold text-white mb-3 text-sm">Personal Savings & Funds</h3>
-                    <div class="flex justify-between items-center bg-black p-3 rounded-lg border border-gray-800 text-sm">
-                        <span>Target Goal Fund</span>
-                        <strong class="text-white">₹50,000 / mo</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
+function generateBill(){
+  const phone=document.getElementById("cust-phone")?document.getElementById("cust-phone").value.trim():BILL_CUST.phone.trim();
+  const name=document.getElementById("cust-name")?document.getElementById("cust-name").value.trim():BILL_CUST.name.trim();
+  if(CART.length===0){ showToast("Cart is empty","err"); return; }
+  if(!phone){ showToast("Phone number required","err"); return; }
+  if(!name){ showToast("Customer name required","err"); return; }
 
-        <!-- TAB 7: SETTINGS -->
-        <div id="view-settings" class="hidden card-bg rounded-xl p-6 shadow-2xl space-y-6">
-            <div class="flex justify-between items-center border-b border-gray-800 pb-4">
-                <h2 class="font-black text-lg text-white">OS Settings & Theme Customizer</h2>
-                <span class="text-xs text-gray-400">Version 2.8.0 Live</span>
-            </div>
-            <div class="bg-black/40 p-5 rounded-xl border border-gray-800 space-y-4">
-                <h3 class="font-bold text-white text-sm">Theme Appearance</h3>
-                <div class="grid grid-cols-3 gap-3">
-                    <button onclick="alert('Spider-Man Red Theme')" class="p-3 rounded-xl bg-red-950 border border-red-800 text-xs font-bold text-red-400 text-center">Spider-Man Red</button>
-                    <button onclick="alert('Obsidian Theme')" class="p-3 rounded-xl bg-black border border-gray-800 text-xs font-bold text-gray-300 text-center">Obsidian Dark</button>
-                    <button onclick="alert('Neon Luxe Theme')" class="p-3 rounded-xl bg-zinc-900 border border-amber-600 text-xs font-bold text-amber-500 text-center">Neon Luxe</button>
-                </div>
-            </div>
-        </div>
+  const {sub,discAmt,total,gst,profit,savings}=recalculateCart();
+  let cust=STATE.customers.find(c=>c.phone===phone);
+  const isNew=!cust;
+  if(isNew){
+    cust={id:uid(),phone,name,createdAt:todayStr(),lastVisit:todayStr(),broadcast:true,totalSpend:total,visits:1};
+    STATE.customers.unshift(cust);
+  } else {
+    cust.visits=(cust.visits||0)+1; cust.totalSpend=(cust.totalSpend||0)+total; cust.lastVisit=todayStr();
+    STATE.customers=STATE.customers.map(c=>c.phone===phone?cust:c);
+  }
+  saveC();
 
-    </main>
+  const sale={
+    id:uid(),invoiceNo:invNo(STATE.invCounter),date:todayStr(),channel:BILL_CHAN,
+    customerName:name,customerPhone:phone,
+    items:CART.map(i=>({...i})),
+    sub,discAmt,discount:BILL_DISC,gst,total,profit,savings,
+    payMode:BILL_PAY,staffName:STATE.settings.staffName,isNew
+  };
+  STATE.sales.unshift(sale); saveS();
 
-    <script>
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-        
-        let _db = null;
-        try {
-            if(SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
-                _db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            }
-        } catch(e) { console.log('Supabase init pending'); }
+  CART.forEach(ci=>{
+    const p=STATE.products.find(p=>p.id===ci.id);
+    if(p) p.stock=Math.max(0,p.stock-ci.qty);
+  });
+  saveP();
+  STATE.invCounter++; saveIC();
 
-        let isPersonalUnlocked = false;
-        let salesHistory = [];
-        let inventory = [
-            { name: "T-Shirt", sku: "DCPRT", price: 400, cost: 150, stock: 100, comboEligible: true },
-            { name: "Top", sku: "DCTOP", price: 300, cost: 150, stock: 100, comboEligible: true },
-            { name: "Denim Pant", sku: "DCDNP", price: 700, cost: 250, stock: 100, comboEligible: false },
-            { name: "Formal Pant", sku: "DCFP", price: 500, cost: 200, stock: 40, comboEligible: false },
-            { name: "Night Pant", sku: "DCNVP", price: 200, cost: 100, stock: 100, comboEligible: true },
-            { name: "Nylon Pant", sku: "DCNYP", price: 100, cost: 50, stock: 50, comboEligible: true },
-            { name: "Forehead Band", sku: "DCFN", price: 500, cost: 200, stock: 50, comboEligible: false },
-            { name: "Belt", sku: "DCBLT", price: 250, cost: 100, stock: 50, comboEligible: false },
-            { name: "Socks", sku: "DCSCK", price: 200, cost: 50, stock: 100, comboEligible: true },
-            { name: "Cosmic Dance Shirt", sku: "DUD-SH-BLK", price: 899, cost: 420, stock: 30, comboEligible: false },
-            { name: "Espresso Shirt", sku: "DUD-SH-BRN", price: 899, cost: 420, stock: 25, comboEligible: false },
-            { name: "Eternal Dance Shirt", sku: "DUD-SH-BLU", price: 899, cost: 420, stock: 25, comboEligible: false },
-            { name: "Oversized Heavy Hoodie", sku: "DUD-HD-01", price: 1899, cost: 950, stock: 24, comboEligible: false }
-        ];
-        let purchases = [];
-        let cart = [];
+  showInvoiceModal(sale,cust,isNew);
+  CART=[]; BILL_CUST={phone:"",name:"",found:null};
+  renderApp();
+}
 
-        async function fetchSupabaseData() {
-            if (!_db) return;
-            try {
-                const { data: bills } = await _db.from('bills').select('*');
-                if (bills && bills.length > 0) {
-                    salesHistory = bills;
-                    renderSalesLedger();
-                }
-            } catch(err) { console.log('Fetching live data error', err); }
-        }
+function showInvoiceModal(sale,cust,isNew){
+  const pop=document.createElement("div");pop.className="modal-bg";pop.id="inv-modal";
+  pop.innerHTML=`<div class="modal">
+    <div style="text-align:center;margin-bottom:14px">
+      <div style="color:var(--ok);font-size:36px">✓</div>
+      <div style="font-weight:900;font-size:18px;color:#fff">${sale.invoiceNo}</div>
+      <div style="font-size:12px;color:var(--muted)">Total Paid: <strong style="color:var(--or)">₹${sale.total}</strong> via ${sale.payMode}</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      <button onclick="printThermal('${sale.id}')" style="background:var(--card2);border:1px solid var(--border);color:#fff;padding:10px">🖨 Print Thermal</button>
+      <button onclick="sendWhatsApp('${sale.id}')" style="background:var(--wa);color:#fff;border:none;padding:10px;font-weight:700">💬 WhatsApp Bill</button>
+    </div>
+    <button onclick="document.getElementById('inv-modal').remove()" style="background:var(--border);border:none;color:var(--muted);width:100%;padding:10px">Close</button>
+  </div>`;
+  document.body.appendChild(pop);
+}
 
-        function requestPersonalAccess() {
-            if (isPersonalUnlocked) { switchTab('personal'); } 
-            else {
-                document.getElementById('pinModal').classList.remove('hidden');
-                document.getElementById('pinInput').value = '';
-                document.getElementById('pinInput').focus();
-            }
-        }
+function sendWhatsApp(sid){
+  const s=STATE.sales.find(s=>s.id===sid);
+  if(!s)return;
+  const msg=encodeURIComponent(`*DUD CLOSET* — Invoice ${s.invoiceNo}\nCustomer: ${s.customerName}\nTotal Amount Paid: ₹${s.total} (${s.payMode})\nThank you for shopping at DUD. All Dud. No Duds.`);
+  window.open(`https://wa.me/91${s.customerPhone.replace(/\\D/g,'')}?text=${msg}`,'_blank');
+}
 
-        function closePinModal() { document.getElementById('pinModal').classList.add('hidden'); }
+function printThermal(sid){
+  const s=STATE.sales.find(s=>s.id===sid);
+  if(!s)return;
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><body style="font-family:monospace;width:280px;padding:10px">
+    <h3 style="text-align:center">DUD CLOSET</h3>
+    <div style="text-align:center;font-size:10px">${STATE.settings.address}</div>
+    <hr style="border-top:1px dashed #000;margin:6px 0"/>
+    <div>Inv: ${s.invoiceNo} | Date: ${s.date}</div>
+    <div>Customer: ${s.customerName} (${s.customerPhone})</div>
+    <hr style="border-top:1px dashed #000;margin:6px 0"/>
+    ${s.items.map(i=>`<div>${i.name} x${i.qty} — ₹${Math.round(i.sell*i.qty)}</div>`).join('')}
+    <hr style="border-top:1px dashed #000;margin:6px 0"/>
+    <div style="font-size:14px;font-weight:bold">TOTAL: ₹${s.total} (${s.payMode})</div>
+    <div style="font-size:9px">Inclusive of all taxes.</div>
+    <div style="text-align:center;margin-top:8px">"${STATE.settings.tagline}"</div>
+  </body></html>`);
+  w.document.close();
+  setTimeout(()=>w.print(),400);
+}
 
-        function verifyPin() {
-            const pin = document.getElementById('pinInput').value;
-            if (pin === '6666' || pin === '1234') {
-                isPersonalUnlocked = true;
-                closePinModal();
-                switchTab('personal');
-            } else { alert('Incorrect PIN!'); }
-        }
+// ════════════════════════════════════
+// INVENTORY MANAGER
+// ════════════════════════════════════
+function renderInventory(){
+  const rows=STATE.products.map((p,i)=>`
+    <tr>
+      <td><div style="font-weight:700">${p.name}</div><div style="font-size:9px;color:var(--muted)">${p.cat}</div></td>
+      <td style="color:var(--muted)">${p.sku}</td>
+      <td>₹${p.cost}</td>
+      <td style="color:var(--or);font-weight:700">₹${p.sell}</td>
+      <td style="color:var(--muted);text-decoration:line-through">₹${p.mrp}</td>
+      <td style="color:${p.stock<=p.minStock?'var(--warn)':'var(--ok)'};font-weight:700">${p.stock}</td>
+      <td>${p.comboEligible?'<span class="tag" style="background:rgba(230,0,18,0.2);color:var(--or)">3 for ₹999</span>':'-'}</td>
+      <td>
+        <button onclick="editProd(${i})" style="background:var(--card2);border:1px solid var(--border);padding:4px 8px;font-size:11px">Edit</button>
+      </td>
+    </tr>`).join('');
 
-        function lockPersonalTab() {
-            isPersonalUnlocked = false;
-            switchTab('pos');
-            alert('Personal tab locked securely.');
-        }
+  return shell(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h2 style="font-size:18px;font-weight:700">Master Inventory (${STATE.products.length} SKUs)</h2>
+      <button onclick="addNewProdModal()" class="spider-btn" style="padding:8px 14px;font-size:12px">+ Add SKU</button>
+    </div>
+    <div class="card" style="padding:0"><div class="scrollx"><table>
+      <thead><tr><th>Product</th><th>SKU</th><th>Cost</th><th>MRP (Final)</th><th>Old MRP</th><th>Stock</th><th>Combo</th><th>Action</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div></div>`);
+}
 
-        function switchTab(tab) {
-            if (tab === 'personal' && !isPersonalUnlocked) { requestPersonalAccess(); return; }
-            ['pos', 'inventory', 'sales', 'purchases', 'expenses', 'personal', 'settings'].forEach(t => {
-                document.getElementById(`view-${t}`).classList.add('hidden');
-                if(document.getElementById(`tab-${t}`)) {
-                    document.getElementById(`tab-${t}`).classList.remove('bg-red-600', 'text-white');
-                    document.getElementById(`tab-${t}`).classList.add('text-gray-400');
-                }
-            });
-            document.getElementById(`view-${tab}`).classList.remove('hidden');
-            if(document.getElementById(`tab-${tab}`)) {
-                document.getElementById(`tab-${tab}`).classList.add('bg-red-600', 'text-white');
-                document.getElementById(`tab-${tab}`).classList.remove('text-gray-400');
-            }
-            if(tab === 'sales') { renderSalesLedger(); }
-        }
+function editProd(idx){
+  const p=STATE.products[idx];
+  const newSell=prompt(`New Selling Price for ${p.name}:`,p.sell);
+  const newStock=prompt(`New Stock Qty for ${p.name}:`,p.stock);
+  const combo=confirm(`Enable 3 for ₹999 Combo for ${p.name}?`);
+  if(newSell!==null) p.sell=Number(newSell);
+  if(newStock!==null) p.stock=Number(newStock);
+  p.comboEligible=combo;
+  saveP(); renderApp();
+}
 
-        function renderCatalog(items) {
-            const grid = document.getElementById('productGrid');
-            grid.innerHTML = '';
-            items.forEach(item => {
-                grid.innerHTML += `
-                    <div onclick="addToCart('${item.sku}')" class="card-bg p-4 rounded-xl cursor-pointer hover:border-red-600 transition flex flex-col justify-between shadow-md group">
-                        <div>
-                            <div class="flex justify-between items-start">
-                                <span class="text-xs text-red-500 font-mono font-semibold tracking-wider">${item.sku}</span>
-                                ${item.comboEligible ? '<span class="text-[9px] bg-red-950 text-red-400 px-1.5 py-0.5 rounded border border-red-800">3 for ₹999 Combo</span>' : ''}
-                            </div>
-                            <h3 class="font-bold text-white mt-1 group-hover:text-red-400 transition text-sm">${item.name}</h3>
-                        </div>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-base font-black text-red-500">₹${item.price}</span>
-                            <span class="text-xs text-gray-500">Stock: ${item.stock}</span>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+function addNewProdModal(){
+  const name=prompt("Product Name:");
+  const sku=prompt("SKU:");
+  const sell=prompt("MRP Final Price (₹):");
+  const cost=prompt("Unit Purchase Cost (₹):");
+  if(name&&sku&&sell){
+    STATE.products.unshift({id:uid(),name,sku,hsn:"6109",cat:"Tops",cost:Number(cost)||150,sell:Number(sell),mrp:Number(sell)+100,gst:5,stock:50,minStock:5,comboEligible:false,offer:""});
+    saveP(); renderApp();
+  }
+}
 
-        function renderInventoryTable() {
-            const tbody = document.getElementById('inventoryTableBody');
-            tbody.innerHTML = '';
-            inventory.forEach((item, index) => {
-                tbody.innerHTML += `
-                    <tr class="border-b border-gray-800 hover:bg-black/30">
-                        <td class="p-3 font-mono text-red-400">${item.sku}</td>
-                        <td class="p-3 font-bold text-white">${item.name} ${item.comboEligible ? '<span class="text-[9px] text-red-400 ml-1">(Combo Active)</span>' : ''}</td>
-                        <td class="p-3">₹${item.cost}</td>
-                        <td class="p-3 text-red-400 font-bold">₹${item.price}</td>
-                        <td class="p-3">${item.stock}</td>
-                        <td class="p-3 flex space-x-2">
-                            <button onclick="editInventoryItem(${index})" class="px-2.5 py-1 rounded bg-gray-900 border border-gray-800 text-xs text-gray-300">Edit</button>
-                            <button onclick="deleteInventoryItem(${index})" class="px-2.5 py-1 rounded bg-red-950 border border-red-800 text-xs text-red-400">Del</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
+// ════════════════════════════════════
+// PURCHASE BILLS (GST ITC)
+// ════════════════════════════════════
+function renderPurchases(){
+  const rows=STATE.purchases.map(pb=>`
+    <tr>
+      <td>${pb.date}</td>
+      <td style="font-weight:700">${pb.supplier}</td>
+      <td style="font-family:monospace;color:var(--muted)">${pb.billNo}</td>
+      <td style="font-size:10px">${pb.gstin}</td>
+      <td>₹${pb.taxable}</td>
+      <td style="color:var(--or)">₹${pb.tax} (5%)</td>
+      <td style="font-weight:800;color:#fff">₹${pb.total}</td>
+    </tr>`).join('');
 
-        function renderSalesLedger() {
-            const tbody = document.getElementById('salesTableBody');
-            if (salesHistory.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-500">No sales recorded yet.</td></tr>`;
-                return;
-            }
-            tbody.innerHTML = '';
-            let totalRev = 0;
-            salesHistory.forEach(s => {
-                totalRev += Number(s.amount || 0);
-                tbody.innerHTML += `
-                    <tr class="border-b border-gray-800">
-                        <td class="p-3 font-mono text-red-400">${s.invoice || 'DUD-01'}</td>
-                        <td class="p-3 font-bold text-white">${s.name || 'Walk-in'} <br><span class="text-xs text-gray-400 font-normal">${s.phone || ''}</span></td>
-                        <td class="p-3">${s.mode || 'UPI'}</td>
-                        <td class="p-3 font-bold text-white">₹${s.amount}</td>
-                        <td class="p-3">
-                            <button onclick="sendWhatsAppBill('${s.invoice}', '${s.amount}', '${s.name}', '${s.phone}')" class="px-2.5 py-1 rounded bg-emerald-950 border border-emerald-800 text-xs text-emerald-400">WhatsApp</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            document.getElementById('todayRevenue').innerText = `₹${totalRev}`;
-            document.getElementById('monthlyRevenue').innerText = `₹${totalRev}`;
-        }
+  return shell(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <div>
+        <h2 style="font-size:18px;font-weight:700">Purchase Bills & Supplier Invoices</h2>
+        <div style="font-size:11px;color:var(--muted)">Input Tax Credit (ITC) tracking for monthly GSTR-3B filings</div>
+      </div>
+      <button onclick="logPurchaseModal()" class="spider-btn" style="padding:8px 14px;font-size:12px">+ Log Purchase Bill</button>
+    </div>
+    <div class="card" style="padding:0"><div class="scrollx"><table>
+      <thead><tr><th>Date</th><th>Supplier</th><th>Bill #</th><th>Supplier GSTIN</th><th>Taxable</th><th>ITC Tax</th><th>Total</th></tr></thead>
+      <tbody>${rows.length>0?rows:`<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--dim)">No purchase bills logged.</td></tr>`}</tbody>
+    </table></div></div>`);
+}
 
-        function addPurchaseModal() {
-            const supplier = prompt("Enter Supplier Name:");
-            const taxable = prompt("Enter Taxable Amount (₹):");
-            if(supplier && taxable) {
-                const tax = Math.round(Number(taxable) * 0.05);
-                purchases.push({ date: new Date().toISOString().split('T')[0], supplier, billNo: 'INV-01', gstin: '33AAAAA0000A1Z5', taxable: Number(taxable), tax, total: Number(taxable)+tax });
-                renderPurchaseTable();
-                alert('Purchase bill logged successfully!');
-            }
-        }
+function logPurchaseModal(){
+  const supplier=prompt("Supplier Name (e.g. Surat Fabrics):");
+  const billNo=prompt("Supplier Invoice / Bill No:");
+  const gstin=prompt("Supplier GSTIN:");
+  const taxable=prompt("Taxable Amount (₹):");
+  if(supplier&&taxable){
+    const tax=Math.round(Number(taxable)*0.05);
+    STATE.purchases.unshift({id:uid(),date:todayStr(),supplier,billNo:billNo||'INV-01',gstin:gstin||'33AAAAA0000A1Z5',taxable:Number(taxable),tax,total:Number(taxable)+tax});
+    savePB(); renderApp();
+  }
+}
 
-        function renderPurchaseTable() {
-            const tbody = document.getElementById('purchaseTableBody');
-            tbody.innerHTML = purchases.length === 0 ? `<tr><td colspan="7" class="p-4 text-center text-gray-500">No purchase bills logged.</td></tr>` : '';
-            purchases.forEach(p => {
-                tbody.innerHTML += `
-                    <tr class="border-b border-gray-800">
-                        <td class="p-3">${p.date}</td>
-                        <td class="p-3 font-bold text-white">${p.supplier}</td>
-                        <td class="p-3 font-mono text-gray-400">${p.billNo}</td>
-                        <td class="p-3 text-xs">${p.gstin}</td>
-                        <td class="p-3">₹${p.taxable}</td>
-                        <td class="p-3 text-red-400">₹${p.tax}</td>
-                        <td class="p-3 font-bold text-white">₹${p.total}</td>
-                    </tr>
-                `;
-            });
-        }
+// ════════════════════════════════════
+// PERSONAL FINANCIALS TAB (PIN PROTECTED)
+// ════════════════════════════════════
+function renderPersonal(){
+  return shell(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div>
+        <h2 style="font-size:18px;font-weight:900;color:#fff">🔒 Personal Financials & Discipline Firewall</h2>
+        <div style="font-size:11px;color:var(--muted)">Strictly isolated from DUD Closet Store P&L and customer checkout</div>
+      </div>
+      <button onclick="lockPersonal()" style="background:var(--card2);border:1px solid var(--border);color:var(--or);padding:6px 14px;font-size:12px">Lock Tab</button>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div style="font-size:11px;color:var(--or);font-weight:800;text-transform:uppercase;margin-bottom:10px">12-Month Savings Fund</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Monthly Savings Target</span><strong>₹50,000 / mo</strong></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Active Units Paid</span><strong style="color:var(--ok)">12 Units Active</strong></div>
+      </div>
+      <div class="card">
+        <div style="font-size:11px;color:var(--or);font-weight:800;text-transform:uppercase;margin-bottom:10px">Personal Draw Allocation</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Living Expenses Allocation</span><strong>₹25,000</strong></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Private Reserves</span><strong style="color:var(--warn)">₹1,20,000</strong></div>
+      </div>
+    </div>`);
+}
 
-        function editInventoryItem(index) {
-            const item = inventory[index];
-            const newPrice = prompt(`Edit MRP Price for ${item.name}:`, item.price);
-            const newStock = prompt(`Edit Stock Quantity for ${item.name}:`, item.stock);
-            const comboToggle = confirm(`Enable 3 for ₹999 Combo Offer for ${item.name}? Click OK for Yes, Cancel for No.`);
-            if (newPrice !== null) item.price = Number(newPrice);
-            if (newStock !== null) item.stock = Number(newStock);
-            item.comboEligible = comboToggle;
-            renderInventoryTable();
-            renderCatalog(inventory);
-        }
+// ════════════════════════════════════
+// SALES LEDGER
+// ════════════════════════════════════
+function renderSales(){
+  const rows=STATE.sales.map(s=>`
+    <tr>
+      <td style="color:var(--or);font-weight:700">${s.invoiceNo}</td>
+      <td style="color:var(--muted)">${s.date}</td>
+      <td>${s.customerName}</td>
+      <td style="color:var(--muted)">${s.customerPhone}</td>
+      <td style="font-weight:800">₹${s.total}</td>
+      <td>${s.payMode}</td>
+      <td><button onclick="sendWhatsApp('${s.id}')" style="background:var(--wa);color:#fff;border:none;padding:3px 8px;border-radius:4px;font-size:10px">WhatsApp</button></td>
+    </tr>`).join('');
 
-        function deleteInventoryItem(index) {
-            if(confirm('Delete this SKU?')) { inventory.splice(index, 1); renderInventoryTable(); renderCatalog(inventory); }
-        }
+  return shell(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h2 style="font-size:18px;font-weight:700">Sales Ledger (${STATE.sales.length} Invoices)</h2>
+      <div style="font-size:12px;color:var(--muted)">Revenue Tracked: <strong style="color:var(--or)">${fmt(STATE.sales.reduce((a,s)=>a+s.total,0))}</strong></div>
+    </div>
+    <div class="card" style="padding:0"><div class="scrollx"><table>
+      <thead><tr><th>Invoice</th><th>Date</th><th>Customer</th><th>Phone</th><th>Total</th><th>Payment</th><th>Action</th></tr></thead>
+      <tbody>${rows.length>0?rows:`<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--dim)">No sales logged yet.</td></tr>`}</tbody>
+    </table></div></div>`);
+}
 
-        function addNewSKUModal() {
-            const name = prompt("Product Name:");
-            const sku = prompt("SKU Code:");
-            const price = prompt("MRP Price (₹):");
-            const comboToggle = confirm("Enable 3 for ₹999 Combo Offer for this product?");
-            if(name && sku && price) {
-                inventory.push({ name, sku, price: Number(price), cost: Number(price)*0.4, stock: 50, comboEligible: comboToggle });
-                renderInventoryTable();
-                renderCatalog(inventory);
-                alert('New SKU added!');
-            }
-        }
+// ════════════════════════════════════
+// OTHER MODULES (CUSTOMERS, EXPENSES, EOD, VENDORS, RETURNS, GST, SETTINGS)
+// ════════════════════════════════════
+function renderCustomers(){
+  const rows=STATE.customers.map(c=>`
+    <tr>
+      <td style="font-weight:700">${c.name}</td>
+      <td style="color:var(--muted)">${c.phone}</td>
+      <td>${c.visits||1}</td>
+      <td style="color:var(--or);font-weight:700">₹${c.totalSpend||0}</td>
+      <td>${c.broadcast?'<span class="tag" style="background:rgba(37,211,102,0.2);color:var(--wa)">YES</span>':'NO'}</td>
+    </tr>`).join('');
+  return shell(`
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h2 style="font-size:18px;font-weight:700">Customer CRM (${STATE.customers.length})</h2>
+      <button onclick="exportBroadcast()" style="background:var(--wa);color:#fff;border:none;padding:8px 14px;border-radius:6px;font-weight:700">Export Broadcast</button>
+    </div>
+    <div class="card" style="padding:0"><div class="scrollx"><table>
+      <thead><tr><th>Name</th><th>Phone</th><th>Visits</th><th>Spend</th><th>Broadcast</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div></div>`);
+}
 
-        function filterCatalog() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            renderCatalog(inventory.filter(i => i.name.toLowerCase().includes(query) || i.sku.toLowerCase().includes(query)));
-        }
+function exportBroadcast(){
+  const txt=STATE.customers.filter(c=>c.broadcast).map(c=>`${c.name}\t+91${c.phone}`).join('\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'})); a.download='DUD_Broadcast.txt'; a.click();
+}
 
-        // --- AUTOMATIC COMBO CART ENGINE ---
-        function addToCart(sku) {
-            const product = inventory.find(i => i.sku === sku);
-            if (!product || product.stock <= 0) return;
+function renderEOD(){
+  const ts=STATE.sales.filter(s=>s.date===todayStr());
+  const cash=ts.filter(s=>s.payMode==='Cash').reduce((a,s)=>a+s.total,0);
+  const upi=ts.filter(s=>s.payMode==='UPI').reduce((a,s)=>a+s.total,0);
+  const card=ts.filter(s=>s.payMode==='Card').reduce((a,s)=>a+s.total,0);
+  const total=ts.reduce((a,s)=>a+s.total,0);
 
-            const existingItem = cart.find(i => i.sku === sku);
-            if (existingItem) {
-                existingItem.qty += 1;
-            } else {
-                cart.push({ sku: product.sku, name: product.name, basePrice: product.price, qty: 1, comboEligible: product.comboEligible });
-            }
-            recalculateCartPrices();
-            renderCart();
-        }
+  return shell(`
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:14px">End of Day Reconciliation (Kotak)</h2>
+    <div class="grid3" style="margin-bottom:14px">
+      <div class="card"><div>Cash in Drawer</div><div style="font-size:20px;font-weight:800;color:var(--ok)">₹${cash}</div></div>
+      <div class="card"><div>UPI (Kotak Settlement)</div><div style="font-size:20px;font-weight:800;color:var(--or)">₹${upi}</div></div>
+      <div class="card"><div>Card Terminal</div><div style="font-size:20px;font-weight:800;color:var(--warn)">₹${card}</div></div>
+    </div>
+    <div class="card"><strong>Total Today: ₹${total}</strong> across ${ts.length} orders.</div>`);
+}
 
-        function recalculateCartPrices() {
-            cart.forEach(item => {
-                if (item.comboEligible && item.qty >= 3) {
-                    // Automatically calculate price per item when 3+ are bought to hit ₹999 total for every group of 3
-                    const setsOfThree = Math.floor(item.qty / 3);
-                    const remainder = item.qty % 3;
-                    const comboTotal = (setsOfThree * 999) + (remainder * item.basePrice);
-                    item.price = Number((comboTotal / item.qty).toFixed(2));
-                    item.appliedCombo = true;
-                } else {
-                    item.price = item.basePrice;
-                    item.appliedCombo = false;
-                }
-            });
-        }
+function renderExpenses(){
+  const rows=STATE.expenses.map((e,i)=>`
+    <tr>
+      <td>${e.name}</td>
+      <td><input type="number" value="${e.amount}" onchange="STATE.expenses[${i}].amount=Number(this.value);saveEX();renderApp()" style="width:100px"></td>
+      <td>${e.cat}</td>
+      <td>${e.paid?'<span class="tag" style="background:rgba(76,175,125,.2);color:var(--ok)">PAID</span>':'PENDING'}</td>
+    </tr>`).join('');
+  return shell(`
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:14px">Store Expenses</h2>
+    <div class="card" style="padding:0"><div class="scrollx"><table>
+      <thead><tr><th>Expense</th><th>Amount ₹</th><th>Type</th><th>Status</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div></div>`);
+}
 
-        function removeItem(index) { cart.splice(index, 1); recalculateCartPrices(); renderCart(); }
-        function clearCart() { cart = []; renderCart(); }
+function renderReturns(){
+  return shell(`<h2 style="font-size:18px;font-weight:700;margin-bottom:14px">Returns & Exchanges</h2><div class="card">No active return requests pending.</div>`);
+}
 
-        function renderCart() {
-            const container = document.getElementById('cartItems');
-            if (cart.length === 0) {
-                container.innerHTML = '<p class="text-gray-500 text-sm text-center py-6">Cart is empty. Select items to bill.</p>';
-                document.getElementById('subtotal').innerText = '₹0';
-                document.getElementById('tax').innerText = '₹0';
-                document.getElementById('grandTotal').innerText = '₹0';
-                return;
-            }
-            container.innerHTML = '';
-            let subtotal = 0;
-            cart.forEach((item, index) => {
-                let itemTotal = Math.round(item.price * item.qty);
-                subtotal += itemTotal;
-                container.innerHTML += `
-                    <div class="flex justify-between items-center bg-black/40 p-2.5 rounded-lg border border-gray-800">
-                        <div>
-                            <h4 class="text-xs font-bold text-white">${item.name} ${item.appliedCombo ? '<span class="text-[9px] text-red-400 bg-red-950 px-1 rounded">COMBO APPLIED</span>' : ''}</h4>
-                            <span class="text-[10px] text-gray-400">₹${item.price} × ${item.qty}</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-xs font-bold text-red-500">₹${itemTotal}</span>
-                            <button onclick="removeItem(${index})" class="text-xs font-bold text-gray-500 hover:text-red-500 px-1 py-0.5 rounded bg-gray-900">✕</button>
-                        </div>
-                    </div>
-                `;
-            });
-            let tax = Math.round(subtotal - (subtotal / 1.05));
-            document.getElementById('subtotal').innerText = `₹${subtotal}`;
-            document.getElementById('tax').innerText = `₹${tax} (Extracted)`;
-            document.getElementById('grandTotal').innerText = `₹${subtotal}`;
-        }
+function renderVendors(){
+  return shell(`<h2 style="font-size:18px;font-weight:700;margin-bottom:14px">Supplier & Vendor Directory</h2><div class="card">Vendors: Delhi Hub, Surat Mills, Local Chennai Suppliers.</div>`);
+}
 
-        function processCheckout(mode) {
-            if (cart.length === 0) { alert('Cart is empty!'); return; }
-            const custName = document.getElementById('billCustomerName').value || 'Walk-in Customer';
-            const custPhone = document.getElementById('billCustomerPhone').value || '9840625257';
-            const totalAmt = Number(document.getElementById('grandTotal').innerText.replace('₹',''));
-            const invoiceNo = `DUD-2026-00${salesHistory.length + 1}`;
+function renderGST(){
+  const thisM=mKey(todayStr());
+  const mSales=STATE.sales.filter(s=>mKey(s.date)===thisM);
+  const rev=mSales.reduce((a,s)=>a+s.total,0);
+  const outGst=Math.round(rev*0.05/1.05);
+  const inGst=STATE.purchases.reduce((a,p)=>a+p.tax,0);
 
-            salesHistory.push({ invoice: invoiceNo, name: custName, phone: custPhone, mode: mode, amount: totalAmt, date: new Date().toISOString().split('T')[0] });
-            alert(`Payment of ₹${totalAmt} successful via ${mode}!`);
-            
-            if(confirm('Send bill via WhatsApp?')) {
-                sendWhatsAppBill(invoiceNo, totalAmt, custName, custPhone);
-            }
+  return shell(`
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:14px">GST Tax Summary (${thisM})</h2>
+    <div class="grid3" style="margin-bottom:14px">
+      <div class="card"><div>Output GST (Sales)</div><div style="font-size:20px;font-weight:800;color:var(--err)">₹${outGst}</div></div>
+      <div class="card"><div>Input GST (Purchases)</div><div style="font-size:20px;font-weight:800;color:var(--ok)">₹${inGst}</div></div>
+      <div class="card"><div>Net GST Payable</div><div style="font-size:20px;font-weight:800;color:var(--or)">₹${Math.max(0,outGst-inGst)}</div></div>
+    </div>`);
+}
 
-            clearCart();
-            document.getElementById('billCustomerName').value = '';
-            document.getElementById('billCustomerPhone').value = '';
-            renderSalesLedger();
-        }
+function renderSettings(){
+  return shell(`
+    <h2 style="font-size:18px;font-weight:700;margin-bottom:14px">System Settings</h2>
+    <div class="card" style="max-width:500px">
+      <div class="lbl">Store Address</div><input value="${STATE.settings.address}" onchange="STATE.settings.address=this.value;saveST()" style="margin-bottom:10px">
+      <div class="lbl">Phone #</div><input value="${STATE.settings.phone}" onchange="STATE.settings.phone=this.value;saveST()" style="margin-bottom:10px">
+      <div class="lbl">Tagline</div><input value="${STATE.settings.tagline}" onchange="STATE.settings.tagline=this.value;saveST()">
+    </div>`);
+}
 
-        function sendWhatsAppBill(invoiceNo, amount, name, phone) {
-            const msg = encodeURIComponent(`*DUD CLOSET* — Invoice ${invoiceNo}\nCustomer: ${name}\nTotal Amount: ₹${amount}\nThank you for shopping at DUD. All Dud. No Duds.`);
-            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
-        }
+// ════════════════════════════════════
+// ROUTER & APP BOOT
+// ════════════════════════════════════
+function renderApp(){
+  let html="";
+  if(STATE.tab==="dashboard") html=renderDashboard();
+  else if(STATE.tab==="billing") html=renderBilling();
+  else if(STATE.tab==="inventory") html=renderInventory();
+  else if(STATE.tab==="sales") html=renderSales();
+  else if(STATE.tab==="purchases") html=renderPurchases();
+  else if(STATE.tab==="customers") html=renderCustomers();
+  else if(STATE.tab==="eod") html=renderEOD();
+  else if(STATE.tab==="expenses") html=renderExpenses();
+  else if(STATE.tab==="returns") html=renderReturns();
+  else if(STATE.tab==="vendors") html=renderVendors();
+  else if(STATE.tab==="gst") html=renderGST();
+  else if(STATE.tab==="personal") html=renderPersonal();
+  else if(STATE.tab==="settings") html=renderSettings();
+  document.getElementById("root").innerHTML=html;
+}
 
-        // Initialize
-        renderCatalog(inventory);
-        renderInventoryTable();
-        renderPurchaseTable();
-        fetchSupabaseData();
-    </script>
+if(isLoggedIn()){ renderApp(); } else { renderLogin(false); }
+</script>
 </body>
 </html>
