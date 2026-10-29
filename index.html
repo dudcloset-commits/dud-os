@@ -114,14 +114,14 @@
                     </div>
                 </div>
 
-                <!-- Bill Summary & Checkout with Card Payment -->
+                <!-- Bill Summary & Checkout (GST Inclusive Pricing Philosophy) -->
                 <div class="border-t border-gray-800 pt-4 mt-4 space-y-3">
                     <div class="flex justify-between text-sm text-gray-400">
-                        <span>Subtotal</span>
+                        <span>Subtotal (MRP Incl. GST)</span>
                         <span id="subtotal">₹0</span>
                     </div>
-                    <div class="flex justify-between text-sm text-gray-400">
-                        <span>GST (Included)</span>
+                    <div class="flex justify-between text-xs text-gray-500">
+                        <span>Extracted GST (5% Internal)</span>
                         <span id="tax">₹0</span>
                     </div>
                     <div class="flex justify-between text-lg font-black text-white pt-2 border-t border-gray-800">
@@ -137,7 +137,7 @@
             </section>
         </div>
 
-        <!-- TAB 2: INVENTORY MANAGER (WITH EDITING) -->
+        <!-- TAB 2: INVENTORY MANAGER -->
         <div id="view-inventory" class="hidden card-bg rounded-xl p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
                 <h2 class="font-black text-lg text-white">Master Inventory & SKU Editor</h2>
@@ -150,7 +150,7 @@
                             <th class="p-3">SKU</th>
                             <th class="p-3">Product Name</th>
                             <th class="p-3">Purchase Price</th>
-                            <th class="p-3">Selling Price</th>
+                            <th class="p-3">MRP (Final Price)</th>
                             <th class="p-3">Stock Qty</th>
                             <th class="p-3">Actions</th>
                         </tr>
@@ -160,20 +160,38 @@
             </div>
         </div>
 
-        <!-- TAB 3: SALES & BILLS LEDGER -->
-        <div id="view-sales" class="hidden card-bg rounded-xl p-6 shadow-2xl">
-            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-4">
-                <h2 class="font-black text-lg text-white">Sales Ledger & Bill History</h2>
-                <span class="text-xs text-gray-400">Total Revenue Tracked</span>
+        <!-- TAB 3: SALES LEDGER & MONTHLY/YEARLY TRACKERS -->
+        <div id="view-sales" class="hidden card-bg rounded-xl p-6 shadow-2xl space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
+                    <span class="text-xs text-gray-400 uppercase tracking-wider">Today's Revenue</span>
+                    <h3 id="todayRevenue" class="text-xl font-black text-white mt-1">₹0</h3>
+                    <span class="text-[10px] text-gray-500">Target: ₹8,000 / day</span>
+                </div>
+                <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
+                    <span class="text-xs text-gray-400 uppercase tracking-wider">Monthly Revenue Tracker</span>
+                    <h3 id="monthlyRevenue" class="text-xl font-black text-red-500 mt-1">₹1,899</h3>
+                    <span class="text-[10px] text-gray-500">Target: ₹2,40,000 / month</span>
+                </div>
+                <div class="bg-black/40 p-4 rounded-xl border border-gray-800">
+                    <span class="text-xs text-gray-400 uppercase tracking-wider">Yearly Revenue Projected</span>
+                    <h3 id="yearlyRevenue" class="text-xl font-black text-white mt-1">₹28,80,000</h3>
+                    <span class="text-[10px] text-gray-500">Scale Target</span>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center border-b border-gray-800 pb-4 pt-4">
+                <h2 class="font-black text-lg text-white">Sales & Customer History</h2>
+                <span class="text-xs text-gray-400">Live DB Records</span>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm text-gray-300">
                     <thead class="bg-black text-xs uppercase text-red-500 border-b border-gray-800">
                         <tr>
                             <th class="p-3">Invoice #</th>
-                            <th class="p-3">Customer / Phone</th>
+                            <th class="p-3">Customer Name & Phone</th>
                             <th class="p-3">Payment Mode</th>
-                            <th class="p-3">Amount</th>
+                            <th class="p-3">Final Amount</th>
                             <th class="p-3">Actions</th>
                         </tr>
                     </thead>
@@ -288,7 +306,7 @@
         <div id="view-settings" class="hidden card-bg rounded-xl p-6 shadow-2xl space-y-6">
             <div class="flex justify-between items-center border-b border-gray-800 pb-4">
                 <h2 class="font-black text-lg text-white">OS Settings & UI Customizer</h2>
-                <span class="text-xs text-gray-400">Version 2.5.0 Live</span>
+                <span class="text-xs text-gray-400">Version 2.6.0 Live</span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-black/40 p-5 rounded-xl border border-gray-800 space-y-4">
@@ -311,6 +329,9 @@
 
     <script>
         let isPersonalUnlocked = false;
+        let salesHistory = [
+            { invoice: "DUD-2026-001", name: "Walk-in Customer", phone: "9840625257", mode: "UPI", amount: 1899, date: "2026-10-30" }
+        ];
 
         function requestPersonalAccess() {
             if (isPersonalUnlocked) {
@@ -360,19 +381,16 @@
                 document.getElementById(`tab-${tab}`).classList.add('bg-red-600', 'text-white');
                 document.getElementById(`tab-${tab}`).classList.remove('text-gray-400');
             }
-        }
-
-        function setTheme(theme) {
-            if(theme === 'spider') {
-                alert('Spider-Man Red Theme Applied');
-            } else if(theme === 'obsidian') {
-                alert('Obsidian Dark Theme Applied');
-            } else if(theme === 'neon') {
-                alert('Neon Luxe Theme Applied');
+            if(tab === 'sales') {
+                renderSalesLedger();
             }
         }
 
-        // Master Inventory Database
+        function setTheme(theme) {
+            alert(theme.toUpperCase() + ' Theme Applied Successfully');
+        }
+
+        // Master Inventory Database migrated from records
         let inventory = [
             { name: "T-Shirt", sku: "DCPRT", price: 400, cost: 150, stock: 100 },
             { name: "Top", sku: "DCTOP", price: 300, cost: 150, stock: 100 },
@@ -452,6 +470,28 @@
             });
         }
 
+        function renderSalesLedger() {
+            const tbody = document.getElementById('salesTableBody');
+            tbody.innerHTML = '';
+            let totalRev = 0;
+            salesHistory.forEach(s => {
+                totalRev += s.amount;
+                tbody.innerHTML += `
+                    <tr class="border-b border-gray-800">
+                        <td class="p-3 font-mono text-red-400">${s.invoice}</td>
+                        <td class="p-3 font-bold text-white">${s.name} <br><span class="text-xs text-gray-400 font-normal">${s.phone}</span></td>
+                        <td class="p-3">${s.mode}</td>
+                        <td class="p-3 font-bold text-white">₹${s.amount}</td>
+                        <td class="p-3">
+                            <button onclick="sendWhatsAppBill('${s.invoice}', '${s.amount}', '${s.name}', '${s.phone}')" class="px-2.5 py-1 rounded bg-emerald-950 border border-emerald-800 text-xs text-emerald-400">WhatsApp</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            document.getElementById('todayRevenue').innerText = `₹${totalRev}`;
+            document.getElementById('monthlyRevenue').innerText = `₹${totalRev + 1899}`;
+        }
+
         function addPurchaseModal() {
             const supplier = prompt("Enter Supplier Name (e.g. Surat Fabrics):");
             const billNo = prompt("Enter Supplier Bill/Invoice No:");
@@ -468,7 +508,7 @@
 
         function editInventoryItem(index) {
             const item = inventory[index];
-            const newPrice = prompt(`Edit Selling Price for ${item.name}:`, item.price);
+            const newPrice = prompt(`Edit MRP Selling Price for ${item.name}:`, item.price);
             const newStock = prompt(`Edit Stock Quantity for ${item.name}:`, item.stock);
             if (newPrice !== null) item.price = Number(newPrice);
             if (newStock !== null) item.stock = Number(newStock);
@@ -487,7 +527,7 @@
         function addNewSKUModal() {
             const name = prompt("Enter Product Name:");
             const sku = prompt("Enter SKU Code:");
-            const price = prompt("Enter Selling Price (₹):");
+            const price = prompt("Enter MRP Price (₹):");
             const stock = prompt("Enter Opening Stock Qty:");
             if(name && sku && price) {
                 inventory.push({ name, sku, price: Number(price), cost: Number(price)*0.4, stock: Number(stock)||50 });
@@ -554,9 +594,10 @@
                 `;
             });
 
-            let tax = Math.round(subtotal * 0.05);
+            // Internal GST extraction (5% inclusive pricing)
+            let tax = Math.round(subtotal - (subtotal / 1.05));
             document.getElementById('subtotal').innerText = `₹${subtotal}`;
-            document.getElementById('tax').innerText = `₹${tax} (Incl.)`;
+            document.getElementById('tax').innerText = `₹${tax} (Extracted)`;
             document.getElementById('grandTotal').innerText = `₹${subtotal}`;
         }
 
@@ -567,18 +608,21 @@
             }
             const custName = document.getElementById('billCustomerName').value || 'Walk-in Customer';
             const custPhone = document.getElementById('billCustomerPhone').value || '9840625257';
-            const totalAmt = document.getElementById('grandTotal').innerText;
+            const totalAmt = Number(document.getElementById('grandTotal').innerText.replace('₹',''));
+            const invoiceNo = `DUD-2026-00${salesHistory.length + 1}`;
+
+            salesHistory.push({ invoice: invoiceNo, name: custName, phone: custPhone, mode: mode, amount: totalAmt, date: new Date().toISOString().split('T')[0] });
             
-            alert(`Payment of ${totalAmt} successful via ${mode}! Bill generated for ${custName}.`);
+            alert(`Payment of ₹${totalAmt} successful via ${mode}! Bill generated.`);
             
-            // Send WhatsApp option prompt
             if(confirm('Do you want to send this bill to customer via WhatsApp?')) {
-                sendWhatsAppBill('DUD-2026-NEW', totalAmt.replace('₹',''), custName, custPhone);
+                sendWhatsAppBill(invoiceNo, totalAmt, custName, custPhone);
             }
 
             clearCart();
             document.getElementById('billCustomerName').value = '';
             document.getElementById('billCustomerPhone').value = '';
+            renderSalesLedger();
         }
 
         function sendWhatsAppBill(invoiceNo, amount, name, phone) {
@@ -590,6 +634,7 @@
         renderCatalog(inventory);
         renderInventoryTable();
         renderPurchaseTable();
+        renderSalesLedger();
     </script>
 </body>
 </html>
