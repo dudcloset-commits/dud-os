@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DUD OS - POS Billing & Storefront</title>
+    <title>DUD OS - POS Billing & Inventory System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -50,52 +50,19 @@
     <!-- Main POS Layout -->
     <main class="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 p-6 max-w-7xl mx-auto w-full">
         
-        <!-- Left 2 Columns: Catalog / Quick Select -->
+        <!-- Left 2 Columns: Catalog & Inventory Search -->
         <section class="lg:col-span-2 flex flex-col space-y-6">
-            <!-- Search & Filter -->
-            <div class="card-bg p-4 rounded-xl flex items-center space-x-4 shadow-md">
-                <input type="text" id="searchInput" placeholder="Search SKU, item name, or scan barcode..." 
+            <!-- Search & Customer CRM Lookup -->
+            <div class="card-bg p-4 rounded-xl flex flex-col md:flex-row gap-3 shadow-md">
+                <input type="text" id="searchInput" oninput="filterCatalog()" placeholder="Search item name or SKU (e.g., DCPRT, Hoodie)..." 
                     class="w-full bg-black border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-red-600">
-                <button onclick="quickAdd('Oversized Heavy Tee', 1199)" class="spider-btn text-white px-5 py-3 rounded-lg text-sm font-bold whitespace-nowrap shadow-md">
-                    + Quick Tee
-                </button>
+                <input type="text" id="customerSearch" placeholder="Customer Name or Phone # (3+ digits)..." 
+                    class="w-full md:w-72 bg-black border border-gray-800 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-red-600">
             </div>
 
-            <!-- Product Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto max-h-[550px] pr-2">
-                <!-- Product Card 1 -->
-                <div onclick="addToCart('DUD Heavy GSM Oversized Hoodie', 1899)" class="card-bg p-4 rounded-xl cursor-pointer hover:border-red-600 transition flex flex-col justify-between shadow-md group">
-                    <div>
-                        <span class="text-xs text-red-500 font-semibold tracking-wider">STREETWEAR</span>
-                        <h3 class="font-bold text-white mt-1 group-hover:text-red-400 transition">Oversized Heavy Hoodie</h3>
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-lg font-black text-red-500">₹1,899</span>
-                        <span class="text-xs text-gray-500">Stock: 24</span>
-                    </div>
-                </div>
-                <!-- Product Card 2 -->
-                <div onclick="addToCart('DUD Acid Wash Graphic Tee', 1199)" class="card-bg p-4 rounded-xl cursor-pointer hover:border-red-600 transition flex flex-col justify-between shadow-md group">
-                    <div>
-                        <span class="text-xs text-red-500 font-semibold tracking-wider">T-SHIRT</span>
-                        <h3 class="font-bold text-white mt-1 group-hover:text-red-400 transition">Acid Wash Graphic Tee</h3>
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-lg font-black text-red-500">₹1,199</span>
-                        <span class="text-xs text-gray-500">Stock: 42</span>
-                    </div>
-                </div>
-                <!-- Product Card 3 -->
-                <div onclick="addToCart('DUD Cargo Street Pants', 2199)" class="card-bg p-4 rounded-xl cursor-pointer hover:border-red-600 transition flex flex-col justify-between shadow-md group">
-                    <div>
-                        <span class="text-xs text-red-500 font-semibold tracking-wider">BOTTOMS</span>
-                        <h3 class="font-bold text-white mt-1 group-hover:text-red-400 transition">Cargo Street Pants</h3>
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <span class="text-lg font-black text-red-500">₹2,199</span>
-                        <span class="text-xs text-gray-500">Stock: 15</span>
-                    </div>
-                </div>
+            <!-- Full Inventory Grid -->
+            <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4 overflow-y-auto max-h-[520px] pr-2">
+                <!-- Populated via JavaScript from Master Inventory -->
             </div>
         </section>
 
@@ -120,7 +87,7 @@
                     <span id="subtotal">₹0</span>
                 </div>
                 <div class="flex justify-between text-sm text-gray-400">
-                    <span>GST (5% / 12% Incl.)</span>
+                    <span>GST (Included)</span>
                     <span id="tax">₹0</span>
                 </div>
                 <div class="flex justify-between text-lg font-black text-white pt-2 border-t border-gray-800">
@@ -141,7 +108,49 @@
     </main>
 
     <script>
+        // Master Inventory Database migrated from DUD records
+        const inventory = [
+            { name: "T-Shirt", sku: "DCPRT", price: 400, stock: 100 },
+            { name: "Top", sku: "DCTOP", price: 300, stock: 100 },
+            { name: "Denim Pant", sku: "DCDNP", price: 700, stock: 100 },
+            { name: "Formal Pant", sku: "DCFP", price: 500, stock: 40 },
+            { name: "Night Pant", sku: "DCNVP", price: 200, stock: 100 },
+            { name: "Nylon Pant", sku: "DCNYP", price: 100, stock: 50 },
+            { name: "Forehead Band", sku: "DCFN", price: 500, stock: 50 },
+            { name: "Belt", sku: "DCBLT", price: 250, stock: 50 },
+            { name: "Socks", sku: "DCSCK", price: 200, stock: 100 },
+            { name: "Cosmic Dance Shirt", sku: "DUD-SH-BLK", price: 899, stock: 30 },
+            { name: "Espresso Shirt", sku: "DUD-SH-BRN", price: 899, stock: 25 },
+            { name: "Eternal Dance Shirt", sku: "DUD-SH-BLU", price: 899, stock: 25 },
+            { name: "Oversized Heavy Hoodie", sku: "DUD-HD-01", price: 1899, stock: 24 }
+        ];
+
         let cart = [];
+
+        function renderCatalog(items) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            items.forEach(item => {
+                grid.innerHTML += `
+                    <div onclick="addToCart('${item.name}', ${item.price})" class="card-bg p-4 rounded-xl cursor-pointer hover:border-red-600 transition flex flex-col justify-between shadow-md group">
+                        <div>
+                            <span class="text-xs text-red-500 font-semibold tracking-wider">${item.sku}</span>
+                            <h3 class="font-bold text-white mt-1 group-hover:text-red-400 transition text-sm">${item.name}</h3>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-base font-black text-red-500">₹${item.price}</span>
+                            <span class="text-xs text-gray-500">Stock: ${item.stock}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterCatalog() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = inventory.filter(i => i.name.toLowerCase().includes(query) || i.sku.toLowerCase().includes(query));
+            renderCatalog(filtered);
+        }
 
         function addToCart(name, price) {
             const existing = cart.find(item => item.name === name);
@@ -151,10 +160,6 @@
                 cart.push({ name, price, qty: 1 });
             }
             renderCart();
-        }
-
-        function quickAdd(name, price) {
-            addToCart(name, price);
         }
 
         function removeItem(index) {
@@ -198,12 +203,10 @@
                 `;
             });
 
-            let tax = Math.round(subtotal * 0.05); // Standard apparel slab estimate
-            let grandTotal = subtotal;
-
+            let tax = Math.round(subtotal * 0.05); // Standard GST inclusive calculation
             document.getElementById('subtotal').innerText = `₹${subtotal}`;
             document.getElementById('tax').innerText = `₹${tax} (Incl.)`;
-            document.getElementById('grandTotal').innerText = `₹${grandTotal}`;
+            document.getElementById('grandTotal').innerText = `₹${subtotal}`;
         }
 
         function processCheckout(mode) {
@@ -214,6 +217,9 @@
             alert(`Payment of ₹${document.getElementById('grandTotal').innerText} successful via ${mode}! Bill generated and inventory updated.`);
             clearCart();
         }
+
+        // Initialize Catalog on Load
+        renderCatalog(inventory);
     </script>
 </body>
 </html>
