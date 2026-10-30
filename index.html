@@ -4,13 +4,12 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>DUD Closet — Store OS</title>
-<script src="https://www.google.com/url?q=https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2&source=gmail&ust=1793481787999000&sa=E"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
 :root{
 --bg:#0A0A0C;--surf:#121216;--card:#16161D;--card2:#22222C;--border:#2A2A36;
---or:#E60012;--orG:rgba(230,0,18,0.15);--text:#F0F0F0;--muted:#888;--dim:#555;
+--or:#E60012;--orG:rgba(230,0,18,0.18);--text:#F0F0F0;--muted:#888;--dim:#555;
 --ok:#4CAF7D;--warn:#F0A500;--err:#E84545;--wa:#25D366;
 }
 input,select,button{font-family:inherit}
@@ -76,7 +75,7 @@ address:"No.441, 21st Street, Thiru Vi Ka Nagar Quarters, Sembiyan, Perambur, Ch
 phone:"93451 25257",
 igOnline:"@dud_official",
 igStore:"@dudcloset_official",
-website:"https://www.google.com/url?q=http://www.dudcloset.com&source=gmail&ust=1793481788000000&sa=E",
+website:"dudcloset.com",
 tagline:"When in doubt, wear DUD",
 upiId:"dud36@kotak",staffName:"",theme:"spider"
 };
@@ -88,11 +87,11 @@ const DEFAULT_EXPENSES = [
 {id:"e05",name:"Packing Materials",cat:"Variable",amount:0,freq:"Variable",paid:false,date:""},
 {id:"e06",name:"Courier / Vendor Charges",cat:"Variable",amount:0,freq:"Variable",paid:false,date:""},
 {id:"e07",name:"Subscriptions",cat:"Variable",amount:0,freq:"Variable",paid:false,date:""},
-{id:"e08",name:"Other Expenses",cat:"Variable",amount:0,freq:"Variable",paid:false,date:""},
+{id:"e08",name:"Other Expenses",cat:"Variable",amount:0,freq:"Variable",paid:false,date:""}
 ];
 const AUTH = { user:"dud closet", pass:"dudneverdies@21", key:"dc_auth" };
 let PERSONAL_UNLOCKED = false;
-function isLoggedIn(){ return localStorage.getItem(AUTH.key)==="1"; }
+function isLoggedIn(){ return localStorage.getItem(AUTH["key"])==="1"; }
 function renderLogin(err){
 document.getElementById("root").innerHTML=`
 <div style="min-height:100vh;background:#0A0A0C;display:flex;align-items:center;justify-content:center;padding:20px">
@@ -119,33 +118,33 @@ ${err?`<div style="background:rgba(232,69,69,.12);border:1px solid rgba(232,69,6
 setTimeout(()=>{
 const u=document.getElementById("login-user");
 const p=document.getElementById("login-pass");
-if(u) u.addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("login-pass").focus(); });
-if(p) p.addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(); });
+if(u) u.addEventListener("keydown",e=>{ if(e["key"]==="Enter") document.getElementById("login-pass").focus(); });
+if(p) p.addEventListener("keydown",e=>{ if(e["key"]==="Enter") doLogin(); });
 },100);
 }
 function togglePw(){
 const p=document.getElementById("login-pass");
 const e=document.getElementById("pw-eye");
 if(!p)return;
-if(p.type==="password"){p.type="text";if(e)e.textContent="🙈";}
-else{p.type="password";if(e)e.textContent="👁";}
+if(p["type"]==="password"){p["type"]="text";if(e)e.textContent="🙈";}
+else{p["type"]="password";if(e)e.textContent="👁";}
 }
 function doLogin(){
 const u=(document.getElementById("login-user").value||"").trim().toLowerCase();
 const p=(document.getElementById("login-pass").value||"").trim();
-if(u===AUTH.user.toLowerCase()&&p===AUTH.pass){
-localStorage.setItem(AUTH.key,"1");
+if(u===AUTH["user"].toLowerCase()&&p===AUTH["pass"]){
+localStorage.setItem(AUTH["key"],"1");
 renderApp();
 } else { renderLogin(true); }
 }
 function doLogout(){
 if(!confirm("Log out of DUD Closet?"))return;
-localStorage.removeItem(AUTH.key);
+localStorage.removeItem(AUTH["key"]);
 renderLogin(false);
 }
 function requestPersonalAccess(){
 if(PERSONAL_UNLOCKED){ go("personal"); return; }
-const pop=document.createElement("div");pop.className="modal-bg";https://www.google.com/url?q=http://pop.id&source=gmail&ust=1793481788000000&sa=E="pin-modal";
+const pop=document.createElement("div");pop.className="modal-bg";pop.setAttribute("id","pin-modal");
 pop.innerHTML=`<div class="modal" style="max-width:340px;text-align:center;border:1px solid var(--or)">
 <div style="font-size:32px;margin-bottom:8px">🔒</div>
 <div style="font-weight:900;font-size:16px;color:#fff;margin-bottom:4px">PERSONAL FIREWALL</div>
@@ -176,16 +175,16 @@ function dbLoad(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):nu
 function dbSave(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){console.error(e);}}
 let STATE = {
 tab:"dashboard",
-products: dbLoad(DB_KEY.P) || SEED_PRODUCTS,
-sales: dbLoad(DB_KEY.S) || [],
-customers: dbLoad(DB_KEY.C) || [],
-invCounter: dbLoad(DB_KEY.IC) || 1,
-settings: dbLoad(https://www.google.com/url?q=http://DB_KEY.ST&source=gmail&ust=1793481788000000&sa=E) || DEFAULT_SETTINGS,
-expenses: dbLoad(DB_KEY.EX) || DEFAULT_EXPENSES,
-vendors: dbLoad(https://www.google.com/url?q=http://DB_KEY.VN&source=gmail&ust=1793481788000000&sa=E) || [],
-returns: dbLoad(DB_KEY.RT) || [],
-purchases: dbLoad(DB_KEY.PB) || [],
-personal: dbLoad(https://www.google.com/url?q=http://DB_KEY.PF&source=gmail&ust=1793481788000000&sa=E) || [
+products: dbLoad(DB_KEY["P"]) || SEED_PRODUCTS,
+sales: dbLoad(DB_KEY["S"]) || [],
+customers: dbLoad(DB_KEY["C"]) || [],
+invCounter: dbLoad(DB_KEY["IC"]) || 1,
+settings: dbLoad(DB_KEY["ST"]) || DEFAULT_SETTINGS,
+expenses: dbLoad(DB_KEY["EX"]) || DEFAULT_EXPENSES,
+vendors: dbLoad(DB_KEY["VN"]) || [],
+returns: dbLoad(DB_KEY["RT"]) || [],
+purchases: dbLoad(DB_KEY["PB"]) || [],
+personal: dbLoad(DB_KEY["PF"]) || [
 {id:"pf1",name:"12-Month Savings Fund",cat:"Savings",amount:50000,date:new Date().toISOString().split("T")[0],note:"Monthly installment"},
 {id:"pf2",name:"Personal Living Draw",cat:"Draw",amount:25000,date:new Date().toISOString().split("T")[0],note:"Owner draw"}
 ]
@@ -194,29 +193,29 @@ personal: dbLoad(https://www.google.com/url?q=http://DB_KEY.PF&source=gmail&ust=
 let changed=false;
 STATE.products=STATE.products.map(p=>{
 let u={...p};
-if(u.gst!==5){u.gst=5;changed=true;}
-if(!u.comboType){
-if(https://www.google.com/url?q=http://u.id&source=gmail&ust=1793481788000000&sa=E==="p09"||u.sku==="DC-SOC") u.comboType="499";
-else if(u.sell===400||https://www.google.com/url?q=http://u.id&source=gmail&ust=1793481788000000&sa=E==="p01") u.comboType="999";
-else u.comboType="none";
+if(u["gst"]!==5){u["gst"]=5;changed=true;}
+if(!u["comboType"]){
+if(u["id"]==="p09"||u["sku"]==="DC-SOC") u["comboType"]="499";
+else if(u["sell"]===400||u["id"]==="p01") u["comboType"]="999";
+else u["comboType"]="none";
 changed=true;
 }
 return u;
 });
-if(changed) dbSave(DB_KEY.P,STATE.products);
+if(changed) dbSave(DB_KEY["P"],STATE.products);
 })();
-function saveP(){ dbSave(DB_KEY.P, STATE.products); }
-function saveS(){ dbSave(DB_KEY.S, STATE.sales); }
-function saveC(){ dbSave(DB_KEY.C, STATE.customers); }
-function saveIC(){ dbSave(DB_KEY.IC, STATE.invCounter); }
-function saveST(){ dbSave(https://www.google.com/url?q=http://DB_KEY.ST&source=gmail&ust=1793481788000000&sa=E, STATE.settings); }
-function saveEX(){ dbSave(DB_KEY.EX, STATE.expenses); }
-function saveVN(){ dbSave(https://www.google.com/url?q=http://DB_KEY.VN&source=gmail&ust=1793481788000000&sa=E, STATE.vendors); }
-function saveRT(){ dbSave(DB_KEY.RT, STATE.returns); }
-function savePB(){ dbSave(DB_KEY.PB, STATE.purchases); }
-function savePF(){ dbSave(https://www.google.com/url?q=http://DB_KEY.PF&source=gmail&ust=1793481788000000&sa=E, STATE.personal); }
+function saveP(){ dbSave(DB_KEY["P"], STATE.products); }
+function saveS(){ dbSave(DB_KEY["S"], STATE.sales); }
+function saveC(){ dbSave(DB_KEY["C"], STATE.customers); }
+function saveIC(){ dbSave(DB_KEY["IC"], STATE.invCounter); }
+function saveST(){ dbSave(DB_KEY["ST"], STATE.settings); }
+function saveEX(){ dbSave(DB_KEY["EX"], STATE.expenses); }
+function saveVN(){ dbSave(DB_KEY["VN"], STATE.vendors); }
+function saveRT(){ dbSave(DB_KEY["RT"], STATE.returns); }
+function savePB(){ dbSave(DB_KEY["PB"], STATE.purchases); }
+function savePF(){ dbSave(DB_KEY["PF"], STATE.personal); }
 function applyTheme(){
-const t = STATE.settings.theme || "spider";
+const t = STATE.settings["theme"] || "spider";
 if(t==="spider"){
 document.documentElement.style.setProperty('--or','#E60012');
 document.documentElement.style.setProperty('--orG','rgba(230,0,18,0.18)');
@@ -243,10 +242,10 @@ const bg=type==="err"?"var(--err)":type==="warn"?"var(--warn)":"var(--ok)";
 el.textContent=msg;el.style.background=bg;el.style.display="block";
 _toastTimer=setTimeout(()=>{el.style.display="none";},3200);
 }
-function go(tab){STATE.tab=tab;renderApp();}
+function go(tab){STATE["tab"]=tab;renderApp();}
 function logoSVG(size=36){
-const col = (STATE.settings && STATE.settings.theme==="orange") ? "#FF6B00" : "#E60012";
-return `<svg width="${size}" height="${size}" viewBox="0 0 120 120" fill="none" xmlns="https://www.google.com/url?q=http://www.w3.org/2000/svg&source=gmail&ust=1793481788001000&sa=E">
+const col = (STATE.settings && STATE.settings["theme"]==="orange") ? "#FF6B00" : "#E60012";
+return `<svg width="${size}" height="${size}" viewBox="0 0 120 120" fill="none">
 <path d="M60 6 L60 22" stroke="${col}" stroke-width="4" stroke-linecap="round"/>
 <path d="M60 22 C60 14 70 11 70 19 C70 25 62 28 60 30" stroke="${col}" stroke-width="3.5" stroke-linecap="round" fill="none"/>
 <path d="M60 30 C40 38 14 58 10 68 C8 74 10 80 14 80 L106 80 C110 80 112 74 110 68 C106 58 80 38 60 30 Z" stroke="${col}" stroke-width="3.5" fill="none" stroke-linejoin="round"/>
@@ -255,7 +254,7 @@ return `<svg width="${size}" height="${size}" viewBox="0 0 120 120" fill="none" 
 </svg>`;
 }
 function logoBlack(size=50){
-return `<svg width="${size}" height="${size}" viewBox="0 0 120 120" fill="none" xmlns="https://www.google.com/url?q=http://www.w3.org/2000/svg&source=gmail&ust=1793481788001000&sa=E">
+return `<svg width="${size}" height="${size}" viewBox="0 0 120 120" fill="none">
 <path d="M60 6 L60 22" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
 <path d="M60 22 C60 14 70 11 70 19 C70 25 62 28 60 30" stroke="#111" stroke-width="2.5" stroke-linecap="round" fill="none"/>
 <path d="M60 30 C40 38 14 58 10 68 C8 74 10 80 14 80 L106 80 C110 80 112 74 110 68 C106 58 80 38 60 30 Z" stroke="#111" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
@@ -278,11 +277,11 @@ const tabs=[
 {id:"vendors",icon:"🚚",label:"Vendors"},
 {id:"gst",icon:"📋",label:"GST"},
 {id:"personal",icon:"🔒",label:"Personal"},
-{id:"settings",icon:"⚙",label:"Settings"},
+{id:"settings",icon:"⚙",label:"Settings"}
 ];
 const navItems=tabs.map(t=>`
-<button onclick="${https://www.google.com/url?q=http://t.id&source=gmail&ust=1793481788001000&sa=E==='personal'?'requestPersonalAccess()':`go('${https://www.google.com/url?q=http://t.id&source=gmail&ust=1793481788001000&sa=E}')`}" style="background:none;border:none;border-bottom:2px solid ${STATE.tab===https://www.google.com/url?q=http://t.id&source=gmail&ust=1793481788001000&sa=E?"var(--or)":"transparent"};color:${STATE.tab===https://www.google.com/url?q=http://t.id&source=gmail&ust=1793481788001000&sa=E?"var(--or)":"var(--muted)"};padding:11px 13px;font-size:12px;font-weight:${STATE.tab===https://www.google.com/url?q=http://t.id?700:400%7D;display:flex;align-items:center;gap:5px&source=gmail&ust=1793481788001000&sa=E">
-<span style="font-size:14px">${t.icon}</span><span>${t.label}</span>
+<button onclick="${t["id"]==='personal'?'requestPersonalAccess()':`go('${t["id"]}')`}" style="background:none;border:none;border-bottom:2px solid ${STATE["tab"]===t["id"]?"var(--or)":"transparent"};color:${STATE["tab"]===t["id"]?"var(--or)":"var(--muted)"};padding:11px 13px;font-size:12px;font-weight:${STATE["tab"]===t["id"]?700:400};display:flex;align-items:center;gap:5px">
+<span style="font-size:14px">${t["icon"]}</span><span>${t["label"]}</span>
 </button>`).join("");
 const dt=new Date().toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
 return `
@@ -311,19 +310,19 @@ function renderDashboard(){
 const now=new Date();
 const thisM=mKey(todayStr());
 const lastM=mKey(new Date(now.getFullYear(),now.getMonth()-1,1).toISOString().split("T")[0]);
-const mS=m=>STATE.sales.filter(s=>mKey(s.date)===m);
-const mRev=m=>mS(m).reduce((a,s)=>a+s.total,0);
-const mProfit=m=>mS(m).reduce((a,s)=>a+s.profit,0);
+const mS=m=>STATE.sales.filter(s=>mKey(s["date"])===m);
+const mRev=m=>mS(m).reduce((a,s)=>a+s["total"],0);
+const mProfit=m=>mS(m).reduce((a,s)=>a+s["profit"],0);
 const thisRev=mRev(thisM),lastRev=mRev(lastM),thisProfit=mProfit(thisM);
-const totalRev=STATE.sales.reduce((a,s)=>a+s.total,0);
+const totalRev=STATE.sales.reduce((a,s)=>a+s["total"],0);
 const growth=lastRev>0?(((thisRev-lastRev)/lastRev)*100).toFixed(1):null;
-const low=STATE.products.filter(p=>p.stock<=p.minStock&&p.stock>0);
-const out=STATE.products.filter(p=>p.stock===0);
+const low=STATE.products.filter(p=>p["stock"]<=p["minStock"]&&p["stock"]>0);
+const out=STATE.products.filter(p=>p["stock"]===0);
 const months6=Array.from({length:6},(_,i)=>{
 const d=new Date(now.getFullYear(),now.getMonth()-(5-i),1);
 return{key:mKey(d.toISOString().split("T")[0]),label:d.toLocaleString("en-IN",{month:"short"})};
 });
-const maxRev=Math.max(...months6.map(m=>mRev(m.key)),1);
+const maxRev=Math.max(...months6.map(m=>mRev(m["key"])),1);
 const bars=months6.map(({key,label})=>{
 const rev=mRev(key);const h=Math.max((rev/maxRev)*72,4);const isThis=key===thisM;
 return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
@@ -334,7 +333,7 @@ return `<div style="flex:1;display:flex;flex-direction:column;align-items:center
 }).join("");
 const chCols={Store:"var(--or)",WooCommerce:"#8B44AC",Amazon:"#F0A500",Flipkart:"#2B7BE8"};
 const chRows=CHANNELS.map(ch=>{
-const rev=mS(thisM).filter(s=>s.channel===ch).reduce((a,s)=>a+s.total,0);
+const rev=mS(thisM).filter(s=>s["channel"]===ch).reduce((a,s)=>a+s["total"],0);
 const pct=thisRev>0?Math.max(rev/thisRev*100,2):2;
 return `<div style="margin-bottom:10px">
 <div style="display:flex;justify-content:space-between;margin-bottom:3px">
@@ -346,8 +345,8 @@ return `<div style="margin-bottom:10px">
 </div>
 </div>`;
 }).join("");
-const alertsHTML=(out.slice(0,4).map(p=>`<div style="display:flex;justify-content:space-between;margin-bottom:5px;padding:6px 8px;background:rgba(232,69,69,.1);border-radius:6px;border:1px solid rgba(232,69,69,.3)"><span style="font-size:12px">${https://www.google.com/url?q=http://p.name&source=gmail&ust=1793481788001000&sa=E}</span><span style="font-size:10px;color:var(--err);font-weight:700">OUT OF STOCK</span></div>`).join(""))+
-(low.slice(0,4).map(p=>`<div style="display:flex;justify-content:space-between;margin-bottom:5px;padding:6px 8px;background:rgba(240,165,0,.1);border-radius:6px;border:1px solid rgba(240,165,0,.3)"><span style="font-size:12px">${https://www.google.com/url?q=http://p.name&source=gmail&ust=1793481788001000&sa=E}</span><span style="font-size:10px;color:var(--warn);font-weight:700">LOW: ${p.stock}</span></div>`).join(""));
+const alertsHTML=(out.slice(0,4).map(p=>`<div style="display:flex;justify-content:space-between;margin-bottom:5px;padding:6px 8px;background:rgba(232,69,69,.1);border-radius:6px;border:1px solid rgba(232,69,69,.3)"><span style="font-size:12px">${p["name"]}</span><span style="font-size:10px;color:var(--err);font-weight:700">OUT OF STOCK</span></div>`).join(""))+
+(low.slice(0,4).map(p=>`<div style="display:flex;justify-content:space-between;margin-bottom:5px;padding:6px 8px;background:rgba(240,165,0,.1);border-radius:6px;border:1px solid rgba(240,165,0,.3)"><span style="font-size:12px">${p["name"]}</span><span style="font-size:10px;color:var(--warn);font-weight:700">LOW: ${p["stock"]}</span></div>`).join(""));
 return shell(`
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
 ${logoSVG(26)}<h2 style="font-size:18px;font-weight:700">Store Overview</h2>
@@ -357,11 +356,11 @@ ${[
 {l:"This Month Revenue",v:fmtK(thisRev),s:growth!==null?(growth>0?"▲":"▼")+" "+Math.abs(growth)+"% vs last month":"Active month",c:"var(--or)"},
 {l:"This Month Profit",v:fmtK(thisProfit),s:"Margin "+(thisRev>0?((thisProfit/thisRev)*100).toFixed(1):0)+"%",c:"var(--ok)"},
 {l:"All-Time Revenue",v:fmtK(totalRev),s:STATE.sales.length+" invoices",c:"var(--warn)"},
-{l:"Customers",v:STATE.customers.length,s:STATE.customers.filter(c=>c.broadcast).length+" in broadcast",c:"#8B44AC"},
-].map(s=>`<div class="card" style="border-left:3px solid ${s.c}">
-<div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${s.l}</div>
-<div style="font-size:24px;font-weight:800;color:${s.c}">${s.v}</div>
-<div style="font-size:11px;color:var(--dim);margin-top:3px">${s.s}</div>
+{l:"Customers",v:STATE.customers.length,s:STATE.customers.filter(c=>c["broadcast"]).length+" in broadcast",c:"#8B44AC"}
+].map(s=>`<div class="card" style="border-left:3px solid ${s["c"]}">
+<div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${s["l"]}</div>
+<div style="font-size:24px;font-weight:800;color:${s["c"]}">${s["v"]}</div>
+<div style="font-size:11px;color:var(--dim);margin-top:3px">${s["s"]}</div>
 </div>`).join("")}
 </div>
 <div class="grid2" style="margin-bottom:12px">
@@ -377,90 +376,90 @@ ${alertsHTML||'<div style="color:var(--ok);font-size:12px">✓ All stock levels 
 }
 let CART=[];let BILL_CUST={phone:"",name:"",found:null};let BILL_DISC=0;let BILL_PAY="Cash";let BILL_CHAN="Store";let BILL_STAFF="";let BILL_CAT="All";let BILL_SEARCH="";
 function applyAutoCombos(){
-const pool999 = CART.filter(i=>i.comboType==="999");
-const total999Qty = pool999.reduce((a,i)=>a+i.qty,0);
+const pool999 = CART.filter(i=>i["comboType"]==="999");
+const total999Qty = pool999.reduce((a,i)=>a+i["qty"],0);
 if(total999Qty >= 3){
 const sets = Math.floor(total999Qty / 3);
 const rem = total999Qty % 3;
 pool999.forEach(i=>{
-const avgComboUnit = ((sets * 999) + (rem * i.basePrice)) / total999Qty;
-i.price = Number(avgComboUnit.toFixed(2));
-i.comboApplied = true;
+const avgComboUnit = ((sets * 999) + (rem * i["basePrice"])) / total999Qty;
+i["price"] = Number(avgComboUnit.toFixed(2));
+i["comboApplied"] = true;
 });
 } else {
-pool999.forEach(i=>{ i.price = i.basePrice; i.comboApplied = false; });
+pool999.forEach(i=>{ i["price"] = i["basePrice"]; i["comboApplied"] = false; });
 }
-const pool499 = CART.filter(i=>i.comboType==="499");
-const total499Qty = pool499.reduce((a,i)=>a+i.qty,0);
+const pool499 = CART.filter(i=>i["comboType"]==="499");
+const total499Qty = pool499.reduce((a,i)=>a+i["qty"],0);
 if(total499Qty >= 3){
 const sets = Math.floor(total499Qty / 3);
 const rem = total499Qty % 3;
 pool499.forEach(i=>{
-const avgComboUnit = ((sets * 499) + (rem * i.basePrice)) / total499Qty;
-i.price = Number(avgComboUnit.toFixed(2));
-i.comboApplied = true;
+const avgComboUnit = ((sets * 499) + (rem * i["basePrice"])) / total499Qty;
+i["price"] = Number(avgComboUnit.toFixed(2));
+i["comboApplied"] = true;
 });
 } else {
-pool499.forEach(i=>{ i.price = i.basePrice; i.comboApplied = false; });
+pool499.forEach(i=>{ i["price"] = i["basePrice"]; i["comboApplied"] = false; });
 }
 }
 function cartTotals(){
 applyAutoCombos();
-const sub = Math.round(CART.reduce((a,i)=>a+i.price*i.qty,0));
+const sub = Math.round(CART.reduce((a,i)=>a+i["price"]*i["qty"],0));
 const discAmt = Math.round(sub*BILL_DISC/100);
 const total = sub - discAmt;
-const mrpTotal = CART.reduce((a,i)=>a+i.mrp*i.qty,0);
+const mrpTotal = CART.reduce((a,i)=>a+i["mrp"]*i["qty"],0);
 const savings = Math.max(0, mrpTotal - total);
-const profit = Math.round(CART.reduce((a,i)=>a+(i.price-i.cost)*i.qty,0) - discAmt);
-const gst = Math.round(CART.reduce((a,i)=>{const lt=i.price*i.qty*(1-BILL_DISC/100);return a+lt-lt*100/(100+i.gst);},0));
+const profit = Math.round(CART.reduce((a,i)=>a+(i["price"]-i["cost"])*i["qty"],0) - discAmt);
+const gst = Math.round(CART.reduce((a,i)=>{const lt=i["price"]*i["qty"]*(1-BILL_DISC/100);return a+lt-lt*100/(100+i["gst"]);},0));
 return{sub,discAmt,total,savings,profit,gst};
 }
 function lowStockBanner(){
-const low=STATE.products.filter(p=>p.stock>0&&p.stock<=p.minStock);
-const out=STATE.products.filter(p=>p.stock===0);
+const low=STATE.products.filter(p=>p["stock"]>0&&p["stock"]<=p["minStock"]);
+const out=STATE.products.filter(p=>p["stock"]===0);
 if(!low.length&&!out.length)return"";
-const items=[...out.map(p=>`<span style="color:var(--err);font-weight:700">${https://www.google.com/url?q=http://p.name&source=gmail&ust=1793481788001000&sa=E} OUT</span>`),
-...low.map(p=>`<span style="color:var(--warn)">${https://www.google.com/url?q=http://p.name&source=gmail&ust=1793481788001000&sa=E} (${p.stock})</span>`)].join(" · ");
+const items=[...out.map(p=>`<span style="color:var(--err);font-weight:700">${p["name"]} OUT</span>`),
+...low.map(p=>`<span style="color:var(--warn)">${p["name"]} (${p["stock"]})</span>`)].join(" · ");
 return`<div style="background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.35);border-radius:8px;padding:8px 14px;margin-bottom:12px;font-size:12px;display:flex;align-items:center;gap:8px"><span style="font-size:16px">⚠</span><div><strong style="color:var(--warn)">Low Stock:</strong> ${items}</div></div>`;
 }
 function renderBilling(){
 const prods=STATE.products.filter(p=>{
-const ms=p.name.toLowerCase().includes(BILL_SEARCH.toLowerCase())||p.sku.toLowerCase().includes(BILL_SEARCH.toLowerCase());
-const mc=BILL_CAT==="All"||https://www.google.com/url?q=http://p.cat&source=gmail&ust=1793481788001000&sa=E===BILL_CAT;
+const ms=p["name"].toLowerCase().includes(BILL_SEARCH.toLowerCase())||p["sku"].toLowerCase().includes(BILL_SEARCH.toLowerCase());
+const mc=BILL_CAT==="All"||p["cat"]===BILL_CAT;
 return ms&&mc;
 });
 const {sub,discAmt,total,savings}=cartTotals();
 const prodCards=prods.map(p=>{
-const avail=p.stock;const inCart=CART.find(i=>https://www.google.com/url?q=http://i.id&source=gmail&ust=1793481788001000&sa=E===https://www.google.com/url?q=http://p.id&source=gmail&ust=1793481788001000&sa=E);
-const col=avail===0?"var(--err)":avail<=p.minStock?"var(--warn)":"var(--ok)";
-return `<div onclick="addToCart('${https://www.google.com/url?q=http://p.id&source=gmail&ust=1793481788001000&sa=E}')" style="background:${inCart?"var(--orG)":"var(--card)"};border:1px solid ${inCart?"var(--or)":avail>0?"var(--border)":"var(--err)"};border-radius:8px;padding:10px;cursor:${avail>0?"pointer":"not-allowed"};opacity:${avail>0?1:.45};position:relative;transition:all .15s">
-${inCart?`<div style="position:absolute;top:5px;right:5px;background:var(--or);color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${inCart.qty}</div>`:""}
-<div style="font-size:11px;font-weight:700;margin-bottom:2px;padding-right:20px">${https://www.google.com/url?q=http://p.name&source=gmail&ust=1793481788002000&sa=E}</div>
-<div style="font-size:9px;color:var(--muted);margin-bottom:5px">${p.sku}</div>
-${p.mrp>p.sell?`<div style="font-size:9px;color:var(--muted);text-decoration:line-through">MRP ₹${p.mrp}</div>`:""}
+const avail=p["stock"];const inCart=CART.find(i=>i["id"]===p["id"]);
+const col=avail===0?"var(--err)":avail<=p["minStock"]?"var(--warn)":"var(--ok)";
+return `<div onclick="addToCart('${p["id"]}')" style="background:${inCart?"var(--orG)":"var(--card)"};border:1px solid ${inCart?"var(--or)":avail>0?"var(--border)":"var(--err)"};border-radius:8px;padding:10px;cursor:${avail>0?"pointer":"not-allowed"};opacity:${avail>0?1:.45};position:relative;transition:all .15s">
+${inCart?`<div style="position:absolute;top:5px;right:5px;background:var(--or);color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${inCart["qty"]}</div>`:""}
+<div style="font-size:11px;font-weight:700;margin-bottom:2px;padding-right:20px">${p["name"]}</div>
+<div style="font-size:9px;color:var(--muted);margin-bottom:5px">${p["sku"]}</div>
+${p["mrp"]>p["sell"]?`<div style="font-size:9px;color:var(--muted);text-decoration:line-through">MRP ₹${p["mrp"]}</div>`:""}
 <div style="display:flex;justify-content:space-between;align-items:center">
-<span style="color:var(--or);font-weight:800;font-size:14px">₹${p.sell}</span>
+<span style="color:var(--or);font-weight:800;font-size:14px">₹${p["sell"]}</span>
 <span style="font-size:9px;color:${col}">${avail>0?avail+" left":"Out"}</span>
 </div>
-${p.comboType==="999"?`<div style="font-size:9px;color:var(--or);margin-top:3px;font-weight:700">★ 3 for ₹999 Auto-Combo</div>`:p.comboType==="499"?`<div style="font-size:9px;color:var(--or);margin-top:3px;font-weight:700">★ 3 for ₹499 Auto-Combo</div>`:p.offer?`<div style="font-size:9px;color:var(--or);margin-top:3px">${p.offer}</div>`:""}
+${p["comboType"]==="999"?`<div style="font-size:9px;color:var(--or);margin-top:3px;font-weight:700">★ 3 for ₹999 Auto-Combo</div>`:p["comboType"]==="499"?`<div style="font-size:9px;color:var(--or);margin-top:3px;font-weight:700">★ 3 for ₹499 Auto-Combo</div>`:p["offer"]?`<div style="font-size:9px;color:var(--or);margin-top:3px">${p["offer"]}</div>`:""}
 </div>`;
 }).join("");
 const catPills=CATS.map(c=>`<button onclick="setBillCat('${c}')" class="pill ${BILL_CAT===c?"active":""}">${c}</button>`).join("");
 const cartItems=CART.map(i=>`
 <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;padding:6px 0;border-bottom:1px solid var(--border)">
 <div style="flex:1">
-<div style="font-size:12px;font-weight:600">${https://www.google.com/url?q=http://i.name&source=gmail&ust=1793481788002000&sa=E}${i.comboApplied?" <span style='background:var(--or);color:#fff;padding:1px 5px;border-radius:3px;font-size:8px;font-weight:800'>COMBO APPLIED</span>":""}</div>
-<div style="font-size:10px;color:var(--muted)">₹${i.price} each ${i.comboApplied?`(Reg ₹${i.basePrice})`:""}</div>
+<div style="font-size:12px;font-weight:600">${i["name"]}${i["comboApplied"]?" <span style='background:var(--or);color:#fff;padding:1px 5px;border-radius:3px;font-size:8px;font-weight:800'>COMBO APPLIED</span>":""}</div>
+<div style="font-size:10px;color:var(--muted)">₹${i["price"]} each ${i["comboApplied"]?`(Reg ₹${i["basePrice"]})`:""}</div>
 </div>
 <div style="display:flex;align-items:center;gap:4px">
-<button onclick="updateCartQty('${https://www.google.com/url?q=http://i.id&source=gmail&ust=1793481788002000&sa=E}',-1)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);width:22px;height:22px;border-radius:4px;font-size:14px">−</button>
-<span style="font-size:13px;width:22px;text-align:center;font-weight:700">${i.qty}</span>
-<button onclick="updateCartQty('${https://www.google.com/url?q=http://i.id&source=gmail&ust=1793481788002000&sa=E}',1)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);width:22px;height:22px;border-radius:4px;font-size:14px">+</button>
+<button onclick="updateCartQty('${i["id"]}',-1)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);width:22px;height:22px;border-radius:4px;font-size:14px">−</button>
+<span style="font-size:13px;width:22px;text-align:center;font-weight:700">${i["qty"]}</span>
+<button onclick="updateCartQty('${i["id"]}',1)" style="background:var(--card2);border:1px solid var(--border);color:var(--text);width:22px;height:22px;border-radius:4px;font-size:14px">+</button>
 </div>
-<div style="font-size:12px;font-weight:700;width:56px;text-align:right;color:var(--or)">₹${Math.round(i.price*i.qty)}</div>
-<button onclick="removeFromCart('${https://www.google.com/url?q=http://i.id&source=gmail&ust=1793481788002000&sa=E}')" style="background:none;border:none;color:var(--err);font-size:14px">✕</button>
+<div style="font-size:12px;font-weight:700;width:56px;text-align:right;color:var(--or)">₹${Math.round(i["price"]*i["qty"])}</div>
+<button onclick="removeFromCart('${i["id"]}')" style="background:none;border:none;color:var(--err);font-size:14px">✕</button>
 </div>`).join("");
-const foundBanner=BILL_CUST.found?`<div style="background:rgba(76,175,125,.1);border:1px solid rgba(76,175,125,.4);border-radius:6px;padding:6px 10px;margin-bottom:6px;font-size:11px;color:var(--ok)">✓ Returning customer · ${BILL_CUST.found.visits||0} visits · Spent ${fmt(BILL_CUST.found.totalSpend||0)}</div>`:"";
+const foundBanner=BILL_CUST["found"]?`<div style="background:rgba(76,175,125,.1);border:1px solid rgba(76,175,125,.4);border-radius:6px;padding:6px 10px;margin-bottom:6px;font-size:11px;color:var(--ok)">✓ Returning customer · ${BILL_CUST["found"]["visits"]||0} visits · Spent ${fmt(BILL_CUST["found"]["totalSpend"]||0)}</div>`:"";
 return shell(`
 ${lowStockBanner()}
 <div style="display:grid;grid-template-columns:1fr 360px;gap:16px">
@@ -478,11 +477,11 @@ ${CHANNELS.map(c=>`<option${c===BILL_CHAN?" selected":""}>${c}</option>`).join("
 <div class="card" style="border-top:3px solid var(--or)">
 <div style="font-size:10px;color:var(--or);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:800">1. Customer Details</div>
 <div style="display:flex;gap:6px;margin-bottom:6px">
-<input id="cust-phone" value="${BILL_CUST.phone}" oninput="setCustPhone(this.value)" onblur="lookupCust()" placeholder="Phone number (WhatsApp) *" style="flex:1">
+<input id="cust-phone" value="${BILL_CUST["phone"]}" oninput="setCustPhone(this.value)" onblur="lookupCust()" placeholder="Phone number (WhatsApp) *" style="flex:1">
 <button onclick="lookupCust()" style="background:var(--border);border:1px solid var(--border);color:var(--text);padding:8px 12px">Find</button>
 </div>
 ${foundBanner}
-<input id="cust-name" value="${BILL_CUST.name}" oninput="setCustName(this.value)" placeholder="Customer name *" style="margin-bottom:6px">
+<input id="cust-name" value="${BILL_CUST["name"]}" oninput="setCustName(this.value)" placeholder="Customer name *" style="margin-bottom:6px">
 <input value="${BILL_STAFF}" oninput="BILL_STAFF=this.value" placeholder="Staff name (optional)">
 </div>
 <div class="card" style="flex:1">
@@ -517,53 +516,53 @@ ${PAY_MODES.map(m=>`<button onclick="BILL_PAY='${m}';renderApp()" style="backgro
 </div>`);
 }
 function addToCart(pid){
-const prod=STATE.products.find(p=>https://www.google.com/url?q=http://p.id&source=gmail&ust=1793481788002000&sa=E===pid);
-if(!prod||prod.stock===0)return;
-const ex=CART.find(i=>https://www.google.com/url?q=http://i.id&source=gmail&ust=1793481788002000&sa=E===pid);
+const prod=STATE.products.find(p=>p["id"]===pid);
+if(!prod||prod["stock"]===0)return;
+const ex=CART.find(i=>i["id"]===pid);
 if(ex){
-if(ex.qty>=prod.stock){showToast("Max stock reached","warn");return;}
-ex.qty++;
+if(ex["qty"]>=prod["stock"]){showToast("Max stock reached","warn");return;}
+ex["qty"]++;
 }else{
-CART.push({id:pid,name:https://www.google.com/url?q=http://prod.name&source=gmail&ust=1793481788002000&sa=E,sku:prod.sku,basePrice:prod.sell,price:prod.sell,mrp:prod.mrp,cost:prod.cost,gst:prod.gst,hsn:prod.hsn,comboType:prod.comboType||"none",qty:1,comboApplied:false});
+CART.push({id:pid,name:prod["name"],sku:prod["sku"],basePrice:prod["sell"],price:prod["sell"],mrp:prod["mrp"],cost:prod["cost"],gst:prod["gst"],hsn:prod["hsn"],comboType:prod["comboType"]||"none",qty:1,comboApplied:false});
 }
 applyAutoCombos();
 renderApp();
 }
-function removeFromCart(pid){CART=CART.filter(i=>https://www.google.com/url?q=http://i.id&source=gmail&ust=1793481788002000&sa=E!==pid);renderApp();}
+function removeFromCart(pid){CART=CART.filter(i=>i["id"]!==pid);renderApp();}
 function updateCartQty(pid,delta){
-const item=CART.find(i=>https://www.google.com/url?q=http://i.id&source=gmail&ust=1793481788002000&sa=E===pid);if(!item)return;
-item.qty+=delta;if(item.qty<=0)CART=CART.filter(i=>https://www.google.com/url?q=http://i.id&source=gmail&ust=1793481788002000&sa=E!==pid);
+const item=CART.find(i=>i["id"]===pid);if(!item)return;
+item["qty"]+=delta;if(item["qty"]<=0)CART=CART.filter(i=>i["id"]!==pid);
 renderApp();
 }
 function setBillCat(c){BILL_CAT=c;renderApp();}
 function setBillChan(c){BILL_CHAN=c;renderApp();}
 function setBillSearch(v){BILL_SEARCH=v;renderApp();}
-function setCustPhone(v){BILL_CUST.phone=v;}
-function setCustName(v){BILL_CUST.name=v;}
+function setCustPhone(v){BILL_CUST["phone"]=v;}
+function setCustName(v){BILL_CUST["name"]=v;}
 function lookupCust(){
-const phone=document.getElementById("cust-phone")?document.getElementById("cust-phone").value:BILL_CUST.phone;
-BILL_CUST.phone=phone;
-const c=STATE.customers.find(c=>c.phone===phone.trim());
-if(c){BILL_CUST.found=c;BILL_CUST.name=https://www.google.com/url?q=http://c.name&source=gmail&ust=1793481788002000&sa=E;showToast("Welcome back, "+https://www.google.com/url?q=http://c.name&source=gmail&ust=1793481788002000&sa=E+"! 🖤");}
-else BILL_CUST.found=null;
+const phone=document.getElementById("cust-phone")?document.getElementById("cust-phone").value:BILL_CUST["phone"];
+BILL_CUST["phone"]=phone;
+const c=STATE.customers.find(c=>c["phone"]===phone.trim());
+if(c){BILL_CUST["found"]=c;BILL_CUST["name"]=c["name"];showToast("Welcome back, "+c["name"]+"! 🖤");}
+else BILL_CUST["found"]=null;
 renderApp();
 }
 function generateBill(){
-const phone=document.getElementById("cust-phone")?document.getElementById("cust-phone").value.trim():BILL_CUST.phone.trim();
-const name=document.getElementById("cust-name")?document.getElementById("cust-name").value.trim():BILL_CUST.name.trim();
+const phone=document.getElementById("cust-phone")?document.getElementById("cust-phone").value.trim():BILL_CUST["phone"].trim();
+const name=document.getElementById("cust-name")?document.getElementById("cust-name").value.trim():BILL_CUST["name"].trim();
 if(CART.length===0){showToast("Cart is empty","err");return;}
 if(!phone){showToast("Enter customer phone","err");return;}
 if(!name){showToast("Enter customer name","err");return;}
-BILL_CUST.phone=phone;BILL_CUST.name=name;
-let cust=STATE.customers.find(c=>c.phone===phone);
+BILL_CUST["phone"]=phone;BILL_CUST["name"]=name;
+let cust=STATE.customers.find(c=>c["phone"]===phone);
 const isNew=!cust;
 const {sub,discAmt,total,savings,profit,gst}=cartTotals();
 if(isNew){
 cust={id:uid(),phone,name,createdAt:todayStr(),lastVisit:todayStr(),broadcast:true,totalSpend:total,visits:1};
 STATE.customers.unshift(cust);
 }else{
-cust.visits=(cust.visits||0)+1;cust.totalSpend=(cust.totalSpend||0)+total;cust.lastVisit=todayStr();
-STATE.customers=STATE.customers.map(c=>c.phone===phone?cust:c);
+cust["visits"]=(cust["visits"]||0)+1;cust["totalSpend"]=(cust["totalSpend"]||0)+total;cust["lastVisit"]=todayStr();
+STATE.customers=STATE.customers.map(c=>c["phone"]===phone?cust:c);
 }
 saveC();
 const sale={
@@ -571,12 +570,12 @@ id:uid(),invoiceNo:invNo(STATE.invCounter),date:todayStr(),channel:BILL_CHAN,
 customerName:name,customerPhone:phone,
 items:CART.map(i=>({...i})),
 sub,discAmt,discount:BILL_DISC,gst,total,profit,savings,
-payMode:BILL_PAY,staffName:BILL_STAFF||STATE.settings.staffName,isNew
+payMode:BILL_PAY,staffName:BILL_STAFF||STATE.settings["staffName"],isNew
 };
 STATE.sales.unshift(sale);saveS();
 CART.forEach(ci=>{
-const p=STATE.products.find(p=>https://www.google.com/url?q=http://p.id&source=gmail&ust=1793481788002000&sa=E===https://www.google.com/url?q=http://ci.id&source=gmail&ust=1793481788002000&sa=E);
-if(p)p.stock=Math.max(0,p.stock-ci.qty);
+const p=STATE.products.find(p=>p["id"]===ci["id"]);
+if(p)p["stock"]=Math.max(0,p["stock"]-ci["qty"]);
 });
 saveP();
 STATE.invCounter++;saveIC();
@@ -586,87 +585,89 @@ renderApp();
 }
 function showInvoiceModal(sale,cust,isNew){
 const st=STATE.settings;
-const pop=document.createElement("div");pop.className="modal-bg";https://www.google.com/url?q=http://pop.id&source=gmail&ust=1793481788002000&sa=E="inv-modal";
-const itemRows=sale.items.map(i=>`
+const pop=document.createElement("div");pop.className="modal-bg";pop.setAttribute("id","inv-modal");
+const itemRows=sale["items"].map(i=>`
 <div style="display:flex;font-size:10px;margin-bottom:2px">
-<span style="flex:3">${https://www.google.com/url?q=http://i.name&source=gmail&ust=1793481788002000&sa=E}${i.comboApplied?" *COMBO*":""}</span>
-<span style="flex:1;text-align:center">${i.qty}</span>
-<span style="flex:1;text-align:right">₹${i.price}</span>
-<span style="flex:1;text-align:right">₹${Math.round(i.price*i.qty)}</span>
+<span style="flex:3">${i["name"]}${i["comboApplied"]?" *COMBO*":""}</span>
+<span style="flex:1;text-align:center">${i["qty"]}</span>
+<span style="flex:1;text-align:right">₹${i["price"]}</span>
+<span style="flex:1;text-align:right">₹${Math.round(i["price"]*i["qty"])}</span>
 </div>`).join("");
 pop.innerHTML=`<div class="modal" style="border:1px solid var(--or)">
 <div style="text-align:center;margin-bottom:12px">
 <div style="font-size:32px;color:var(--ok)">✓</div>
-<div style="color:var(--or);font-weight:800;font-size:16px">${sale.invoiceNo}</div>
+<div style="color:var(--or);font-weight:800;font-size:16px">${sale["invoiceNo"]}</div>
 </div>
 <div style="background:#fff;color:#111;padding:14px;border-radius:8px;margin-bottom:14px;font-family:'Courier New',monospace;font-size:11px">
 <div style="text-align:center;margin-bottom:6px">
-<div style="font-weight:900;font-size:14px;letter-spacing:2px">${st.storeName.toUpperCase()}</div>
-<div style="font-size:9px;color:#555">${st.address}</div>
-<div style="font-size:9px;color:#555">📞 ${st.phone}</div>
+<div style="font-weight:900;font-size:14px;letter-spacing:2px">${st["storeName"].toUpperCase()}</div>
+<div style="font-size:9px;color:#555">${st["address"]}</div>
+<div style="font-size:9px;color:#555">📞 ${st["phone"]}</div>
 </div>
 <div style="border-top:1px dashed #999;margin:6px 0"></div>
-<div style="display:flex;justify-content:space-between;font-size:10px"><b>Inv: ${sale.invoiceNo}</b><span>${sale.date}</span></div>
-<div style="font-size:10px">Customer: ${sale.customerName} (${sale.customerPhone})</div>
-<div style="font-size:10px">Channel: ${sale.channel} | Pay: ${sale.payMode}</div>
+<div style="display:flex;justify-content:space-between;font-size:10px"><b>Inv: ${sale["invoiceNo"]}</b><span>${sale["date"]}</span></div>
+<div style="font-size:10px">Customer: ${sale["customerName"]} (${sale["customerPhone"]})</div>
+<div style="font-size:10px">Channel: ${sale["channel"]} | Pay: ${sale["payMode"]}</div>
 <div style="border-top:1px dashed #999;margin:6px 0"></div>
 ${itemRows}
 <div style="border-top:1px dashed #999;margin:6px 0"></div>
-${sale.savings>0?`<div style="display:flex;justify-content:space-between;font-size:10px;color:green"><span>Total Savings 🎉</span><span>₹${sale.savings}</span></div>`:""}
-<div style="display:flex;justify-content:space-between;font-weight:900;font-size:14px"><span>TOTAL</span><span>₹${sale.total}</span></div>
+${sale["savings"]>0?`<div style="display:flex;justify-content:space-between;font-size:10px;color:green"><span>Total Savings 🎉</span><span>₹${sale["savings"]}</span></div>`:""}
+<div style="display:flex;justify-content:space-between;font-weight:900;font-size:14px"><span>TOTAL</span><span>₹${sale["total"]}</span></div>
 <div style="font-size:8px;color:#777">Inclusive of all taxes (No separate GST charged)</div>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-<button onclick="printInvoice('${https://www.google.com/url?q=http://sale.id&source=gmail&ust=1793481788003000&sa=E}')" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px">🖨 Print Thermal</button>
-<button onclick="waInvoice('${https://www.google.com/url?q=http://sale.id&source=gmail&ust=1793481788003000&sa=E}')" style="background:var(--wa);border:none;color:#fff;padding:10px;font-weight:700">💬 WhatsApp Bill</button>
+<button onclick="printInvoice('${sale["id"]}')" style="background:var(--card2);border:1px solid var(--border);color:var(--text);padding:10px">🖨 Print Thermal</button>
+<button onclick="waInvoice('${sale["id"]}')" style="background:var(--wa);border:none;color:#fff;padding:10px;font-weight:700">💬 WhatsApp Bill</button>
 </div>
-<button onclick="downloadPDFInvoice('${https://www.google.com/url?q=http://sale.id&source=gmail&ust=1793481788003000&sa=E}')" style="background:#1A1A1A;border:1px solid var(--or);color:var(--or);width:100%;padding:10px;font-weight:700;margin-bottom:8px">📄 Download PDF Invoice</button>
-${isNew?`<button onclick="waWelcome('${https://www.google.com/url?q=http://sale.id&source=gmail&ust=1793481788003000&sa=E}')" style="background:var(--or);border:none;color:#fff;width:100%;padding:10px;font-weight:800;margin-bottom:8px">🖤 Send Welcome Message</button>`:""}
+<button onclick="downloadPDFInvoice('${sale["id"]}')" style="background:#1A1A1A;border:1px solid var(--or);color:var(--or);width:100%;padding:10px;font-weight:700;margin-bottom:8px">📄 Download PDF Invoice</button>
+${isNew?`<button onclick="waWelcome('${sale["id"]}')" style="background:var(--or);border:none;color:#fff;width:100%;padding:10px;font-weight:800;margin-bottom:8px">🖤 Send Welcome Message</button>`:""}
 <button onclick="document.getElementById('inv-modal').remove()" style="background:var(--border);border:none;color:var(--muted);width:100%;padding:10px">Close</button>
 </div>`;
 document.body.appendChild(pop);
 }
 function printInvoice(sid){
-const sale=STATE.sales.find(s=>https://www.google.com/url?q=http://s.id&source=gmail&ust=1793481788003000&sa=E===sid);if(!sale)return;
+const sale=STATE.sales.find(s=>s["id"]===sid);if(!sale)return;
 const st=STATE.settings;const w=window.open("","_blank");
-const rows=sale.items.map(i=>`<div style="display:flex;justify-content:space-between;font-size:10px"><span>${https://www.google.com/url?q=http://i.name&source=gmail&ust=1793481788003000&sa=E} x${i.qty}</span><span>₹${Math.round(i.price*i.qty)}</span></div>`).join("");
+const rows=sale["items"].map(i=>`<div style="display:flex;justify-content:space-between;font-size:10px"><span>${i["name"]} x${i["qty"]}</span><span>₹${Math.round(i["price"]*i["qty"])}</span></div>`).join("");
 w.document.write(`<!DOCTYPE html><html><body style="font-family:monospace;width:270px;padding:10px;font-size:11px">
-<div style="text-align:center"><b>${st.storeName.toUpperCase()}</b><br><span style="font-size:9px">${st.address}<br>Ph: ${st.phone}</span></div><hr>
-<div>Inv: ${sale.invoiceNo} | ${sale.date}<br>${sale.customerName} (${sale.customerPhone})</div><hr>${rows}<hr>
-<div style="display:flex;justify-content:space-between;font-weight:bold;font-size:14px"><span>TOTAL (${sale.payMode})</span><span>₹${sale.total}</span></div>
+<div style="text-align:center"><b>${st["storeName"].toUpperCase()}</b><br><span style="font-size:9px">${st["address"]}<br>Ph: ${st["phone"]}</span></div><hr>
+<div>Inv: ${sale["invoiceNo"]} | ${sale["date"]}<br>${sale["customerName"]} (${sale["customerPhone"]})</div><hr>${rows}<hr>
+<div style="display:flex;justify-content:space-between;font-weight:bold;font-size:14px"><span>TOTAL (${sale["payMode"]})</span><span>₹${sale["total"]}</span></div>
 <div style="font-size:8px">All prices inclusive of tax</div><hr>
-<div style="text-align:center;font-size:9px">"${st.tagline}"</div>
+<div style="text-align:center;font-size:9px">"${st["tagline"]}"</div>
 </body></html>`);
 w.document.close();setTimeout(()=>w.print(),300);
 }
 function waInvoice(sid){
-const sale=STATE.sales.find(s=>https://www.google.com/url?q=http://s.id&source=gmail&ust=1793481788003000&sa=E===sid);if(!sale)return;
+const sale=STATE.sales.find(s=>s["id"]===sid);if(!sale)return;
 const st=STATE.settings;
-const lines=["🖤 *DUD CLOSET*",`*Invoice: ${sale.invoiceNo}* (${sale.date})`,"",`Hi *${sale.customerName}*, summary of your bill:`,"",...sale.items.map(i=>`• ${https://www.google.com/url?q=http://i.name&source=gmail&ust=1793481788003000&sa=E} × ${i.qty}${i.comboApplied?" (COMBO)":""} — ₹${Math.round(i.price*i.qty)}`),"",sale.savings>0?`*You saved ₹${sale.savings}* 🎉`:null,`*Total Paid: ₹${sale.total}* (${sale.payMode})`,"_All prices inclusive of tax_","",`📸 ${st.igOnline} | ${st.igStore}`,`🌐 ${st.website}`].filter(Boolean);
-window.open("https://www.google.com/url?q=https://wa.me/91&source=gmail&ust=1793481788003000&sa=E"+sale.customerPhone.replace(/\D/g,"")+"?text="+encodeURIComponent(lines.join("\n")),"_blank");
+const lines=["🖤 *DUD CLOSET*",`*Invoice: ${sale["invoiceNo"]}* (${sale["date"]})`,"",`Hi *${sale["customerName"]}*, summary of your bill:`,"",...sale["items"].map(i=>`• ${i["name"]} × ${i["qty"]}${i["comboApplied"]?" (COMBO)":""} — ₹${Math.round(i["price"]*i["qty"])}`),"",sale["savings"]>0?`*You saved ₹${sale["savings"]}* 🎉`:null,`*Total Paid: ₹${sale["total"]}* (${sale["payMode"]})`,"_All prices inclusive of tax_","",`📸 ${st["igOnline"]} | ${st["igStore"]}`,`🌐 ${st["website"]}`].filter(Boolean);
+const waBase = "https://api.whatsapp.com/send?phone=91";
+window.open(waBase+sale["customerPhone"].replace(/\D/g,"")+"&text="+encodeURIComponent(lines.join("\n")),"_blank");
 }
 function waWelcome(sid){
-const sale=STATE.sales.find(s=>https://www.google.com/url?q=http://s.id&source=gmail&ust=1793481788003000&sa=E===sid);if(!sale)return;
+const sale=STATE.sales.find(s=>s["id"]===sid);if(!sale)return;
 const st=STATE.settings;
-const msg=`🖤 *Welcome to DUD Closet!*\n\nHi *${sale.customerName}*! Thank you for visiting us. Stay tuned for weekly drops & offers!\n📸 ${st.igOnline} | ${st.igStore}\n🌐 ${st.website}`;
-window.open("https://www.google.com/url?q=https://wa.me/91&source=gmail&ust=1793481788003000&sa=E"+sale.customerPhone.replace(/\D/g,"")+"?text="+encodeURIComponent(msg),"_blank");
+const msg=`🖤 *Welcome to DUD Closet!*\n\nHi *${sale["customerName"]}*! Thank you for visiting us. Stay tuned for weekly drops & offers!\n📸 ${st["igOnline"]} | ${st["igStore"]}\n🌐 ${st["website"]}`;
+const waBase = "https://api.whatsapp.com/send?phone=91";
+window.open(waBase+sale["customerPhone"].replace(/\D/g,"")+"&text="+encodeURIComponent(msg),"_blank");
 }
 function downloadPDFInvoice(sid){ printInvoice(sid); }
 let INV_SEARCH="";let INV_CAT="All";
 function renderInventory(){
-const totalVal=STATE.products.reduce((a,p)=>a+p.stock*p.cost,0);
-const filtered=STATE.products.filter(p=>(p.name.toLowerCase().includes(INV_SEARCH.toLowerCase())||p.sku.toLowerCase().includes(INV_SEARCH.toLowerCase()))&&(INV_CAT==="All"||https://www.google.com/url?q=http://p.cat&source=gmail&ust=1793481788003000&sa=E===INV_CAT));
+const totalVal=STATE.products.reduce((a,p)=>a+p["stock"]*p["cost"],0);
+const filtered=STATE.products.filter(p=>(p["name"].toLowerCase().includes(INV_SEARCH.toLowerCase())||p["sku"].toLowerCase().includes(INV_SEARCH.toLowerCase()))&&(INV_CAT==="All"||p["cat"]===INV_CAT));
 const rows=filtered.map(p=>`<tr>
-<td><b>${https://www.google.com/url?q=http://p.name&source=gmail&ust=1793481788003000&sa=E}</b><div style="font-size:9px;color:var(--muted)">${https://www.google.com/url?q=http://p.cat&source=gmail&ust=1793481788003000&sa=E}</div></td>
-<td>${p.sku}</td><td>₹${p.cost}</td>
-<td style="color:var(--or);font-weight:700">₹${p.sell}</td>
-<td style="color:var(--muted);text-decoration:line-through">₹${p.mrp}</td>
-<td style="color:${p.stock<=p.minStock?"var(--warn)":"var(--ok)"};font-weight:700">${p.stock}</td>
-<td>${p.comboType==="999"?`<span class="tag" style="background:var(--orG);color:var(--or)">3 @ ₹999</span>`:p.comboType==="499"?`<span class="tag" style="background:var(--orG);color:var(--or)">3 @ ₹499</span>`:"—"}</td>
+<td><b>${p["name"]}</b><div style="font-size:9px;color:var(--muted)">${p["cat"]}</div></td>
+<td>${p["sku"]}</td><td>₹${p["cost"]}</td>
+<td style="color:var(--or);font-weight:700">₹${p["sell"]}</td>
+<td style="color:var(--muted);text-decoration:line-through">₹${p["mrp"]}</td>
+<td style="color:${p["stock"]<=p["minStock"]?"var(--warn)":"var(--ok)"};font-weight:700">${p["stock"]}</td>
+<td>${p["comboType"]==="999"?`<span class="tag" style="background:var(--orG);color:var(--or)">3 @ ₹999</span>`:p["comboType"]==="499"?`<span class="tag" style="background:var(--orG);color:var(--or)">3 @ ₹499</span>`:"—"}</td>
 <td><div style="display:flex;gap:4px">
-<button onclick="openEditProd('${https://www.google.com/url?q=http://p.id&source=gmail&ust=1793481788003000&sa=E}')" style="background:var(--border);border:none;color:#fff;padding:4px 8px;font-size:11px">Edit</button>
-<button onclick="restockProd('${https://www.google.com/url?q=http://p.id&source=gmail&ust=1793481788003000&sa=E}')" style="background:rgba(76,175,125,.15);border:1px solid var(--ok);color:var(--ok);padding:4px 8px;font-size:11px">+Stock</button>
-<button onclick="deleteProd('${https://www.google.com/url?q=http://p.id&source=gmail&ust=1793481788003000&sa=E}')" style="background:var(--err);border:none;color:#fff;padding:4px 8px;font-size:11px">Del</button>
+<button onclick="openEditProd('${p["id"]}')" style="background:var(--border);border:none;color:#fff;padding:4px 8px;font-size:11px">Edit</button>
+<button onclick="restockProd('${p["id"]}')" style="background:rgba(76,175,125,.15);border:1px solid var(--ok);color:var(--ok);padding:4px 8px;font-size:11px">+Stock</button>
+<button onclick="deleteProd('${p["id"]}')" style="background:var(--err);border:none;color:#fff;padding:4px 8px;font-size:11px">Del</button>
 </div></td>
 </tr>`).join("");
 return shell(`
@@ -681,29 +682,29 @@ return shell(`
 <div class="card scrollx" style="padding:0"><table><thead><tr><th>Product</th><th>SKU</th><th>Cost</th><th>Final Price</th><th>MRP</th><th>Stock</th><th>Auto-Combo</th><th>Action</th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }
 function openEditProd(id){
-const p=id?STATE.products.find(x=>https://www.google.com/url?q=http://x.id&source=gmail&ust=1793481788003000&sa=E===id):null;
+const p=id?STATE.products.find(x=>x["id"]===id):null;
 const v=p||{name:"",sku:"",hsn:"6109",cat:"Tops",cost:150,sell:400,mrp:500,gst:5,stock:50,minStock:5,comboType:"999"};
-const pop=document.createElement("div");pop.className="modal-bg";https://www.google.com/url?q=http://pop.id&source=gmail&ust=1793481788003000&sa=E="pf-mod";
+const pop=document.createElement("div");pop.className="modal-bg";pop.setAttribute("id","pf-mod");
 pop.innerHTML=`<div class="modal">
 <h3 style="color:var(--or);margin-bottom:14px">${p?"Edit Product":"Add Product"}</h3>
 <div class="grid2">
-<div style="grid-column:1/-1"><div class="lbl">Product Name</div><input id="pf-name" value="${https://www.google.com/url?q=http://v.name&source=gmail&ust=1793481788003000&sa=E}"></div>
-<div><div class="lbl">SKU</div><input id="pf-sku" value="${v.sku}"></div>
-<div><div class="lbl">Category</div><select id="pf-cat">${CATS.filter(c=>c!=="All").map(c=>`<option${c===https://www.google.com/url?q=http://v.cat&source=gmail&ust=1793481788003000&sa=E?" selected":""}>${c}</option>`).join("")}</select></div>
-<div><div class="lbl">Cost ₹</div><input id="pf-cost" type="number" value="${v.cost}"></div>
-<div><div class="lbl">Final Price (MRP Incl) ₹</div><input id="pf-sell" type="number" value="${v.sell}"></div>
-<div><div class="lbl">Strikeout MRP ₹</div><input id="pf-mrp" type="number" value="${v.mrp}"></div>
-<div><div class="lbl">Stock Qty</div><input id="pf-stock" type="number" value="${v.stock}"></div>
+<div style="grid-column:1/-1"><div class="lbl">Product Name</div><input id="pf-name" value="${v["name"]}"></div>
+<div><div class="lbl">SKU</div><input id="pf-sku" value="${v["sku"]}"></div>
+<div><div class="lbl">Category</div><select id="pf-cat">${CATS.filter(c=>c!=="All").map(c=>`<option${c===v["cat"]?" selected":""}>${c}</option>`).join("")}</select></div>
+<div><div class="lbl">Cost ₹</div><input id="pf-cost" type="number" value="${v["cost"]}"></div>
+<div><div class="lbl">Final Price (MRP Incl) ₹</div><input id="pf-sell" type="number" value="${v["sell"]}"></div>
+<div><div class="lbl">Strikeout MRP ₹</div><input id="pf-mrp" type="number" value="${v["mrp"]}"></div>
+<div><div class="lbl">Stock Qty</div><input id="pf-stock" type="number" value="${v["stock"]}"></div>
 <div style="grid-column:1/-1"><div class="lbl">Combo Rule</div>
 <select id="pf-combo">
-<option value="none"${v.comboType==="none"?" selected":""}>No Combo</option>
-<option value="999"${v.comboType==="999"?" selected":""}>Buy 3 @ ₹999</option>
-<option value="499"${v.comboType==="499"?" selected":""}>Buy 3 @ ₹499</option>
+<option value="none"${v["comboType"]==="none"?" selected":""}>No Combo</option>
+<option value="999"${v["comboType"]==="999"?" selected":""}>Buy 3 @ ₹999</option>
+<option value="499"${v["comboType"]==="499"?" selected":""}>Buy 3 @ ₹499</option>
 </select>
 </div>
 </div>
 <div style="display:flex;gap:8px;margin-top:16px">
-<button onclick="saveProdItem('${p?https://www.google.com/url?q=http://p.id&source=gmail&ust=1793481788003000&sa=E:""}')" style="background:var(--or);border:none;color:#fff;flex:1;padding:10px">Save</button>
+<button onclick="saveProdItem('${p?p["id"]:""}')" style="background:var(--or);border:none;color:#fff;flex:1;padding:10px">Save</button>
 <button onclick="document.getElementById('pf-mod').remove()" style="background:var(--border);border:none;color:var(--muted);flex:1;padding:10px">Cancel</button>
 </div>
 </div>`;
@@ -724,40 +725,40 @@ stock:Number(document.getElementById("pf-stock").value)||0,
 minStock:5,gst:5,comboType,
 offer:comboType==="999"?"3 for ₹999 Combo":comboType==="499"?"Buy 3 @ ₹499":""
 };
-if(id)STATE.products=STATE.products.map(p=>https://www.google.com/url?q=http://p.id&source=gmail&ust=1793481788003000&sa=E===id?item:p);
+if(id)STATE.products=STATE.products.map(p=>p["id"]===id?item:p);
 else STATE.products.unshift(item);
 saveP();document.getElementById("pf-mod").remove();renderApp();
 }
 function restockProd(id){
-const p=STATE.products.find(x=>https://www.google.com/url?q=http://x.id&source=gmail&ust=1793481788003000&sa=E===id);if(!p)return;
-const qty=Number(prompt(`Add stock quantity for ${https://www.google.com/url?q=http://p.name&source=gmail&ust=1793481788003000&sa=E}:`,"10"))||0;
-if(qty>0){p.stock+=qty;saveP();renderApp();}
+const p=STATE.products.find(x=>x["id"]===id);if(!p)return;
+const qty=Number(prompt(`Add stock quantity for ${p["name"]}:`,"10"))||0;
+if(qty>0){p["stock"]+=qty;saveP();renderApp();}
 }
 function deleteProd(id){
-if(confirm("Delete product?")){STATE.products=STATE.products.filter(x=>https://www.google.com/url?q=http://x.id&source=gmail&ust=1793481788003000&sa=E!==id);saveP();renderApp();}
+if(confirm("Delete product?")){STATE.products=STATE.products.filter(x=>x["id"]!==id);saveP();renderApp();}
 }
 function renderCustomers(){
-const rows=STATE.customers.map(c=>`<tr><td><b>${https://www.google.com/url?q=http://c.name&source=gmail&ust=1793481788003000&sa=E}</b></td><td>${c.phone}</td><td>${c.visits||1}</td><td style="color:var(--or);font-weight:700">${fmt(c.totalSpend||0)}</td><td>${c.lastVisit||"-"}</td></tr>`).join("");
+const rows=STATE.customers.map(c=>`<tr><td><b>${c["name"]}</b></td><td>${c["phone"]}</td><td>${c["visits"]||1}</td><td style="color:var(--or);font-weight:700">${fmt(c["totalSpend"]||0)}</td><td>${c["lastVisit"]||"-"}</td></tr>`).join("");
 return shell(`<div style="display:flex;justify-content:space-between;margin-bottom:14px"><h2 style="font-size:18px;font-weight:700">Customers (${STATE.customers.length})</h2></div><div class="card scrollx" style="padding:0"><table><thead><tr><th>Name</th><th>Phone</th><th>Visits</th><th>Total Spend</th><th>Last Visit</th></tr></thead><tbody>${rows||`<tr><td colspan="5" style="text-align:center;padding:20px">No customers yet</td></tr>`}</tbody></table></div>`);
 }
 let SALES_PERIOD="month";
 function renderSales(){
 const now=new Date();
 const filtered=STATE.sales.filter(s=>{
-const d=new Date(s.date);
+const d=new Date(s["date"]);
 if(SALES_PERIOD==="month")return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
 if(SALES_PERIOD==="year")return d.getFullYear()===now.getFullYear();
 return true;
 });
-const rev=filtered.reduce((a,s)=>a+s.total,0);
-const profit=filtered.reduce((a,s)=>a+s.profit,0);
+const rev=filtered.reduce((a,s)=>a+s["total"],0);
+const profit=filtered.reduce((a,s)=>a+s["profit"],0);
 const rows=filtered.map(s=>`<tr>
-<td style="color:var(--or);font-weight:700">${s.invoiceNo}</td><td>${s.date}</td><td>${s.customerName}</td><td>${s.customerPhone}</td>
-<td style="font-weight:700">${fmt(s.total)}</td><td style="color:var(--ok)">${fmt(s.profit)}</td><td>${s.payMode}</td>
+<td style="color:var(--or);font-weight:700">${s["invoiceNo"]}</td><td>${s["date"]}</td><td>${s["customerName"]}</td><td>${s["customerPhone"]}</td>
+<td style="font-weight:700">${fmt(s["total"])}</td><td style="color:var(--ok)">${fmt(s["profit"])}</td><td>${s["payMode"]}</td>
 <td><div style="display:flex;gap:4px">
-<button onclick="waInvoice('${https://www.google.com/url?q=http://s.id&source=gmail&ust=1793481788004000&sa=E}')" style="background:var(--wa);border:none;color:#fff;padding:3px 8px;font-size:10px">WA</button>
-<button onclick="editBill('${https://www.google.com/url?q=http://s.id&source=gmail&ust=1793481788004000&sa=E}')" style="background:var(--border);border:none;color:#fff;padding:3px 8px;font-size:10px">Edit</button>
-<button onclick="deleteBill('${https://www.google.com/url?q=http://s.id&source=gmail&ust=1793481788004000&sa=E}')" style="background:var(--err);border:none;color:#fff;padding:3px 8px;font-size:10px">Del</button>
+<button onclick="waInvoice('${s["id"]}')" style="background:var(--wa);border:none;color:#fff;padding:3px 8px;font-size:10px">WA</button>
+<button onclick="editBill('${s["id"]}')" style="background:var(--border);border:none;color:#fff;padding:3px 8px;font-size:10px">Edit</button>
+<button onclick="deleteBill('${s["id"]}')" style="background:var(--err);border:none;color:#fff;padding:3px 8px;font-size:10px">Del</button>
 </div></td>
 </tr>`).join("");
 return shell(`
@@ -773,22 +774,22 @@ return shell(`
 <div class="card scrollx" style="padding:0"><table><thead><tr><th>Invoice</th><th>Date</th><th>Customer</th><th>Phone</th><th>Total</th><th>Profit</th><th>Mode</th><th>Actions</th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }
 function editBill(id){
-const s=STATE.sales.find(x=>https://www.google.com/url?q=http://x.id&source=gmail&ust=1793481788004000&sa=E===id);if(!s)return;
-const n=prompt("Customer Name:",s.customerName);
-const p=prompt("Phone:",s.customerPhone);
-const t=prompt("Total Bill ₹:",s.total);
-const m=prompt("Payment Mode (Cash/UPI/Card/Online):",s.payMode);
-if(n)s.customerName=n;if(p)s.customerPhone=p;if(t)s.total=Number(t);if(m)s.payMode=m;
+const s=STATE.sales.find(x=>x["id"]===id);if(!s)return;
+const n=prompt("Customer Name:",s["customerName"]);
+const p=prompt("Phone:",s["customerPhone"]);
+const t=prompt("Total Bill ₹:",s["total"]);
+const m=prompt("Payment Mode (Cash/UPI/Card/Online):",s["payMode"]);
+if(n)s["customerName"]=n;if(p)s["customerPhone"]=p;if(t)s["total"]=Number(t);if(m)s["payMode"]=m;
 saveS();renderApp();
 }
 function deleteBill(id){
-const s=STATE.sales.find(x=>https://www.google.com/url?q=http://x.id&source=gmail&ust=1793481788004000&sa=E===id);if(!s||!confirm("Delete bill and restore stock?"))return;
-s.items.forEach(i=>{const p=STATE.products.find(x=>https://www.google.com/url?q=http://x.id&source=gmail&ust=1793481788004000&sa=E===https://www.google.com/url?q=http://i.id&source=gmail&ust=1793481788004000&sa=E);if(p)p.stock+=i.qty;});
-saveP();STATE.sales=STATE.sales.filter(x=>https://www.google.com/url?q=http://x.id&source=gmail&ust=1793481788004000&sa=E!==id);saveS();renderApp();
+const s=STATE.sales.find(x=>x["id"]===id);if(!s||!confirm("Delete bill and restore stock?"))return;
+s["items"].forEach(i=>{const p=STATE.products.find(x=>x["id"]===i["id"]);if(p)p["stock"]+=i["qty"];});
+saveP();STATE.sales=STATE.sales.filter(x=>x["id"]!==id);saveS();renderApp();
 }
 function renderPurchases(){
-const totalITC=STATE.purchases.reduce((a,p)=>a+Number(p.gstAmt||0),0);
-const rows=STATE.purchases.map((p,i)=>`<tr><td>${p.date}</td><td><b>${p.supplier}</b></td><td>${p.billNo}</td><td>${p.gstin||"-"}</td><td>${fmt(p.taxable)}</td><td style="color:var(--ok);font-weight:700">${fmt(p.gstAmt)}</td><td><b>${fmt(p.total)}</b></td><td><button onclick="STATE.purchases.splice(${i},1);savePB();renderApp()" style="background:none;border:none;color:var(--err)">✕</button></td></tr>`).join("");
+const totalITC=STATE.purchases.reduce((a,p)=>a+Number(p["gstAmt"]||0),0);
+const rows=STATE.purchases.map((p,i)=>`<tr><td>${p["date"]}</td><td><b>${p["supplier"]}</b></td><td>${p["billNo"]}</td><td>${p["gstin"]||"-"}</td><td>${fmt(p["taxable"])}</td><td style="color:var(--ok);font-weight:700">${fmt(p["gstAmt"])}</td><td><b>${fmt(p["total"])}</b></td><td><button onclick="STATE.purchases.splice(${i},1);savePB();renderApp()" style="background:none;border:none;color:var(--err)">✕</button></td></tr>`).join("");
 return shell(`
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
 <div><h2 style="font-size:18px;font-weight:700">📥 Purchase Bills (GST Input Credit)</h2><div style="font-size:11px;color:var(--muted)">Total Claimable ITC: <b style="color:var(--ok)">${fmt(totalITC)}</b></div></div>
@@ -807,18 +808,18 @@ STATE.purchases.unshift({id:uid(),date:todayStr(),supplier,billNo,gstin,taxable,
 savePB();renderApp();
 }
 function renderEOD(){
-const ts=STATE.sales.filter(s=>s.date===todayStr());
-const sum=m=>ts.filter(s=>s.payMode===m).reduce((a,s)=>a+s.total,0);
+const ts=STATE.sales.filter(s=>s["date"]===todayStr());
+const sum=m=>ts.filter(s=>s["payMode"]===m).reduce((a,s)=>a+s["total"],0);
 return shell(`<h2 style="font-size:18px;font-weight:700;margin-bottom:14px">🏁 End of Day (${todayStr()})</h2>
 <div class="grid3">${[["Cash",sum("Cash")],["UPI",sum("UPI")],["Card",sum("Card")],["Online",sum("Online")]].map(([l,v])=>`<div class="card"><div class="lbl">${l}</div><div style="font-size:20px;font-weight:800;color:var(--or)">${fmt(v)}</div></div>`).join("")}</div>`);
 }
 function renderExpenses(){
-const rows=STATE.expenses.map((e,i)=>`<tr><td><b>${https://www.google.com/url?q=http://e.name&source=gmail&ust=1793481788004000&sa=E}</b></td><td><input type="number" value="${e.amount}" onchange="STATE.expenses[${i}].amount=Number(this.value);saveEX();renderApp()" style="width:110px"></td><td>${https://www.google.com/url?q=http://e.cat&source=gmail&ust=1793481788004000&sa=E}</td><td><button onclick="STATE.expenses.splice(${i},1);saveEX();renderApp()" style="background:none;border:none;color:var(--err)">✕</button></td></tr>`).join("");
+const rows=STATE.expenses.map((e,i)=>`<tr><td><b>${e["name"]}</b></td><td><input type="number" value="${e["amount"]}" onchange="STATE.expenses[${i}]['amount']=Number(this.value);saveEX();renderApp()" style="width:110px"></td><td>${e["cat"]}</td><td><button onclick="STATE.expenses.splice(${i},1);saveEX();renderApp()" style="background:none;border:none;color:var(--err)">✕</button></td></tr>`).join("");
 return shell(`<div style="display:flex;justify-content:space-between;margin-bottom:14px"><h2 style="font-size:18px;font-weight:700">💸 Business Expenses</h2><button onclick="const n=prompt('Expense Name:');if(n){STATE.expenses.push({id:uid(),name:n,cat:'Variable',amount:0,freq:'Monthly'});saveEX();renderApp()}" style="background:var(--or);border:none;color:#fff;padding:8px 14px">+ Add Expense</button></div><div class="card scrollx" style="padding:0"><table><thead><tr><th>Expense</th><th>Amount ₹</th><th>Category</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }
 function renderPersonal(){
 if(!PERSONAL_UNLOCKED){requestPersonalAccess();return"";}
-const rows=STATE.personal.map((p,i)=>`<tr><td><b>${https://www.google.com/url?q=http://p.name&source=gmail&ust=1793481788004000&sa=E}</b></td><td>${https://www.google.com/url?q=http://p.cat&source=gmail&ust=1793481788004000&sa=E}</td><td><input type="number" value="${p.amount}" onchange="STATE.personal[${i}].amount=Number(this.value);savePF();renderApp()" style="width:110px"></td><td>${p.date}</td><td><button onclick="STATE.personal.splice(${i},1);savePF();renderApp()" style="background:none;border:none;color:var(--err)">✕</button></td></tr>`).join("");
+const rows=STATE.personal.map((p,i)=>`<tr><td><b>${p["name"]}</b></td><td>${p["cat"]}</td><td><input type="number" value="${p["amount"]}" onchange="STATE.personal[${i}]['amount']=Number(this.value);savePF();renderApp()" style="width:110px"></td><td>${p["date"]}</td><td><button onclick="STATE.personal.splice(${i},1);savePF();renderApp()" style="background:none;border:none;color:var(--err)">✕</button></td></tr>`).join("");
 return shell(`<div style="display:flex;justify-content:space-between;margin-bottom:14px"><h2 style="font-size:18px;font-weight:700">🔒 Personal Expenses (PIN Locked)</h2><div style="display:flex;gap:8px"><button onclick="const n=prompt('Entry:');if(n){STATE.personal.unshift({id:uid(),name:n,cat:'Personal',amount:Number(prompt('Amount ₹:'))||0,date:todayStr()});savePF();renderApp()}" style="background:var(--or);border:none;color:#fff;padding:8px 14px">+ Add</button><button onclick="PERSONAL_UNLOCKED=false;go('dashboard')" style="background:var(--border);border:none;color:#fff;padding:8px 14px">Lock</button></div></div><div class="card scrollx" style="padding:0"><table><thead><tr><th>Item</th><th>Type</th><th>Amount ₹</th><th>Date</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`);
 }
 function renderReturns(){
@@ -828,8 +829,8 @@ function renderVendors(){
 return shell(`<h2 style="font-size:18px;font-weight:700;margin-bottom:14px">🚚 Vendors</h2><div class="card">Log all supplier GST invoices directly in the <b>Purchases (GST)</b> tab.</div>`);
 }
 function renderGST(){
-const outGST=STATE.sales.reduce((a,s)=>a+(s.gst||Math.round(s.total-s.total/1.05)),0);
-const inGST=STATE.purchases.reduce((a,p)=>a+Number(p.gstAmt||0),0);
+const outGST=STATE.sales.reduce((a,s)=>a+(s["gst"]||Math.round(s["total"]-s["total"]/1.05)),0);
+const inGST=STATE.purchases.reduce((a,p)=>a+Number(p["gstAmt"]||0),0);
 return shell(`<h2 style="font-size:18px;font-weight:700;margin-bottom:14px">📋 GST Summary (Internal Extraction)</h2>
 <div class="grid3">
 <div class="card"><div class="lbl">Output GST (From Inclusive MRP)</div><div style="font-size:20px;font-weight:800;color:var(--err)">${fmt(outGST)}</div></div>
@@ -843,20 +844,20 @@ return shell(`<h2 style="font-size:18px;font-weight:700;margin-bottom:14px">⚙ 
 <div class="card" style="max-width:520px">
 <div class="lbl">Theme Color</div>
 <div style="display:flex;gap:8px;margin-bottom:14px">
-<button onclick="STATE.settings.theme='spider';saveST();renderApp()" style="background:#E60012;color:#fff;border:none;padding:8px 14px">Spider Red</button>
-<button onclick="STATE.settings.theme='orange';saveST();renderApp()" style="background:#FF6B00;color:#000;border:none;padding:8px 14px">Original Orange</button>
-<button onclick="STATE.settings.theme='gold';saveST();renderApp()" style="background:#F59E0B;color:#000;border:none;padding:8px 14px">Luxury Gold</button>
+<button onclick="STATE.settings['theme']='spider';saveST();renderApp()" style="background:#E60012;color:#fff;border:none;padding:8px 14px">Spider Red</button>
+<button onclick="STATE.settings['theme']='orange';saveST();renderApp()" style="background:#FF6B00;color:#000;border:none;padding:8px 14px">Original Orange</button>
+<button onclick="STATE.settings['theme']='gold';saveST();renderApp()" style="background:#F59E0B;color:#000;border:none;padding:8px 14px">Luxury Gold</button>
 </div>
-<div class="lbl">Store Name</div><input id="st-n" value="${s.storeName}" style="margin-bottom:8px">
-<div class="lbl">Address</div><input id="st-a" value="${s.address}" style="margin-bottom:8px">
-<div class="lbl">Phone</div><input id="st-p" value="${s.phone}" style="margin-bottom:8px">
-<div class="lbl">Tagline</div><input id="st-t" value="${s.tagline}" style="margin-bottom:14px">
-<button onclick="STATE.settings.storeName=document.getElementById('st-n').value;STATE.settings.address=document.getElementById('st-a').value;STATE.settings.phone=document.getElementById('st-p').value;STATE.settings.tagline=document.getElementById('st-t').value;saveST();showToast('Saved!')" style="background:var(--or);border:none;color:#fff;padding:10px 20px">Save Settings</button>
+<div class="lbl">Store Name</div><input id="st-n" value="${s["storeName"]}" style="margin-bottom:8px">
+<div class="lbl">Address</div><input id="st-a" value="${s["address"]}" style="margin-bottom:8px">
+<div class="lbl">Phone</div><input id="st-p" value="${s["phone"]}" style="margin-bottom:8px">
+<div class="lbl">Tagline</div><input id="st-t" value="${s["tagline"]}" style="margin-bottom:14px">
+<button onclick="STATE.settings['storeName']=document.getElementById('st-n').value;STATE.settings['address']=document.getElementById('st-a').value;STATE.settings['phone']=document.getElementById('st-p').value;STATE.settings['tagline']=document.getElementById('st-t').value;saveST();showToast('Saved!')" style="background:var(--or);border:none;color:#fff;padding:10px 20px">Save Settings</button>
 </div>`);
 }
 function renderApp(){
 const map={dashboard:renderDashboard,billing:renderBilling,inventory:renderInventory,customers:renderCustomers,sales:renderSales,purchases:renderPurchases,eod:renderEOD,expenses:renderExpenses,returns:renderReturns,vendors:renderVendors,gst:renderGST,personal:renderPersonal,settings:renderSettings};
-document.getElementById("root").innerHTML=(map[STATE.tab]||renderDashboard)();
+document.getElementById("root").innerHTML=(map[STATE["tab"]]||renderDashboard)();
 }
 if(isLoggedIn()){renderApp();}else{renderLogin(false);}
 </script>
