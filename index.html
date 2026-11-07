@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DUD OS 666 — Store Billing, Omnichannel API Hub & Personal Command Vault</title>
+  <title>DUD CLOSET — Ultra-Luxury Store OS, GST Excel & Omnichannel Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -12,13 +12,13 @@
     :root {
       --accent: #ef4444;
       --accent-glow: rgba(239, 68, 68, 0.45);
-      --bg-overlay: rgba(8, 8, 12, 0.84);
+      --bg-overlay: rgba(7, 7, 10, 0.85);
       --bg-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=2000&q=80');
     }
     [data-theme="cyber-gold"] {
       --accent: #f59e0b;
       --accent-glow: rgba(245, 158, 11, 0.45);
-      --bg-overlay: rgba(12, 10, 6, 0.85);
+      --bg-overlay: rgba(10, 8, 5, 0.86);
       --bg-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=2000&q=80');
     }
     [data-theme="neon-venom"] {
@@ -30,7 +30,7 @@
     [data-theme="velvet-runway"] {
       --accent: #ec4899;
       --accent-glow: rgba(236, 72, 153, 0.45);
-      --bg-overlay: rgba(14, 6, 16, 0.84);
+      --bg-overlay: rgba(14, 6, 16, 0.85);
       --bg-image: url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=2000&q=80');
     }
 
@@ -53,7 +53,7 @@
       position: fixed;
       inset: 0;
       background: radial-gradient(circle at 80% 15%, var(--accent-glow), transparent 45%), var(--bg-overlay);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(14px);
       z-index: -2;
       transition: all 0.5s ease;
     }
@@ -71,10 +71,10 @@
       background: rgba(17, 17, 24, 0.80);
       backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.75);
       transition: transform 0.2s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
-    .glass:hover { border-color: rgba(255, 255, 255, 0.2); }
+    .glass:hover { border-color: rgba(255, 255, 255, 0.22); }
     .neon-border {
       border: 1px solid var(--accent);
       box-shadow: 0 0 18px var(--accent-glow);
@@ -105,47 +105,47 @@
   <div class="bg-backdrop"></div>
   <canvas id="fxCanvas"></canvas>
 
-  <!-- TOP NAVIGATION -->
+  <!-- ULTRA-LUXURY HEADER (BOUND TO dc_sales, dc_cust, dc_prod, dc_ic) -->
   <header class="sticky top-0 z-40 glass border-b border-white/10 px-4 py-3">
     <div class="max-w-[1680px] mx-auto flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-xl accent-btn flex items-center justify-center font-bold text-xl tracking-tighter mono animate-float">
-          666
+        <div class="w-11 h-11 rounded-xl accent-btn flex items-center justify-center font-bold text-lg tracking-tighter mono animate-float">
+          DUD
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="font-bold text-lg md:text-xl tracking-tight">DUD CLOSET OS</h1>
+            <h1 class="font-bold text-lg md:text-xl tracking-tight">DUD CLOSET — STORE OS</h1>
             <span class="text-[11px] mono uppercase px-2 py-0.5 rounded-full bg-white/10 border border-white/15">GSTIN: 33CVFPP9066H1Z7</span>
-            <span id="apiGlobalBadge" class="text-[11px] mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">8 APIs Ready</span>
+            <span id="storageBadge" class="text-[11px] mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Live: dc_sales & dc_cust</span>
           </div>
-          <p class="text-xs text-slate-400">Thiru Vi Ka Nagar, Perambur, Chennai - 600082 • <span class="text-amber-300 mono">POS ID: SB640288</span></p>
+          <p class="text-xs text-slate-400">No.441, 21st Street, Thiru Vi Ka Nagar Quarters, Sembiyan, Perambur, Chennai - 600011 • Ph: 93451 25257 • <span class="italic text-amber-300">"When in doubt, wear DUD"</span></p>
         </div>
       </div>
 
       <!-- MODULE TABS -->
       <nav class="flex flex-wrap items-center gap-1 bg-black/40 p-1.5 rounded-xl border border-white/10">
         <button onclick="switchTab('pos')" id="tab-pos" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition tab-active">⚡ POS Terminal</button>
-        <button onclick="switchTab('apihub')" id="tab-apihub" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-sky-300 hover:text-white transition">🌐 Omnichannel & API Hub (8)</button>
-        <button onclick="switchTab('analytics')" id="tab-analytics" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition">📊 Sales Analytics</button>
-        <button onclick="switchTab('invoices')" id="tab-invoices" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition">🧾 Invoices & GST</button>
-        <button onclick="switchTab('inventory')" id="tab-inventory" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition">📦 SKU Inventory (26)</button>
-        <button onclick="switchTab('crm')" id="tab-crm" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition">👥 CRM (15)</button>
-        <button onclick="switchTab('personal')" id="tab-personal" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-300 hover:text-white transition">🔒 Personal & Loan Vault</button>
+        <button onclick="switchTab('invoices')" id="tab-invoices" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition">🧾 Sales (`dc_sales`: <span id="navSalesCount">0</span>)</button>
+        <button onclick="switchTab('crm')" id="tab-crm" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition">👥 Customers (`dc_cust`: <span id="navCustCount">0</span>)</button>
+        <button onclick="switchTab('inventory')" id="tab-inventory" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition">📦 Inventory (`dc_prod`: <span id="navProdCount">0</span>)</button>
+        <button onclick="switchTab('analytics')" id="tab-analytics" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition">📊 Day/Month/Year</button>
+        <button onclick="switchTab('apihub')" id="tab-apihub" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-sky-300 hover:text-white transition">🌐 Omnichannel APIs (8)</button>
+        <button onclick="switchTab('personal')" id="tab-personal" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-amber-300 hover:text-white transition">🔒 Personal & Loans</button>
       </nav>
 
-      <!-- CONTROLS & DESKTOP SYNC -->
+      <!-- COUTURE THEME & EXCEL CONTROLS -->
       <div class="flex items-center gap-2">
         <select id="themeSelector" onchange="setTheme(this.value)" class="bg-black/60 text-xs border border-white/15 rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none">
-          <option value="spider">🕷️ Spider-Verse Red (Alt+1)</option>
-          <option value="cyber-gold">⚡ Cyber Gold (Alt+2)</option>
-          <option value="neon-venom">🧪 Neon Venom (Alt+3)</option>
+          <option value="spider">🕷️ Obsidian Crimson (Alt+1)</option>
+          <option value="cyber-gold">⚡ Champagne Gold (Alt+2)</option>
+          <option value="neon-venom">🧪 Venom Emerald (Alt+3)</option>
           <option value="velvet-runway">🌸 Velvet Runway (Alt+4)</option>
         </select>
         <button onclick="toggleAnimations()" id="animBtn" class="px-2.5 py-1.5 rounded-lg text-xs border border-white/15 bg-white/5 hover:bg-white/10 mono" title="Hotkey: Alt + A">
           ✨ FX: ON
         </button>
-        <button onclick="openDesktopSyncModal()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-sky-600/30 border border-sky-500/40 text-sky-200 hover:bg-sky-600/50">
-          🔄 Desktop Sync
+        <button onclick="openStorageInspectorModal()" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-sky-600/30 border border-sky-500/40 text-sky-200 hover:bg-sky-600/50">
+          🔄 Backup / Restore
         </button>
         <button onclick="exportFullGSTR1Excel()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg">
           📥 GST Excel
@@ -156,22 +156,22 @@
 
   <main class="max-w-[1680px] mx-auto p-4 md:p-6">
 
-    <!-- ==================== 1. POS TERMINAL TAB ==================== -->
+    <!-- ==================== 1. POS BILLING TERMINAL ==================== -->
     <section id="view-pos" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       <div class="lg:col-span-8 space-y-4">
         <div class="glass rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
           <div class="flex-1 min-w-[220px]">
-            <input id="posSearch" oninput="renderPOSCatalog()" type="text" placeholder="Scan or search SKU (DCPRT, DCTOP, DCDNP, DCFP, DCBLT, DCCTR, DCK2P...) [Press '/']" class="w-full bg-black/50 border border-white/15 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-red-500" />
+            <input id="posSearch" oninput="renderPOSCatalog()" type="text" placeholder="Scan SKU or search item (Denim Pant, Tops, Shirt, DC 250 TOP, Skirts, Kurti, Saree, Footwear...) [Press '/']" class="w-full bg-black/50 border border-white/15 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-red-500" />
           </div>
           <div class="flex flex-wrap gap-1.5" id="posCategoryFilters"></div>
         </div>
 
         <div class="glass rounded-2xl p-3.5 border-l-4 border-l-amber-400 flex flex-wrap items-center justify-between gap-2 text-xs">
           <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold mono">OMNICHANNEL POS</span>
-            <span>Auto-deducts stock across <strong>Store + Hostinger + Amazon + Flipkart + Meesho</strong> & triggers <strong>WhatsApp Business Cloud API</strong> receipt!</span>
+            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold mono">NATIVE dc_sales ENGINE</span>
+            <span>Every bill saves directly to <strong>`dc_sales`</strong> & <strong>`dc_cust`</strong> and downloads as <strong>`<Invoice_No>.pdf`</strong> in your exact thermal format!</span>
           </div>
-          <button onclick="openCustomItemModal()" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 font-semibold text-white">+ Custom Item</button>
+          <button onclick="openCustomItemModal()" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 font-semibold text-white">+ Custom Item / Price</button>
         </div>
 
         <div id="posProductGrid" class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3.5"></div>
@@ -181,8 +181,8 @@
         <div class="glass rounded-2xl p-5 sticky top-20 space-y-4 neon-border">
           <div class="flex items-center justify-between border-b border-white/10 pb-3">
             <div>
-              <span class="text-xs text-slate-400 uppercase">Next Invoice No.</span>
-              <h2 id="nextInvoiceLabel" class="text-lg font-bold mono text-amber-400">DC-0082</h2>
+              <span class="text-xs text-slate-400 uppercase">Next Invoice (`dc_ic`)</span>
+              <h2 id="nextInvoiceLabel" class="text-lg font-bold mono text-amber-400">DC-0108</h2>
             </div>
             <div class="text-right">
               <span class="text-xs text-slate-400">Bill Date</span>
@@ -191,15 +191,12 @@
           </div>
 
           <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <label class="text-xs text-slate-300 font-semibold">Customer Details (Predictive CRM)</label>
-              <select id="crmQuickSelect" onchange="fillCustomerFromCRM(this.value)" class="bg-black/60 border border-white/15 rounded-lg px-2 py-1 text-xs text-amber-300">
-                <option value="">⚡ Select Customer...</option>
-              </select>
-            </div>
+            <select id="crmQuickSelect" onchange="fillCustomerFromCRM(this.value)" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-amber-300">
+              <option value="">⚡ Select Customer from dc_cust...</option>
+            </select>
             <div class="grid grid-cols-2 gap-2">
-              <input id="custName" type="text" placeholder="Customer Name" class="bg-black/50 border border-white/15 rounded-xl px-3 py-2 text-sm" />
-              <input id="custPhone" type="text" placeholder="WhatsApp 10-digit No." class="bg-black/50 border border-white/15 rounded-xl px-3 py-2 text-sm mono" />
+              <input id="custName" type="text" placeholder="Customer Name (e.g. viki)" class="bg-black/50 border border-white/15 rounded-xl px-3 py-2 text-sm" />
+              <input id="custPhone" type="text" placeholder="10-Digit Phone" class="bg-black/50 border border-white/15 rounded-xl px-3 py-2 text-sm mono" />
             </div>
           </div>
 
@@ -208,312 +205,54 @@
           <div class="bg-black/50 rounded-xl p-3.5 space-y-1.5 text-xs border border-white/10">
             <div class="flex justify-between text-slate-300">
               <span>Gross Subtotal</span>
-              <span id="cartGross" class="mono">₹0.00</span>
+              <span id="cartGross" class="mono">₹0</span>
             </div>
             <div class="flex justify-between text-amber-400">
-              <span>Customer Saved / Discount (₹)</span>
+              <span>Discount / Saved (₹)</span>
               <div class="flex items-center gap-1">
                 <span>-₹</span>
-                <input id="manualDiscount" oninput="renderCart()" type="number" min="0" value="0" class="w-16 bg-black border border-white/20 rounded px-1.5 py-0.5 text-right mono text-amber-300" />
+                <input id="manualDiscount" oninput="renderCart()" type="number" min="0" value="0" class="w-20 bg-black border border-white/20 rounded px-1.5 py-0.5 text-right mono text-amber-300" />
               </div>
             </div>
             <div class="flex justify-between text-slate-400">
-              <span>Taxable Value (Reverse GST)</span>
+              <span>Taxable Value (Excl. GST)</span>
               <span id="cartTaxable" class="mono">₹0.00</span>
             </div>
             <div class="flex justify-between text-slate-400">
-              <span>CGST + SGST (Included)</span>
+              <span>Included CGST + SGST</span>
               <span id="cartGST" class="mono">₹0.00</span>
             </div>
             <div class="flex justify-between text-base font-bold text-white pt-2 border-t border-white/10">
-              <span>Final Total (MRP Incl.)</span>
+              <span>TOTAL (Tax Inclusive)</span>
               <span id="cartNetTotal" class="mono text-xl text-emerald-400">₹0</span>
             </div>
           </div>
 
           <div class="grid grid-cols-4 gap-1.5">
-            <button onclick="setPaymentMode('UPI')" id="pay-UPI" class="py-2 rounded-xl text-xs font-bold border border-emerald-500 bg-emerald-500/20 text-emerald-300">📱 UPI</button>
-            <button onclick="setPaymentMode('Cash')" id="pay-Cash" class="py-2 rounded-xl text-xs font-bold border border-white/15 bg-black/40 text-slate-300">💵 Cash</button>
-            <button onclick="setPaymentMode('Card')" id="pay-Card" class="py-2 rounded-xl text-xs font-bold border border-white/15 bg-black/40 text-slate-300">💳 Card</button>
-            <button onclick="setPaymentMode('Razorpay')" id="pay-Razorpay" class="py-2 rounded-xl text-xs font-bold border border-white/15 bg-black/40 text-slate-300">⚡ Rzp</button>
+            <button onclick="setPaymentMode('UPI')" id="pay-UPI" class="py-2 rounded-xl text-xs font-bold border border-emerald-500 bg-emerald-500/20 text-emerald-300">UPI</button>
+            <button onclick="setPaymentMode('Cash')" id="pay-Cash" class="py-2 rounded-xl text-xs font-bold border border-white/15 bg-black/40 text-slate-300">Cash</button>
+            <button onclick="setPaymentMode('Card')" id="pay-Card" class="py-2 rounded-xl text-xs font-bold border border-white/15 bg-black/40 text-slate-300">Card</button>
+            <button onclick="setPaymentMode('Razorpay')" id="pay-Razorpay" class="py-2 rounded-xl text-xs font-bold border border-white/15 bg-black/40 text-slate-300">Rzp</button>
           </div>
 
           <div class="grid grid-cols-2 gap-2.5 pt-1">
-            <button onclick="completeSale(false)" class="accent-btn py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-1.5">
-              💾 Save & PDF Bill
-            </button>
-            <button onclick="completeSale(true)" class="bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-1.5 shadow-lg">
-              💬 Cloud WA + PDF
-            </button>
+            <button onclick="completeSale(false)" class="accent-btn py-3 rounded-xl font-bold text-sm">💾 Save & PDF Bill</button>
+            <button onclick="completeSale(true)" class="bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-bold text-sm shadow-lg">💬 WhatsApp + PDF</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== 2. OMNICHANNEL & API HUB TAB (ALL 8 INTEGRATIONS) ==================== -->
-    <section id="view-apihub" class="hidden space-y-6">
-      <!-- Top Security & API Vault Bar -->
-      <div class="glass rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4 border-l-4 border-l-sky-400">
-        <div>
-          <div class="flex items-center gap-2">
-            <h2 class="text-xl font-bold">🌐 Omnichannel Command & Encrypted API Connector Hub</h2>
-            <span class="px-2.5 py-0.5 rounded-full text-xs bg-sky-500/20 text-sky-300 mono">ZERO KEYS EXPOSED IN CODE</span>
-          </div>
-          <p class="text-xs text-slate-400 mt-1">All API keys are stored strictly inside your browser's local vault (`DUD_OS_API_VAULT`) so GitHub secret scanners never flag your repo.</p>
-        </div>
-        <div class="flex flex-wrap gap-2">
-          <button onclick="openApiConfigModal()" class="accent-btn px-4 py-2 rounded-xl text-xs font-bold">🔑 Configure API Keys & Tokens</button>
-          <button onclick="syncAllChannelsNow()" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white">🔄 Sync All 8 Channels Now</button>
-        </div>
-      </div>
-
-      <!-- 8 Connected Platform Status Cards -->
-      <div id="apiConnectorCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-
-      <!-- Middle Grid: Marketplace Order Queue + Shiprocket / Razorpay Dispatch -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- Unified Marketplace & Website Orders (Amazon, Flipkart, Meesho, Hostinger) -->
-        <div class="lg:col-span-7 glass rounded-2xl p-5 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="font-bold text-base">📦 Unified Marketplace & Hostinger Order Queue</h3>
-              <p class="text-xs text-slate-400">Amazon Seller • Flipkart Seller • Meesho Seller • `www.dudcloset.com` (Razorpay)</p>
-            </div>
-            <div class="flex gap-2">
-              <button onclick="pullSimulatedMarketplaceOrder()" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold">+ Pull Live Order</button>
-              <label class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold cursor-pointer">
-                📥 Import Meesho/Flipkart CSV
-                <input type="file" accept=".csv" onchange="importMarketplaceCSV(event)" class="hidden" />
-              </label>
-            </div>
-          </div>
-
-          <div class="overflow-x-auto max-h-80">
-            <table class="w-full text-left text-xs">
-              <thead class="text-slate-400 border-b border-white/10 uppercase">
-                <tr>
-                  <th class="py-2.5 px-2">Channel</th>
-                  <th class="py-2.5 px-2">Order ID</th>
-                  <th class="py-2.5 px-2">Customer / City</th>
-                  <th class="py-2.5 px-2">SKU</th>
-                  <th class="py-2.5 px-2 text-right">Amount</th>
-                  <th class="py-2.5 px-2 text-center">Payment / Gateway</th>
-                  <th class="py-2.5 px-2 text-center">Shiprocket AWB Action</th>
-                </tr>
-              </thead>
-              <tbody id="omnichannelOrdersBody" class="divide-y divide-white/10 mono"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Shiprocket Live AWB & Razorpay Payment Link Generator -->
-        <div class="lg:col-span-5 glass rounded-2xl p-5 space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-bold text-base">🚀 Shiprocket Dispatch & Razorpay Link Studio</h3>
-            <span class="text-[11px] mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300">SRV27HR000431885 Active</span>
-          </div>
-
-          <!-- Shiprocket Live Auth & Order Push -->
-          <div class="bg-black/50 rounded-xl p-4 border border-white/10 space-y-3 text-xs">
-            <div class="flex items-center justify-between">
-              <span class="font-bold text-sky-300">🚚 Shiprocket API (`apiv2.shiprocket.in/v1/external`)</span>
-              <button onclick="authenticateShiprocketLive()" class="px-2.5 py-1 rounded bg-sky-600 hover:bg-sky-500 text-white font-bold">Test JWT Login</button>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <input id="srOrderCustomer" type="text" placeholder="Receiver Name" class="bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5" />
-              <input id="srOrderPincode" type="text" placeholder="Delivery Pincode (e.g. 600082)" class="bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <input id="srOrderSku" type="text" value="DUD-SH-BLK" placeholder="SKU Code" class="bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-              <input id="srOrderAmount" type="number" value="899" placeholder="Order Value (₹)" class="bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-            </div>
-            <button onclick="createShiprocketShipment()" class="w-full py-2 rounded-xl font-bold bg-purple-600 hover:bg-purple-500 text-white">
-              📦 Generate Shiprocket Order & Assign AWB
-            </button>
-          </div>
-
-          <!-- Razorpay Instant Payment Link for Hostinger / IG DM Orders -->
-          <div class="bg-black/50 rounded-xl p-4 border border-white/10 space-y-3 text-xs">
-            <div class="flex items-center justify-between">
-              <span class="font-bold text-indigo-300">⚡ Razorpay (`dudcloset.com` & IG DM Checkout)</span>
-              <span class="mono text-[10px] text-emerald-400">Webhook Ready</span>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <input id="rzpCustName" type="text" placeholder="Customer Name" class="bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5" />
-              <input id="rzpAmount" type="number" placeholder="Amount (₹)" value="899" class="bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-            </div>
-            <button onclick="generateRazorpayCheckoutLink()" class="w-full py-2 rounded-xl font-bold bg-indigo-600 hover:bg-indigo-500 text-white">
-              🔗 Create Razorpay Link & Send on WhatsApp
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom Grid: Dual Instagram Graph API (@dud__official + @dudclosetofficial) & GMB Perambur -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- Dual Instagram Graph API -->
-        <div class="lg:col-span-7 glass rounded-2xl p-5 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="font-bold text-base">📸 Dual Meta / Instagram Graph API Command</h3>
-              <p class="text-xs text-slate-400">Connected to <strong>@dud__official</strong> (Brand Ethos) & <strong>@dudclosetofficial</strong> (Perambur Store Foot-Traffic)</p>
-            </div>
-            <div class="flex gap-1.5">
-              <button onclick="switchIGAccount('BRAND')" id="btnIgBrand" class="px-3 py-1 rounded-lg text-xs font-bold accent-btn">@dud__official (Brand)</button>
-              <button onclick="switchIGAccount('STORE')" id="btnIgStore" class="px-3 py-1 rounded-lg text-xs font-bold bg-white/10 text-slate-300">@dudclosetofficial (Store)</button>
-            </div>
-          </div>
-
-          <div id="igDashboardContent" class="grid grid-cols-1 md:grid-cols-3 gap-3.5"></div>
-
-          <div class="bg-black/40 rounded-xl p-3.5 border border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
-            <div class="flex-1 min-w-[220px]">
-              <input id="igReelCaption" type="text" placeholder="Write 9:16 Reel / Carousel Caption (e.g. 3 Tops @ ₹999 live at TVK Nagar Perambur!)..." class="w-full bg-black/60 border border-white/15 rounded-lg px-3 py-2 text-xs" />
-            </div>
-            <button onclick="publishIGMediaContainer()" class="px-4 py-2 rounded-xl font-bold bg-pink-600 hover:bg-pink-500 text-white">
-              🚀 Publish via Graph API (`/{IG_ID}/media`)
-            </button>
-          </div>
-        </div>
-
-        <!-- Google Business Profile (GMB) Perambur Store -->
-        <div class="lg:col-span-5 glass rounded-2xl p-5 space-y-4">
-          <div class="flex items-center justify-between">
-            <div>
-              <h3 class="font-bold text-base">📍 Google Business Profile (GMB — Perambur)</h3>
-              <p class="text-xs text-slate-400">DUD CLOSET, Thiru Vi Ka Nagar • Linked to `dudcloset.com/connect`</p>
-            </div>
-            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-xs font-bold mono">4.9 ★ Verified</span>
-          </div>
-
-          <div class="grid grid-cols-3 gap-2.5 text-center">
-            <div class="bg-black/40 border border-white/10 rounded-xl p-3">
-              <span class="text-[11px] text-slate-400 block">Interactions</span>
-              <strong id="gmbInteractions" class="text-lg font-extrabold mono text-emerald-400">57</strong>
-            </div>
-            <div class="bg-black/40 border border-white/10 rounded-xl p-3">
-              <span class="text-[11px] text-slate-400 block">Direction Clicks</span>
-              <strong id="gmbDirections" class="text-lg font-extrabold mono text-amber-300">49</strong>
-            </div>
-            <div class="bg-black/40 border border-white/10 rounded-xl p-3">
-              <span class="text-[11px] text-slate-400 block">Website Visits</span>
-              <strong id="gmbWebVisits" class="text-lg font-extrabold mono text-sky-300">4</strong>
-            </div>
-          </div>
-
-          <div class="bg-black/40 border border-white/10 rounded-xl p-3.5 space-y-2 text-xs">
-            <div class="font-semibold text-slate-200">📢 Publish GMB Store Offer Post (`localPosts` API)</div>
-            <div class="flex gap-2">
-              <input id="gmbPostInput" type="text" placeholder="e.g. Visit DUD CLOSET TVK Nagar for 3-for-₹999 Western Tops!" class="flex-1 bg-black/60 border border-white/15 rounded-lg px-3 py-1.5" />
-              <button onclick="publishGMBPost()" class="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold">Post</button>
-            </div>
-          </div>
-
-          <!-- Live API Dispatch Log -->
-          <div class="bg-black/70 border border-white/10 rounded-xl p-3 space-y-1">
-            <div class="flex justify-between text-[11px] text-slate-400">
-              <span>LIVE API TELEMETRY CONSOLE</span>
-              <button onclick="document.getElementById('apiConsoleLog').innerHTML=''" class="hover:text-white">Clear</button>
-            </div>
-            <div id="apiConsoleLog" class="h-24 overflow-y-auto text-[11px] mono text-emerald-400 space-y-1"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 3. MULTI-DIMENSIONAL SALES ANALYTICS TAB ==================== -->
-    <section id="view-analytics" class="hidden space-y-6">
-      <div class="glass rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 class="text-xl font-bold">📊 Complete Store Sales Intelligence (Updated Through 06/11/2026)</h2>
-          <p class="text-xs text-slate-400">Includes all DC-00XX Invoices + SBI POS E-Statement (`SB640288`) Settlements through Nov 5–6, 2026</p>
-        </div>
-        <div class="flex flex-wrap items-center gap-3">
-          <div class="flex items-center gap-2 text-xs">
-            <span class="text-slate-400">Inspect Date:</span>
-            <input id="analyticsDateFilter" type="date" onchange="renderAnalytics()" class="bg-black/60 border border-white/15 rounded-lg px-3 py-1.5 mono" />
-          </div>
-          <div class="flex items-center gap-2 text-xs">
-            <span class="text-slate-400">Year:</span>
-            <select id="analyticsYearFilter" onchange="renderAnalytics()" class="bg-black/60 border border-white/15 rounded-lg px-3 py-1.5 mono">
-              <option value="ALL" selected>All Years (2025 + 2026)</option>
-              <option value="2026">2026</option>
-              <option value="2025">2025</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="analyticsKPICards"></div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div class="lg:col-span-7 glass rounded-2xl p-5 space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-bold text-base">📅 Day-Wise Sales Ledger (Every Active Store Date up to 06/11/2026)</h3>
-            <span class="text-xs text-slate-400 mono">Click any date to inspect</span>
-          </div>
-          <div class="overflow-x-auto max-h-96">
-            <table class="w-full text-left text-xs">
-              <thead class="text-slate-400 border-b border-white/10 uppercase">
-                <tr>
-                  <th class="py-2.5 px-2">Date</th>
-                  <th class="py-2.5 px-2">Bills</th>
-                  <th class="py-2.5 px-2">Items</th>
-                  <th class="py-2.5 px-2">UPI (₹)</th>
-                  <th class="py-2.5 px-2">Cash/POS (₹)</th>
-                  <th class="py-2.5 px-2">Saved (₹)</th>
-                  <th class="py-2.5 px-2 text-right">Day Total (₹)</th>
-                </tr>
-              </thead>
-              <tbody id="dayWiseTableBody" class="divide-y divide-white/5 mono"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="lg:col-span-5 glass rounded-2xl p-5 space-y-4">
-          <h3 class="font-bold text-base">🏷️ Category-Wise Sales Performance</h3>
-          <div id="categorySalesList" class="space-y-3"></div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div class="lg:col-span-7 glass rounded-2xl p-5 space-y-4">
-          <h3 class="font-bold text-base">📆 Monthly Sales Breakdown (July – November 2026)</h3>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-              <thead class="text-slate-400 border-b border-white/10 uppercase">
-                <tr>
-                  <th class="py-2.5 px-2">Month</th>
-                  <th class="py-2.5 px-2">Records</th>
-                  <th class="py-2.5 px-2">Taxable (₹)</th>
-                  <th class="py-2.5 px-2">Total GST (₹)</th>
-                  <th class="py-2.5 px-2 text-right">Net Revenue (₹)</th>
-                </tr>
-              </thead>
-              <tbody id="monthlyTableBody" class="divide-y divide-white/5 mono"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="lg:col-span-5 glass rounded-2xl p-5 space-y-4">
-          <h3 class="font-bold text-base">🏆 Yearly Revenue & Tax Summary</h3>
-          <div id="yearlySummaryCards" class="space-y-3"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 4. INVOICES & GST EXCEL TAB ==================== -->
-    <section id="view-invoices" class="hidden space-y-6">
+    <!-- ==================== 2. COMPLETE SALES HISTORY (`dc_sales`) ==================== -->
+    <section id="view-invoices" class="hidden space-y-4">
       <div class="glass rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 class="text-xl font-bold">🧾 Complete Sales History & WhatsApp PDF Archive (Through 06/11/2026)</h2>
-          <p class="text-xs text-slate-400">Includes exact Customer Savings (`₹300`, `₹200`, `₹50`, `₹600`) on October Bills + SBI POS Terminal `SB640288` settlements</p>
+          <h2 class="text-xl font-bold">🧾 Complete Store Sales History (`dc_sales`)</h2>
+          <p class="text-xs text-slate-400">Reads all bills directly from your browser's `dc_sales` storage + verified uploaded PDFs (`DC-0095`, `DC-0103`–`DC-0107`)</p>
         </div>
         <div class="flex flex-wrap gap-2">
-          <input id="invSearch" oninput="renderInvoiceTable()" type="text" placeholder="Search Invoice No., Customer, Phone..." class="bg-black/50 border border-white/15 rounded-xl px-3.5 py-2 text-xs" />
-          <button onclick="exportFullGSTR1Excel()" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white">
-            📊 Download 4-Sheet GST Excel (.xlsx)
-          </button>
+          <input id="invSearch" oninput="renderInvoiceTable()" type="text" placeholder="Search Invoice No (DC-0107), Customer, Phone, Date..." class="bg-black/50 border border-white/15 rounded-xl px-3.5 py-2 text-xs min-w-[250px]" />
+          <button onclick="exportFullGSTR1Excel()" class="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white">📊 Download 4-Sheet GST Excel (.xlsx)</button>
         </div>
       </div>
 
@@ -526,13 +265,13 @@
                 <th class="py-3 px-4">Date</th>
                 <th class="py-3 px-4">Customer</th>
                 <th class="py-3 px-4">Phone</th>
-                <th class="py-3 px-4">Exact Items Purchased</th>
+                <th class="py-3 px-4">Items Purchased</th>
                 <th class="py-3 px-4">Mode</th>
-                <th class="py-3 px-4 text-right">Saved (₹)</th>
+                <th class="py-3 px-4 text-right">Saved</th>
                 <th class="py-3 px-4 text-right">Taxable</th>
                 <th class="py-3 px-4 text-right">GST</th>
                 <th class="py-3 px-4 text-right">Total (₹)</th>
-                <th class="py-3 px-4 text-center">Actions</th>
+                <th class="py-3 px-4 text-center">Receipt PDF</th>
               </tr>
             </thead>
             <tbody id="invoiceTableBody" class="divide-y divide-white/10"></tbody>
@@ -541,16 +280,27 @@
       </div>
     </section>
 
-    <!-- ==================== 5. SKU INVENTORY TAB ==================== -->
-    <section id="view-inventory" class="hidden space-y-6">
+    <!-- ==================== 3. COMPLETE CUSTOMERS (`dc_cust`) ==================== -->
+    <section id="view-crm" class="hidden space-y-4">
       <div class="glass rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 class="text-xl font-bold">📦 Master Apparel & Brand Inventory (All 26 Corrected SKUs)</h2>
-          <p class="text-xs text-slate-400">Opening Stock, Sold Qty from Verified Bills, and Live Remaining Stock</p>
+          <h2 class="text-xl font-bold">👥 Complete Customer Directory (`dc_cust`)</h2>
+          <p class="text-xs text-slate-400">Reads all customers from `dc_cust` and links every bill from `dc_sales` automatically</p>
+        </div>
+        <input id="crmSearch" oninput="renderCRM()" type="text" placeholder="Search customer name or phone..." class="bg-black/50 border border-white/15 rounded-xl px-3.5 py-2 text-xs min-w-[250px]" />
+      </div>
+      <div id="crmGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <!-- ==================== 4. MASTER INVENTORY (`dc_prod`) ==================== -->
+    <section id="view-inventory" class="hidden space-y-4">
+      <div class="glass rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-bold">📦 Master Apparel Inventory (`dc_prod`)</h2>
+          <p class="text-xs text-slate-400">Directly reads and updates your `dc_prod` inventory catalog</p>
         </div>
         <button onclick="openAddInventoryModal()" class="accent-btn px-4 py-2 rounded-xl text-xs font-bold">+ Add New SKU</button>
       </div>
-
       <div class="glass rounded-2xl overflow-hidden">
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
@@ -559,11 +309,9 @@
                 <th class="py-3 px-4">SKU Code</th>
                 <th class="py-3 px-4">Product Name</th>
                 <th class="py-3 px-4">Category</th>
-                <th class="py-3 px-4">HSN</th>
-                <th class="py-3 px-4 text-right">Purchase Cost (₹)</th>
+                <th class="py-3 px-4 text-right">Cost (₹)</th>
                 <th class="py-3 px-4 text-right">Selling Price (₹)</th>
-                <th class="py-3 px-4 text-center">Opening Stock</th>
-                <th class="py-3 px-4 text-center">Current Stock</th>
+                <th class="py-3 px-4 text-center">Live Stock</th>
                 <th class="py-3 px-4 text-center">Quick Adjust</th>
               </tr>
             </thead>
@@ -573,19 +321,77 @@
       </div>
     </section>
 
-    <!-- ==================== 6. CUSTOMER CRM TAB ==================== -->
-    <section id="view-crm" class="hidden space-y-6">
-      <div class="glass rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+    <!-- ==================== 5. DAY / MONTH / YEAR / CATEGORY ANALYTICS ==================== -->
+    <section id="view-analytics" class="hidden space-y-6">
+      <div class="glass rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-bold">👥 Customer CRM & Purchase Directory (All 15 Profiles)</h2>
-          <p class="text-xs text-slate-400">Verified phone numbers, channels, linked invoices, and total spend</p>
+          <h2 class="text-xl font-bold">📊 Complete Store Sales Intelligence (`dc_sales`)</h2>
+          <p class="text-xs text-slate-400">Daily Date Inspector • Day-Wise Ledger • Monthly Breakdown • Yearly Summary • Category Sales</p>
         </div>
-        <input id="crmSearch" oninput="renderCRM()" type="text" placeholder="Search customer name or phone..." class="bg-black/50 border border-white/15 rounded-xl px-3.5 py-2 text-xs" />
+        <div class="flex flex-wrap items-center gap-3 text-xs">
+          <span class="text-slate-400">Inspect Date:</span>
+          <input id="analyticsDateFilter" type="date" value="2026-11-06" onchange="renderAnalytics()" class="bg-black/60 border border-white/15 rounded-lg px-3 py-1.5 mono text-white" />
+        </div>
       </div>
-      <div id="crmGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="analyticsKPICards"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 glass rounded-2xl p-5 space-y-3">
+          <h3 class="font-bold text-base">📅 Day-Wise Sales Breakdown (Click any row to inspect)</h3>
+          <div class="overflow-x-auto max-h-96">
+            <table class="w-full text-left text-xs mono">
+              <thead class="text-slate-400 border-b border-white/10 uppercase">
+                <tr>
+                  <th class="py-2.5 px-2">Date</th>
+                  <th class="py-2.5 px-2">Bills</th>
+                  <th class="py-2.5 px-2">Items Sold</th>
+                  <th class="py-2.5 px-2">Cash (₹)</th>
+                  <th class="py-2.5 px-2">UPI/Other (₹)</th>
+                  <th class="py-2.5 px-2 text-right">Day Total (₹)</th>
+                </tr>
+              </thead>
+              <tbody id="dayWiseTableBody" class="divide-y divide-white/5"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 glass rounded-2xl p-5 space-y-3">
+          <h3 class="font-bold text-base">🏷️ Item & Category Sales Breakdown</h3>
+          <div id="categorySalesList" class="space-y-2.5 max-h-96 overflow-y-auto pr-1"></div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="glass rounded-2xl p-5 space-y-3">
+          <h3 class="font-bold text-base">📆 Monthly Sales Breakdown</h3>
+          <table class="w-full text-left text-xs mono">
+            <thead class="text-slate-400 border-b border-white/10 uppercase">
+              <tr><th class="py-2">Month</th><th class="py-2">Bills</th><th class="py-2">Taxable (₹)</th><th class="py-2">GST (₹)</th><th class="py-2 text-right">Total (₹)</th></tr>
+            </thead>
+            <tbody id="monthlyTableBody" class="divide-y divide-white/5"></tbody>
+          </table>
+        </div>
+        <div class="glass rounded-2xl p-5 space-y-3">
+          <h3 class="font-bold text-base">🏆 Yearly Revenue Summary</h3>
+          <div id="yearlySummaryCards" class="space-y-3"></div>
+        </div>
+      </div>
     </section>
 
-    <!-- ==================== 7. PIN-PROTECTED PERSONAL & LOAN VAULT ==================== -->
+    <!-- ==================== 6. OMNICHANNEL & 8-API HUB ==================== -->
+    <section id="view-apihub" class="hidden space-y-6">
+      <div class="glass rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4 border-l-4 border-l-sky-400">
+        <div>
+          <h2 class="text-xl font-bold">🌐 Omnichannel Command & Serverless `/api/webhook` Hub</h2>
+          <p class="text-xs text-slate-400">Connected to WhatsApp Cloud API, Amazon, Flipkart, Meesho, Hostinger (`dudcloset.com`) + Razorpay, Shiprocket, `@dud__official` & `@dudclosetofficial`, and GMB Perambur</p>
+        </div>
+        <button onclick="testServerlessWebhook()" class="accent-btn px-4 py-2 rounded-xl text-xs font-bold">⚡ Test `/api/webhook` Connection</button>
+      </div>
+      <div id="apiHubCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+    </section>
+
+    <!-- ==================== 7. PERSONAL & LOAN VAULT ==================== -->
     <section id="view-personal" class="hidden space-y-6">
       <div id="vaultLockScreen" class="max-w-md mx-auto glass rounded-3xl p-8 text-center space-y-5 my-10 neon-border">
         <div class="w-16 h-16 rounded-2xl accent-btn mx-auto flex items-center justify-center text-3xl">🔐</div>
@@ -594,86 +400,43 @@
           <p class="text-xs text-slate-400 mt-1">Protected by 4-Digit Security PIN (Default: <code class="text-amber-300">6666</code>)</p>
         </div>
         <input id="vaultPinInput" type="password" maxlength="8" placeholder="••••" onkeydown="if(event.key==='Enter') unlockVault()" class="w-48 text-center text-2xl tracking-[0.5em] mono bg-black/70 border border-white/20 rounded-xl py-2.5 focus:outline-none focus:border-red-500" />
-        <div id="vaultPinError" class="text-xs text-red-400 hidden">Incorrect PIN. Use Master Recovery Key below if forgotten.</div>
         <div class="flex flex-col gap-2">
           <button onclick="unlockVault()" class="accent-btn w-full py-3 rounded-xl font-bold text-sm">Unlock Personal Vault</button>
-          <button onclick="openPinResetModal()" class="text-xs text-slate-400 hover:text-amber-300 underline pt-1">Forgot or Want to Reset Password / PIN?</button>
+          <button onclick="changeVaultPin()" class="text-xs text-slate-400 hover:text-amber-300 underline pt-1">Reset Password / PIN (Recovery Key: DUD666)</button>
         </div>
       </div>
 
       <div id="vaultUnlockedContent" class="hidden space-y-6">
         <div class="glass rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4 border-l-4 border-l-red-500">
           <div>
-            <div class="flex items-center gap-2">
-              <h2 class="text-xl font-bold">🏦 Uploaded Personal Loan Ledger & EMI Reminder System</h2>
-              <span class="px-2.5 py-0.5 rounded-full text-xs bg-emerald-500/20 text-emerald-300 mono">EXACT UPLOADED DATA</span>
-            </div>
-            <p class="text-xs text-slate-400 mt-0.5">Switch between your <strong>Core 7-Loan Ledger (₹14,09,774 | ₹69,290.46 EMI)</strong> and <strong>Full 9-Loan Portfolio incl. Zype & Aditya Birla (₹15,99,747 | ₹82,617.46 EMI)</strong></p>
+            <h2 class="text-xl font-bold">🏦 Uploaded Personal Loan Portfolio & EMI Reminders</h2>
+            <p class="text-xs text-slate-400">Core 7 Uploaded Loans (`₹14,09,774` | `₹69,290.46/mo`) + Full 9 Active View (`₹15,99,747` | `₹82,617.46/mo`) + Closed SMFG</p>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <button onclick="openAddLoanModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20">+ Add Loan</button>
-            <button onclick="openPinResetModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">🔑 Reset PIN</button>
-            <button onclick="lockVault()" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-red-500/20 text-red-300 border border-red-500/40">🔒 Lock</button>
+          <div class="flex gap-2">
+            <button onclick="setLoanMode('CORE7')" id="btnCore7" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Core 7 Uploaded</button>
+            <button onclick="setLoanMode('FULL9')" id="btnFull9" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-300">Full 9 + Closed SMFG</button>
+            <button onclick="changeVaultPin()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300">🔑 Reset PIN</button>
           </div>
         </div>
-
         <div id="loanSummaryCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-
         <div class="glass rounded-2xl overflow-hidden">
-          <div class="p-4 border-b border-white/10 flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="font-bold text-base">📋 Exact Uploaded Loan Portfolio (Account IDs, Tenures, Balances & Due Dates)</h3>
-              <p class="text-xs text-slate-400">3rd–6th Axis Bank Debit Concentration: ₹73,332.41 (9-loan) / ₹60,005.41 (7-loan) • Next Due: 10th (`PPR008211288516`) & 15th (`SBI XXXXX625321`)</p>
-            </div>
-            <div class="flex flex-wrap gap-2 text-xs">
-              <button onclick="setLoanViewMode('CORE7')" id="btnLoanCore7" class="px-3 py-1.5 rounded-lg font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Core 7-Loan Ledger (₹14,09,774)</button>
-              <button onclick="setLoanViewMode('FULL9')" id="btnLoanFull9" class="px-3 py-1.5 rounded-lg font-bold bg-white/10 text-slate-300">Full 9-Loan + Closed SMFG (₹15,99,747)</button>
-            </div>
-          </div>
           <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
+            <table class="w-full text-left text-xs mono">
               <thead class="bg-black/60 text-slate-300 uppercase border-b border-white/10">
                 <tr>
-                  <th class="py-3 px-3">Priority</th>
-                  <th class="py-3 px-3">Lender Name</th>
-                  <th class="py-3 px-3">Account / Loan ID</th>
-                  <th class="py-3 px-3">Tenure (Start–End)</th>
-                  <th class="py-3 px-3 text-center">Rem. Mos</th>
+                  <th class="py-3 px-3">Rank</th>
+                  <th class="py-3 px-3">Lender</th>
+                  <th class="py-3 px-3">Account ID</th>
+                  <th class="py-3 px-3">Tenure</th>
                   <th class="py-3 px-3 text-right">APR %</th>
                   <th class="py-3 px-3 text-right">Sanctioned (₹)</th>
-                  <th class="py-3 px-3 text-right">Current Balance (₹)</th>
-                  <th class="py-3 px-3 text-right">Monthly EMI (₹)</th>
-                  <th class="py-3 px-3 text-center">Due Date & Status</th>
+                  <th class="py-3 px-3 text-right">Balance (₹)</th>
+                  <th class="py-3 px-3 text-right">EMI (₹)</th>
+                  <th class="py-3 px-3 text-center">Due Day</th>
                 </tr>
               </thead>
-              <tbody id="loanTableBody" class="divide-y divide-white/10 mono"></tbody>
+              <tbody id="loanTableBody" class="divide-y divide-white/10"></tbody>
             </table>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div class="lg:col-span-6 glass rounded-2xl p-5 space-y-4">
-            <h3 class="font-bold text-base">🚀 Debt Avalanche Prepayment Simulator</h3>
-            <p class="text-xs text-slate-400">Prioritize highest-APR NBFCs first: <strong>Northern Arc (29.99%) / Zype (30%) → DMI (26.50%) → Poonawalla (25.00%)</strong> while keeping low-APR bank loans on standard EMI.</p>
-            <div class="space-y-2">
-              <div class="flex justify-between text-xs">
-                <span>Monthly Extra Prepayment (incl. ₹7,799 freed from closed SMFG):</span>
-                <span id="simExtraLabel" class="font-bold mono text-amber-300">₹10,000 / month</span>
-              </div>
-              <input id="simExtraInput" type="range" min="2000" max="50000" step="1000" value="10000" oninput="runAvalancheSim()" class="w-full accent-red-500" />
-            </div>
-            <div id="avalancheSimResult" class="bg-black/50 rounded-xl p-4 border border-white/10 space-y-2 text-xs"></div>
-          </div>
-
-          <div class="lg:col-span-6 glass rounded-2xl p-5 space-y-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <h3 class="font-bold text-base">💰 12-Month Savings Fund & MUDRA Pipeline</h3>
-                <p class="text-xs text-slate-400">₹1,000/mo Savings Scheme + SBI MUDRA (₹7,00,000 Applied | ₹40k Monthly Store Surplus)</p>
-              </div>
-              <button onclick="addFundMemberPrompt()" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold">+ Enroller</button>
-            </div>
-            <div id="fundSchemeList" class="space-y-2 max-h-56 overflow-y-auto pr-1"></div>
           </div>
         </div>
       </div>
@@ -681,652 +444,315 @@
 
   </main>
 
-  <!-- ==================== API CREDENTIALS VAULT MODAL (LOCAL BROWSER ONLY) ==================== -->
-  <div id="apiConfigModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="glass rounded-3xl max-w-3xl w-full p-6 space-y-4 border border-white/20 max-h-[90vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-white/10 pb-3">
-        <div>
-          <h3 class="font-bold text-lg">🔑 Local Encrypted API Credential Vault (8 Integrations)</h3>
-          <p class="text-xs text-slate-400">Stored strictly in `localStorage` on this machine — never pushed to GitHub.</p>
-        </div>
-        <button onclick="closeApiConfigModal()" class="text-slate-400 hover:text-white text-xl">&times;</button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        <!-- 1. WhatsApp Business Cloud API -->
-        <div class="bg-black/50 p-3.5 rounded-xl border border-white/10 space-y-2">
-          <div class="font-bold text-emerald-400">1. WhatsApp Business Cloud API (Meta v21.0)</div>
-          <input id="cfg_wa_phone_id" type="text" placeholder="Phone Number ID (e.g. 10492839102)" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-          <input id="cfg_wa_token" type="password" placeholder="Permanent System User Access Token (EAAG...)" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-        </div>
-
-        <!-- 2. Shiprocket API -->
-        <div class="bg-black/50 p-3.5 rounded-xl border border-white/10 space-y-2">
-          <div class="font-bold text-purple-400">2. Shiprocket Shipping API (`apiv2.shiprocket.in`)</div>
-          <input id="cfg_sr_email" type="email" placeholder="Shiprocket API User Email" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-          <input id="cfg_sr_password" type="password" placeholder="Shiprocket API User Password / JWT" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-        </div>
-
-        <!-- 3. Hostinger + Razorpay Gateway -->
-        <div class="bg-black/50 p-3.5 rounded-xl border border-white/10 space-y-2">
-          <div class="font-bold text-indigo-400">3. Hostinger (`dudcloset.com`) + Razorpay Gateway</div>
-          <input id="cfg_rzp_key" type="text" placeholder="Razorpay Key ID (rzp_live_...)" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-          <input id="cfg_hostinger_webhook" type="text" placeholder="dudcloset.com Webhook / API Endpoint" value="https://www.dudcloset.com/api/orders" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-        </div>
-
-        <!-- 4. Amazon SP-API & Flipkart Seller API -->
-        <div class="bg-black/50 p-3.5 rounded-xl border border-white/10 space-y-2">
-          <div class="font-bold text-amber-400">4. Amazon SP-API & Flipkart Seller v3</div>
-          <input id="cfg_amz_token" type="password" placeholder="Amazon LWA Refresh Token / Seller ID" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-          <input id="cfg_fk_token" type="password" placeholder="Flipkart Application ID & Secret" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-        </div>
-
-        <!-- 5. Meesho Seller Hub & GMB -->
-        <div class="bg-black/50 p-3.5 rounded-xl border border-white/10 space-y-2">
-          <div class="font-bold text-pink-400">5. Meesho Seller Account & GMB Perambur</div>
-          <input id="cfg_meesho_id" type="text" placeholder="Meesho Supplier ID / API Token" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-          <input id="cfg_gmb_loc" type="text" placeholder="GMB Location ID (TVK Nagar, Perambur)" value="locations/dud-closet-perambur-600082" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-        </div>
-
-        <!-- 6. Dual Instagram Graph API -->
-        <div class="bg-black/50 p-3.5 rounded-xl border border-white/10 space-y-2">
-          <div class="font-bold text-rose-400">6. Dual Instagram (`@dud__official` & `@dudclosetofficial`)</div>
-          <input id="cfg_ig_brand_id" type="text" placeholder="@dud__official IG Business ID" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-          <input id="cfg_ig_store_id" type="text" placeholder="@dudclosetofficial IG Business ID" class="w-full bg-black/60 border border-white/15 rounded-lg px-2.5 py-1.5 mono" />
-        </div>
-      </div>
-
-      <div class="flex justify-end gap-2 pt-3 border-t border-white/10">
-        <button onclick="closeApiConfigModal()" class="px-4 py-2 rounded-xl text-xs bg-white/10">Cancel</button>
-        <button onclick="saveApiConfigVault()" class="accent-btn px-5 py-2 rounded-xl text-xs font-bold">💾 Save Keys to Local Vault</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== INVOICE PDF PREVIEW & WHATSAPP MODAL ==================== -->
+  <!-- ==================== EXACT THERMAL RECEIPT PDF MODAL (MATCHES 7.pdf - 11.pdf) ==================== -->
   <div id="invoiceModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="glass rounded-3xl max-w-lg w-full p-6 space-y-4 border border-white/20 max-h-[92vh] overflow-y-auto">
+    <div class="glass rounded-3xl max-w-md w-full p-5 space-y-4 border border-white/20">
       <div class="flex items-center justify-between">
-        <h3 class="font-bold text-lg">📄 Official DUD CLOSET Bill Preview</h3>
+        <h3 class="font-bold text-base">🧾 Official DUD CLOSET Bill (<span id="modalInvTitle"></span>)</h3>
         <button onclick="closeInvoiceModal()" class="text-slate-400 hover:text-white text-xl">&times;</button>
       </div>
 
-      <div id="printableInvoiceArea" class="bg-white text-slate-900 rounded-2xl p-6 space-y-4 text-xs">
-        <div class="flex justify-between items-start border-b-2 border-slate-900 pb-3">
-          <div>
-            <h2 class="text-xl font-extrabold tracking-tight text-slate-900">DUD CLOSET</h2>
-            <p class="text-[11px] text-slate-600">Thiru Vi Ka Nagar, Perambur, Chennai - 600082</p>
-            <p class="text-[11px] font-semibold text-slate-800">GSTIN: 33CVFPP9066H1Z7 • Ph: +91 93451 25257</p>
-            <p class="text-[10px] text-slate-500">www.dudcloset.com | @dudclosetofficial | @dud__official</p>
-          </div>
-          <div class="text-right">
-            <span class="px-2 py-0.5 rounded bg-slate-900 text-white font-bold text-[10px] uppercase">Tax Invoice</span>
-            <p id="pdfInvNo" class="text-base font-extrabold mono mt-1">DC-0081</p>
-            <p id="pdfInvDate" class="text-[11px] text-slate-600">17 Oct 2026</p>
-          </div>
+      <div id="printableInvoiceArea" class="bg-white text-black rounded-xl p-6 space-y-3 text-xs font-sans">
+        <div class="text-center border-b border-dashed border-gray-400 pb-3 space-y-0.5">
+          <h2 class="text-lg font-extrabold tracking-wide">DUD CLOSET</h2>
+          <p class="text-[11px]">No.441, 21st Street, Thiru Vi Ka Nagar Quarters,</p>
+          <p class="text-[11px]">Sembiyan, Perambur, Chennai - 600011</p>
+          <p class="text-[11px] font-semibold">Ph: 93451 25257</p>
         </div>
 
-        <div class="flex justify-between bg-slate-100 rounded-lg p-2.5 text-[11px]">
-          <div>
-            <span class="text-slate-500 block">Billed To:</span>
-            <strong id="pdfCustName" class="text-slate-900">Customer</strong>
-            <span id="pdfCustPhone" class="block mono text-slate-700"></span>
-          </div>
-          <div class="text-right">
-            <span class="text-slate-500 block">Payment Mode:</span>
-            <strong id="pdfPayMode" class="text-slate-900 uppercase">UPI</strong>
-            <span class="block text-[10px] text-emerald-700 font-semibold">Tax-Inclusive MRP</span>
-          </div>
+        <div class="border-b border-dashed border-gray-400 pb-2 space-y-0.5 text-[11px]">
+          <div class="font-bold mono" id="pdfInvLine">Inv: DC-0107 | 2026-11-06</div>
+          <div class="font-semibold" id="pdfCustLine">viki (9952002542)</div>
         </div>
 
-        <table class="w-full text-left text-[11px] border-collapse">
-          <thead>
-            <tr class="border-b border-slate-300 text-slate-600">
-              <th class="py-1.5">Item / SKU</th>
-              <th class="py-1.5 text-center">Qty</th>
-              <th class="py-1.5 text-right">Price</th>
-              <th class="py-1.5 text-right">Total</th>
-            </tr>
-          </thead>
-          <tbody id="pdfItemsBody" class="divide-y divide-slate-200"></tbody>
-        </table>
+        <div id="pdfItemsBody" class="space-y-1.5 border-b border-dashed border-gray-400 pb-3 text-xs"></div>
 
-        <div class="border-t-2 border-slate-900 pt-2.5 space-y-1 text-[11px]">
-          <div class="flex justify-between">
-            <span class="text-slate-600">Gross Subtotal:</span>
-            <span id="pdfGross" class="mono">₹0.00</span>
-          </div>
-          <div class="flex justify-between text-emerald-700 font-bold">
-            <span>You Saved (Discount):</span>
-            <span id="pdfSaved" class="mono">-₹0.00</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-slate-600">Taxable Value:</span>
-            <span id="pdfTaxable" class="mono">₹0.00</span>
-          </div>
-          <div class="flex justify-between">
-            <span class="text-slate-600">CGST + SGST (Included):</span>
-            <span id="pdfGST" class="mono">₹0.00</span>
-          </div>
-          <div class="flex justify-between text-sm font-extrabold text-slate-900 pt-1 border-t border-slate-300">
-            <span>Grand Total (MRP Inclusive):</span>
-            <span id="pdfGrandTotal" class="mono">₹0.00</span>
-          </div>
+        <div class="flex justify-between items-center text-sm font-extrabold pt-1">
+          <span id="pdfTotalLabel">TOTAL (UPI)</span>
+          <span id="pdfGrandTotal" class="mono">₹4000</span>
+        </div>
+
+        <div class="text-center pt-2 space-y-0.5 text-[11px] text-gray-600">
+          <p>All prices inclusive of tax</p>
+          <p class="italic font-semibold text-black">"When in doubt, wear DUD"</p>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
-        <button onclick="downloadCurrentInvoicePDF()" class="accent-btn py-2.5 rounded-xl font-bold text-xs">
-          📥 Download <span id="btnPdfFileName">DC-0081.pdf</span>
+      <div class="grid grid-cols-2 gap-2.5">
+        <button onclick="downloadCurrentInvoicePDF(false)" class="accent-btn py-2.5 rounded-xl font-bold text-xs">
+          📥 Save <span id="btnPdfFileName">DC-0107.pdf</span>
         </button>
-        <button onclick="shareCurrentInvoiceWhatsApp()" class="bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-xl font-bold text-xs">
-          💬 Send via WhatsApp Cloud API + PDF
+        <button onclick="downloadCurrentInvoicePDF(true)" class="bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-xl font-bold text-xs">
+          💬 WhatsApp + PDF
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== STORE DESKTOP LOCAL DATA SYNC MODAL ==================== -->
-  <div id="desktopSyncModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+  <!-- ==================== BACKUP & LOCALSTORAGE RECOVERY MODAL ==================== -->
+  <div id="storageModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
     <div class="glass rounded-3xl max-w-lg w-full p-6 space-y-4 border border-white/20">
       <div class="flex items-center justify-between">
-        <h3 class="font-bold text-lg">🔄 Store Desktop LocalStorage Sync & Backup</h3>
-        <button onclick="closeDesktopSyncModal()" class="text-slate-400 hover:text-white text-xl">&times;</button>
+        <h3 class="font-bold text-lg">🔄 Browser Storage Inspector (`dc_sales` & `dc_cust`)</h3>
+        <button onclick="closeStorageInspectorModal()" class="text-slate-400 hover:text-white text-xl">&times;</button>
       </div>
-      <p class="text-xs text-slate-300">Scan your browser's existing local storage keys from older DUD OS builds, or export/import a `.json` file from your Store Desktop.</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-        <button onclick="autoMergeLegacyBrowserStorage()" class="p-3 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-200 hover:bg-emerald-600/50 text-xs font-bold text-left">
-          🔍 1. Scan & Merge Browser LocalStorage
+      <p class="text-xs text-slate-300">Export a full `.json` backup from your billing computer, or import a backup file to sync across your Mac, iPad, iPhone, and Store Desktop.</p>
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="exportFullJSONBackup()" class="p-3 rounded-xl bg-emerald-600/30 border border-emerald-500/40 text-emerald-200 font-bold text-xs">
+          📤 Export Full Backup (.json)
         </button>
-        <button onclick="exportFullJSONBackup()" class="p-3 rounded-xl bg-sky-600/30 border border-sky-500/40 text-sky-200 hover:bg-sky-600/50 text-xs font-bold text-left">
-          📤 2. Export Full Store Backup (.json)
-        </button>
+        <label class="p-3 rounded-xl bg-sky-600/30 border border-sky-500/40 text-sky-200 font-bold text-xs cursor-pointer text-center">
+          📥 Import Backup (.json)
+          <input type="file" accept=".json" onchange="importFullJSONBackup(event)" class="hidden" />
+        </label>
       </div>
-      <div class="pt-2 border-t border-white/10 space-y-2">
-        <label class="text-xs text-slate-400 block">📥 3. Import Store Desktop JSON Backup File:</label>
-        <input type="file" accept=".json" onchange="importFullJSONBackup(event)" class="text-xs text-slate-300 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-white/10 file:text-white hover:file:bg-white/20" />
-      </div>
-      <div id="syncStatusMsg" class="text-xs text-amber-300 mono"></div>
-    </div>
-  </div>
-
-  <!-- ==================== PIN RESET MODAL ==================== -->
-  <div id="pinResetModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="glass rounded-3xl max-w-md w-full p-6 space-y-4 border border-white/20">
-      <div class="flex items-center justify-between">
-        <h3 class="font-bold text-lg">🔑 Reset Personal Vault Password / PIN</h3>
-        <button onclick="closePinResetModal()" class="text-slate-400 hover:text-white text-xl">&times;</button>
-      </div>
-      <p class="text-xs text-slate-300">Enter your <strong>Current PIN</strong> OR Recovery Key (<code class="text-amber-300">DUD666</code> or <code class="text-amber-300">H1Z7</code>) to set a new PIN.</p>
-      <div class="space-y-3">
-        <input id="resetAuthInput" type="text" placeholder="Current PIN or DUD666" class="w-full bg-black/60 border border-white/20 rounded-xl px-3.5 py-2 text-sm mono" />
-        <input id="resetNewPin" type="password" placeholder="New PIN (e.g. 6666)" class="w-full bg-black/60 border border-white/20 rounded-xl px-3.5 py-2 text-sm mono" />
-      </div>
-      <div id="resetFeedback" class="text-xs hidden"></div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closePinResetModal()" class="px-4 py-2 rounded-xl text-xs bg-white/10">Cancel</button>
-        <button onclick="confirmPinReset()" class="accent-btn px-5 py-2 rounded-xl text-xs font-bold">Save New PIN</button>
-      </div>
+      <div id="storageInspectorReport" class="text-[11px] mono text-amber-300 bg-black/50 p-3 rounded-xl max-h-40 overflow-y-auto"></div>
     </div>
   </div>
 
   <script>
     // =========================================================================
-    // 1. MASTER INVENTORY (ALL 26 VERIFIED SKUS & MIGRATION PRICES)
+    // 1. VERIFIED HISTORICAL + UPLOADED NOV 1 & NOV 6 BILLS (MERGED WITH `dc_sales`)
     // =========================================================================
-    const INITIAL_INVENTORY = [
-      { sku: 'DCPRT', name: 'T-Shirt', category: 'Tops & Tees', hsn: '6109', cost: 150, price: 400, openingStock: 100, stock: 97, combo: '999' },
-      { sku: 'DCTOP', name: 'Western Top', category: 'Tops & Tees', hsn: '6206', cost: 150, price: 300, openingStock: 100, stock: 86, combo: '999' },
-      { sku: 'DCTOP-250', name: 'DC 250 Top', category: 'Tops & Tees', hsn: '6206', cost: 120, price: 250, openingStock: 50, stock: 49, combo: 'NONE' },
-      { sku: 'DCDNP', name: 'Denim Pant', category: 'Bottoms & Denims', hsn: '6204', cost: 250, price: 700, openingStock: 100, stock: 96, combo: 'NONE' },
-      { sku: 'DCDNP-600', name: 'Denim 600', category: 'Bottoms & Denims', hsn: '6204', cost: 250, price: 600, openingStock: 50, stock: 49, combo: 'NONE' },
-      { sku: 'DCFP', name: 'Formal Pant', category: 'Bottoms & Denims', hsn: '6204', cost: 200, price: 500, openingStock: 40, stock: 39, combo: 'NONE' },
-      { sku: 'DCNVP', name: 'Night Pant', category: 'Bottoms & Denims', hsn: '6108', cost: 100, price: 200, openingStock: 100, stock: 100, combo: '499' },
-      { sku: 'DCNYP', name: 'Nylon Pant', category: 'Bottoms & Denims', hsn: '6204', cost: 50, price: 100, openingStock: 50, stock: 50, combo: '499' },
-      { sku: 'DCSKT', name: 'Skirts', category: 'Bottoms & Denims', hsn: '6204', cost: 200, price: 500, openingStock: 50, stock: 44, combo: 'NONE' },
-      { sku: 'DCFN', name: 'Forehead Band', category: 'Accessories', hsn: '6117', cost: 200, price: 500, openingStock: 50, stock: 50, combo: 'NONE' },
-      { sku: 'DCBLT', name: 'Belt', category: 'Accessories', hsn: '4203', cost: 100, price: 200, openingStock: 50, stock: 50, combo: '499' },
-      { sku: 'DCSCK', name: 'Socks', category: 'Accessories', hsn: '6115', cost: 50, price: 200, openingStock: 100, stock: 100, combo: '499' },
-      { sku: 'DCCTR', name: 'Cotton Saree', category: 'Sarees & Ethnic', hsn: '5208', cost: 200, price: 500, openingStock: 50, stock: 47, combo: 'NONE' },
-      { sku: 'DUD-SAR-01', name: 'Cosmic Saree', category: 'Sarees & Ethnic', hsn: '5407', cost: 200, price: 500, openingStock: 50, stock: 48, combo: 'NONE' },
-      { sku: 'DCK1P', name: 'Kurti (1pc)', category: 'Ethnic & Kurtis', hsn: '6204', cost: 130, price: 250, openingStock: 50, stock: 50, combo: '999' },
-      { sku: 'DCK2P', name: 'Kurti (2pc Set)', category: 'Ethnic & Kurtis', hsn: '6204', cost: 250, price: 500, openingStock: 50, stock: 49, combo: 'NONE' },
-      { sku: 'DCCRD', name: 'Co-ord Set', category: 'Co-ords & Sets', hsn: '6204', cost: 300, price: 600, openingStock: 40, stock: 38, combo: 'NONE' },
-      { sku: 'DCGFT-S', name: 'Gift Basket S', category: 'Gift Baskets', hsn: '9608', cost: 50, price: 100, openingStock: 50, stock: 48, combo: 'NONE' },
-      { sku: 'DCGFT-L', name: 'Gift Basket L', category: 'Gift Baskets', hsn: '9608', cost: 100, price: 200, openingStock: 50, stock: 47, combo: 'NONE' },
-      { sku: 'DCFTW', name: 'Footwear', category: 'Footwear', hsn: '6404', cost: 200, price: 500, openingStock: 30, stock: 29, combo: 'NONE' },
-      { sku: 'DUD-SH-BLK', name: 'Cosmic Dance Shirt (Ltd 60)', category: 'Stitching Statements', hsn: '6205', cost: 420, price: 899, openingStock: 30, stock: 29, combo: 'NONE' },
-      { sku: 'DUD-SH-BRN', name: 'Espresso Shirt (Ltd 60)', category: 'Stitching Statements', hsn: '6205', cost: 420, price: 899, openingStock: 25, stock: 25, combo: 'NONE' },
-      { sku: 'DUD-SH-BLU', name: 'Eternal Dance Shirt / Tee (Ltd 60)', category: 'Stitching Statements', hsn: '6205', cost: 420, price: 899, openingStock: 25, stock: 24, combo: 'NONE' },
-      { sku: 'DUD-SH-SND', name: 'DUD Sandstorm Pulse Shirt', category: 'Stitching Statements', hsn: '6205', cost: 420, price: 899, openingStock: 20, stock: 19, combo: 'NONE' },
-      { sku: 'DUD-HD-01', name: 'Oversized Heavy Hoodie', category: 'Outerwear', hsn: '6110', cost: 950, price: 1899, openingStock: 24, stock: 24, combo: 'NONE' },
-      { sku: 'B5-QDCP-FEQT', name: 'Korean Style Toe Socks (Amazon)', category: 'Accessories', hsn: '6115', cost: 120, price: 499, openingStock: 45, stock: 45, combo: 'NONE' }
+    const VERIFIED_BILLS_SEED = [
+      { id: 'INV-000001', invoiceNo: 'INV-000001', date: '2025-12-31', customerName: 'Sudhir', customerPhone: '9840625257', payMode: 'UPI', discount: 0, total: 899, items: [{ sku: 'DUD-SH-BLK', name: 'DUD Cosmic Dance Shirt', qty: 1, price: 899 }] },
+      { id: 'INV-000003', invoiceNo: 'INV-000003', date: '2026-06-06', customerName: 'Online Order', customerPhone: '9840625257', payMode: 'UPI', discount: 0, total: 1399, items: [{ sku: 'DUD-SAR-01', name: 'Cosmic Saree', qty: 1, price: 500 }, { sku: 'DUD-SH-BLU', name: 'Eternal Dance Blue Tee', qty: 1, price: 899 }] },
+      { id: 'DC-0013', invoiceNo: 'DC-0013', date: '2026-07-11', customerName: 'Sumiya', customerPhone: '9884299563', payMode: 'Cash', discount: 0, total: 899, items: [{ sku: 'DUD-SH-SND', name: 'DUD Sandstorn pulse', qty: 1, price: 899 }] },
+      { id: 'DC-0014', invoiceNo: 'DC-0014', date: '2026-07-12', customerName: 'Sanjana', customerPhone: '7305459138', payMode: 'Cash', discount: 0, total: 700, items: [{ sku: 'DCDNP', name: 'Denim Pant', qty: 1, price: 700 }] },
+      { id: 'DC-0015', invoiceNo: 'DC-0015', date: '2026-07-12', customerName: 'debo', customerPhone: '9150611972', payMode: 'UPI', discount: 0, total: 1900, items: [{ sku: 'DCDNP', name: 'Denim Pant', qty: 1, price: 700 }, { sku: 'DCTOP', name: 'Tops', qty: 1, price: 300 }, { sku: 'DCPRT', name: 'Shirt', qty: 1, price: 400 }, { sku: 'DCSKT', name: 'Skirts', qty: 1, price: 500 }] },
+      { id: 'DC-0016', invoiceNo: 'DC-0016', date: '2026-07-12', customerName: 'Angeline', customerPhone: '7358083040', payMode: 'Cash', discount: 0, total: 500, items: [{ sku: 'DCFTW', name: 'Footwear', qty: 1, price: 500 }] },
+      { id: 'DC-0021', invoiceNo: 'DC-0021', date: '2026-07-21', customerName: 'Praveena', customerPhone: '6385496637', payMode: 'UPI', discount: 0, total: 1000, items: [{ sku: 'DCTOP', name: 'Tops', qty: 2, price: 300 }, { sku: 'DCGFT-L', name: 'Gift Basket L', qty: 2, price: 200 }] },
+      { id: 'DC-0022', invoiceNo: 'DC-0022', date: '2026-08-02', customerName: 'debo', customerPhone: '9150611972', payMode: 'UPI', discount: 0, total: 2400, items: [{ sku: 'DCDNP', name: 'Denim Pant', qty: 1, price: 700 }, { sku: 'DCCRD', name: 'Co-ord Set', qty: 2, price: 600 }, { sku: 'DCK2P', name: 'Kurti 2pc Set', qty: 1, price: 500 }] },
+      { id: 'DC-0023', invoiceNo: 'DC-0023', date: '2026-08-02', customerName: 'Aishwarya', customerPhone: '9080685188', payMode: 'UPI', discount: 0, total: 3100, items: [{ sku: 'DCPRT', name: 'Shirt', qty: 3, price: 400 }, { sku: 'DCTOP', name: 'Tops', qty: 2, price: 300 }, { sku: 'DCDNP', name: 'Denim Pant', qty: 1, price: 700 }, { sku: 'DCFP', name: 'Formal Pant', qty: 1, price: 600 }] },
+      { id: 'DC-0024', invoiceNo: 'DC-0024', date: '2026-08-10', customerName: 'Jaishree', customerPhone: '9150470740', payMode: 'UPI', discount: 0, total: 400, items: [{ sku: 'DCPRT', name: 'Shirt', qty: 1, price: 400 }] },
+      { id: 'DC-0025', invoiceNo: 'DC-0025', date: '2026-08-12', customerName: 'vijaya', customerPhone: '9710254101', payMode: 'UPI', discount: 0, total: 1500, items: [{ sku: 'DCCTR', name: 'Cotton Saree', qty: 3, price: 500 }] },
+      { id: 'DC-0026', invoiceNo: 'DC-0026', date: '2026-08-12', customerName: 'Komala', customerPhone: '8754558442', payMode: 'UPI', discount: 0, total: 500, items: [{ sku: 'DUD-SAR-01', name: 'Cosmic Saree', qty: 1, price: 500 }] },
+      { id: 'DC-0077', invoiceNo: 'DC-0077', date: '2026-10-13', customerName: 'Krithi', customerPhone: '9123575991', payMode: 'UPI', discount: 300, total: 1500, items: [{ sku: 'DCDNP', name: 'Denim 600', qty: 1, price: 600 }, { sku: 'DCTOP', name: 'Tops', qty: 4, price: 300 }] },
+      { id: 'DC-0078', invoiceNo: 'DC-0078', date: '2026-10-14', customerName: 'Syeduma', customerPhone: '7639590880', payMode: 'UPI', discount: 200, total: 1000, items: [{ sku: 'DCSKT', name: 'Skirts', qty: 2, price: 600 }] },
+      { id: 'DC-0079', invoiceNo: 'DC-0079', date: '2026-10-14', customerName: 'Beauty', customerPhone: '7639591220', payMode: 'UPI', discount: 50, total: 350, items: [{ sku: 'DCTOP-250', name: 'DC 250 TOP', qty: 1, price: 250 }, { sku: 'DCGFT-S', name: 'Gift Basket S', qty: 1, price: 150 }] },
+      { id: 'DC-0080', invoiceNo: 'DC-0080', date: '2026-10-16', customerName: 'Dharshini', customerPhone: '7418577530', payMode: 'UPI', discount: 200, total: 1100, items: [{ sku: 'DCSKT', name: 'Skirts', qty: 2, price: 600 }, { sku: 'DCGFT-S', name: 'Gift Basket S', qty: 1, price: 100 }] },
+      { id: 'DC-0081', invoiceNo: 'DC-0081', date: '2026-10-17', customerName: 'Aliya', customerPhone: '8124688909', payMode: 'Cash', discount: 600, total: 2000, items: [{ sku: 'DCTOP', name: 'Tops', qty: 8, price: 300 }, { sku: 'DCGFT-L', name: 'Gift Basket L', qty: 1, price: 200 }] },
+      { id: 'DC-0095', invoiceNo: 'DC-0095', date: '2026-11-01', customerName: 'Lena', customerPhone: '7339067637', payMode: 'UPI', discount: 0, total: 5799, items: [{ sku: 'DCSKT', name: 'Skirts', qty: 3, price: 500 }, { sku: 'DCDNP', name: 'Denim Pant', qty: 1, price: 500 }, { sku: 'DCFP', name: 'Formal Pant', qty: 1, price: 500 }, { sku: 'DUD-SH-SND', name: 'DUD Sandstorn pulse', qty: 1, price: 699 }, { sku: 'DCTOP-250', name: 'DC 250 TOP', qty: 2, price: 250 }, { sku: 'DCTOP', name: 'Tops', qty: 2, price: 300 }, { sku: 'DCFTW', name: 'Footwear', qty: 3, price: 500 }] },
+      { id: 'DC-0103', invoiceNo: 'DC-0103', date: '2026-11-06', customerName: 'Vishwa', customerPhone: '6381902562', payMode: 'Cash', discount: 0, total: 2500, items: [{ sku: 'DCDNP', name: 'Denim Pant', qty: 3, price: 500 }, { sku: 'DCTOP', name: 'Tops', qty: 2, price: 300 }, { sku: 'DCPRT', name: 'Shirt', qty: 1, price: 400 }] },
+      { id: 'DC-0104', invoiceNo: 'DC-0104', date: '2026-11-06', customerName: 'Keerthika', customerPhone: '9176718132', payMode: 'UPI', discount: 0, total: 999, items: [{ sku: 'DCPRT', name: 'Shirt', qty: 3, price: 333 }] },
+      { id: 'DC-0105', invoiceNo: 'DC-0105', date: '2026-11-06', customerName: 'viki', customerPhone: '9952002542', payMode: 'Cash', discount: 0, total: 800, items: [{ sku: 'DCTOP', name: 'Tops', qty: 1, price: 300 }, { sku: 'DCFP', name: 'Formal Pant', qty: 1, price: 500 }] },
+      { id: 'DC-0106', invoiceNo: 'DC-0106', date: '2026-11-06', customerName: 'Dhanalakshmi', customerPhone: '9940055826', payMode: 'Cash', discount: 0, total: 2700, items: [{ sku: 'DCDNP', name: 'Denim Pant', qty: 2, price: 500 }, { sku: 'DCGFT-L', name: 'Gift Basket L', qty: 2, price: 200 }, { sku: 'DCTOP-250', name: 'DC 250 TOP', qty: 4, price: 250 }, { sku: 'DCTOP', name: 'Tops', qty: 1, price: 300 }] },
+      { id: 'DC-0107', invoiceNo: 'DC-0107', date: '2026-11-06', customerName: 'viki', customerPhone: '9952002542', payMode: 'UPI', discount: 0, total: 4000, items: [{ sku: 'DUD-SAR-01', name: 'Cosmic Saree', qty: 1, price: 500 }, { sku: 'DCCTR', name: 'Cotton Saree', qty: 1, price: 500 }, { sku: 'DCFTW', name: 'Footwear', qty: 2, price: 500 }, { sku: 'DCFP', name: 'Formal Pant', qty: 2, price: 500 }, { sku: 'DCDNP', name: 'Denim Pant', qty: 1, price: 500 }, { sku: 'DCK2P', name: 'Kurti 2pc Set', qty: 1, price: 500 }] }
+    ];
+
+    const DEFAULT_PRODUCTS = [
+      { id: 'P1', sku: 'DCPRT', name: 'Shirt', cat: 'Tops & Tees', cost: 150, sell: 400, stock: 100 },
+      { id: 'P2', sku: 'DCTOP', name: 'Tops', cat: 'Tops & Tees', cost: 150, sell: 300, stock: 100 },
+      { id: 'P3', sku: 'DCTOP-250', name: 'DC 250 TOP', cat: 'Tops & Tees', cost: 120, sell: 250, stock: 50 },
+      { id: 'P4', sku: 'DCDNP', name: 'Denim Pant', cat: 'Bottoms & Denims', cost: 250, sell: 500, stock: 100 },
+      { id: 'P5', sku: 'DCDNP-700', name: 'Denim Pant (700)', cat: 'Bottoms & Denims', cost: 250, sell: 700, stock: 50 },
+      { id: 'P6', sku: 'DCFP', name: 'Formal Pant', cat: 'Bottoms & Denims', cost: 200, sell: 500, stock: 40 },
+      { id: 'P7', sku: 'DCSKT', name: 'Skirts', cat: 'Bottoms & Denims', cost: 200, sell: 500, stock: 50 },
+      { id: 'P8', sku: 'DCNVP', name: 'Night Pant', cat: 'Bottoms & Denims', cost: 100, sell: 200, stock: 100 },
+      { id: 'P9', sku: 'DCNYP', name: 'Nylon Pant', cat: 'Bottoms & Denims', cost: 50, sell: 100, stock: 50 },
+      { id: 'P10', sku: 'DCCTR', name: 'Cotton Saree', cat: 'Sarees & Ethnic', cost: 200, sell: 500, stock: 50 },
+      { id: 'P11', sku: 'DUD-SAR-01', name: 'Cosmic Saree', cat: 'Sarees & Ethnic', cost: 200, sell: 500, stock: 50 },
+      { id: 'P12', sku: 'DCK1P', name: 'Kurti 1pc', cat: 'Ethnic & Kurtis', cost: 130, sell: 250, stock: 50 },
+      { id: 'P13', sku: 'DCK2P', name: 'Kurti 2pc Set', cat: 'Ethnic & Kurtis', cost: 250, sell: 500, stock: 50 },
+      { id: 'P14', sku: 'DCCRD', name: 'Co-ord Set', cat: 'Co-ords & Sets', cost: 300, sell: 600, stock: 40 },
+      { id: 'P15', sku: 'DCFTW', name: 'Footwear', cat: 'Footwear', cost: 200, sell: 500, stock: 30 },
+      { id: 'P16', sku: 'DCGFT-S', name: 'Gift Basket S', cat: 'Gift Baskets', cost: 50, sell: 100, stock: 50 },
+      { id: 'P17', sku: 'DCGFT-L', name: 'Gift Basket L', cat: 'Gift Baskets', cost: 100, sell: 200, stock: 50 },
+      { id: 'P18', sku: 'DCFN', name: 'Forehead Band', cat: 'Accessories', cost: 200, sell: 500, stock: 50 },
+      { id: 'P19', sku: 'DCBLT', name: 'Belt', cat: 'Accessories', cost: 100, sell: 200, stock: 50 },
+      { id: 'P20', sku: 'DCSCK', name: 'Socks', cat: 'Accessories', cost: 50, sell: 200, stock: 100 },
+      { id: 'P21', sku: 'DUD-SH-SND', name: 'DUD Sandstorn pulse', cat: 'Stitching Statements', cost: 420, sell: 699, stock: 20 },
+      { id: 'P22', sku: 'DUD-SH-BLK', name: 'Cosmic Dance Shirt', cat: 'Stitching Statements', cost: 420, sell: 899, stock: 30 },
+      { id: 'P23', sku: 'DUD-SH-BRN', name: 'Espresso Shirt', cat: 'Stitching Statements', cost: 420, sell: 899, stock: 25 },
+      { id: 'P24', sku: 'DUD-SH-BLU', name: 'Eternal Dance Shirt', cat: 'Stitching Statements', cost: 420, sell: 899, stock: 25 },
+      { id: 'P25', sku: 'DUD-HD-01', name: 'Oversized Heavy Hoodie', cat: 'Outerwear', cost: 950, sell: 1899, stock: 24 },
+      { id: 'P26', sku: 'B5-QDCP-FEQT', name: 'Korean Style Toe Socks', cat: 'Accessories', cost: 120, sell: 499, stock: 45 }
+    ];
+
+    const UPLOADED_LOANS = [
+      { core7: true, lender: 'Northern Arc', account: '5115316976853733', tenure: 'Oct 2026 – Jan 2028 (15m)', apr: 29.99, sanctioned: 150000, balance: 150000, emi: 12114.00, dueDay: '5th' },
+      { core7: true, lender: 'DMI Finance', account: 'DMI0062405429', tenure: 'Oct 2026 – Oct 2027 (12m)', apr: 26.50, sanctioned: 60000, balance: 60000, emi: 5746.41, dueDay: '5th' },
+      { core7: true, lender: 'Poonawalla Fincorp', account: 'PLA14318803206', tenure: 'Sep 2026 – Oct 2029 (36m)', apr: 25.00, sanctioned: 400000, balance: 400000, emi: 15904.00, dueDay: '3rd' },
+      { core7: true, lender: 'Axis Bank Loan 2', account: 'PPR008211288516', tenure: 'Jul 2024 – Jun 2028 (20m)', apr: 13.99, sanctioned: 104000, balance: 49226, emi: 2841.00, dueDay: '10th' },
+      { core7: true, lender: 'Axis Bank Loan 1', account: 'PPR008210554441', tenure: 'Mar 2024 – May 2028 (19m)', apr: 12.99, sanctioned: 210000, balance: 90466, emi: 5380.00, dueDay: '5th' },
+      { core7: true, lender: 'Bank Loan (Dec 2023)', account: '146409205', tenure: 'Dec 2023 – Nov 2028 (25m)', apr: 11.50, sanctioned: 948557, balance: 461803, emi: 20861.00, dueDay: '6th' },
+      { core7: true, lender: 'State Bank of India (SBI)', account: 'XXXXX625321', tenure: 'Oct 2026 – Oct 2029 (36m)', apr: 9.90, sanctioned: 200000, balance: 198279, emi: 6444.05, dueDay: '15th' },
+      { core7: false, lender: 'Zype NBFC', account: 'A/C ending 6976', tenure: 'Oct 2026 – Oct 2028 (24m)', apr: 30.00, sanctioned: 150000, balance: 142000, emi: 7940.00, dueDay: '5th' },
+      { core7: false, lender: 'Aditya Birla Capital', account: 'ABFL Personal', tenure: 'Ends Aug 2027 (9m)', apr: 25.99, sanctioned: 100000, balance: 47973, emi: 5387.00, dueDay: '5th' },
+      { core7: false, lender: 'SMFG India Credit', account: 'CLOSED FACILITY', tenure: 'Closed Oct 2026', apr: 24.00, sanctioned: 150000, balance: 0, emi: 7799.00, dueDay: 'CLOSED' }
     ];
 
     // =========================================================================
-    // 2. COMPLETE VERIFIED SALES HISTORY TILL 06/11/2026 (23 RECORDS)
+    // 2. NATIVE STORAGE ENGINE (READS `dc_sales`, `dc_cust`, `dc_prod`, `dc_ic`)
     // =========================================================================
-    const INITIAL_INVOICES = [
-      { id: 'INV-000001', date: '2025-12-31', customer: 'Sudhir', phone: '9840625257', mode: 'UPI', discount: 0, items: [{ sku: 'DUD-SH-BLK', name: 'DUD Cosmic Dance Shirt', category: 'Stitching Statements', qty: 1, price: 899 }] },
-      { id: 'INV-000003', date: '2026-06-06', customer: 'Online / Store', phone: '9840625257', mode: 'UPI', discount: 0, items: [{ sku: 'DUD-SAR-01', name: 'Cosmic Saree', category: 'Sarees & Ethnic', qty: 1, price: 500 }, { sku: 'DUD-SH-BLU', name: 'Eternal Dance Blue Tee (M)', category: 'Stitching Statements', qty: 1, price: 899 }] },
-      { id: 'DC-0013', date: '2026-07-11', customer: 'Sumiya', phone: '9884299563', mode: 'Cash', discount: 0, items: [{ sku: 'DUD-SH-SND', name: 'DUD Sandstorm Pulse Shirt', category: 'Stitching Statements', qty: 1, price: 899 }] },
-      { id: 'DC-0014', date: '2026-07-12', customer: 'Sanjana', phone: '7305459138', mode: 'Cash', discount: 0, items: [{ sku: 'DCDNP', name: 'Denim Pant', category: 'Bottoms & Denims', qty: 1, price: 700 }] },
-      { id: 'DC-0015', date: '2026-07-12', customer: 'debo', phone: '9150611972', mode: 'UPI', discount: 0, items: [{ sku: 'DCDNP', name: 'Denim Pant', category: 'Bottoms & Denims', qty: 1, price: 700 }, { sku: 'DCTOP', name: 'Western Top', category: 'Tops & Tees', qty: 1, price: 300 }, { sku: 'DCPRT', name: 'Shirt / Tee', category: 'Tops & Tees', qty: 1, price: 400 }, { sku: 'DCSKT', name: 'Skirts', category: 'Bottoms & Denims', qty: 1, price: 500 }] },
-      { id: 'DC-0016', date: '2026-07-12', customer: 'Angeline', phone: '7358083040', mode: 'Cash', discount: 0, items: [{ sku: 'DCFTW', name: 'Footwear', category: 'Footwear', qty: 1, price: 500 }] },
-      { id: 'DC-0021', date: '2026-07-21', customer: 'Praveena', phone: '6385496637', mode: 'UPI', discount: 0, items: [{ sku: 'DCTOP', name: 'Western Top', category: 'Tops & Tees', qty: 2, price: 300 }, { sku: 'DCGFT-L', name: 'Gift Basket L', category: 'Gift Baskets', qty: 2, price: 200 }] },
-      { id: 'DC-0022', date: '2026-08-02', customer: 'debo', phone: '9150611972', mode: 'UPI', discount: 0, items: [{ sku: 'DCDNP', name: 'Denim Pant', category: 'Bottoms & Denims', qty: 1, price: 700 }, { sku: 'DCCRD', name: 'Co-ord Set', category: 'Co-ords & Sets', qty: 2, price: 600 }, { sku: 'DCK2P', name: 'Kurti (2pc Set)', category: 'Ethnic & Kurtis', qty: 1, price: 500 }] },
-      { id: 'DC-0023', date: '2026-08-02', customer: 'Aishwarya', phone: '9080685188', mode: 'UPI', discount: 0, items: [{ sku: 'DCPRT', name: 'Shirts / Tees', category: 'Tops & Tees', qty: 3, price: 400 }, { sku: 'DCTOP', name: 'Western Tops', category: 'Tops & Tees', qty: 2, price: 300 }, { sku: 'DCDNP', name: 'Denim Pant', category: 'Bottoms & Denims', qty: 1, price: 700 }, { sku: 'DCFP', name: 'Formal Pant', category: 'Bottoms & Denims', qty: 1, price: 600 }] },
-      { id: 'DC-0024', date: '2026-08-10', customer: 'Jaishree', phone: '9150470740', mode: 'UPI', discount: 0, items: [{ sku: 'DCPRT', name: 'Shirt', category: 'Tops & Tees', qty: 1, price: 400 }] },
-      { id: 'DC-0025', date: '2026-08-12', customer: 'vijaya', phone: '9710254101', mode: 'UPI', discount: 0, items: [{ sku: 'DCCTR', name: 'Cotton Saree', category: 'Sarees & Ethnic', qty: 3, price: 500 }] },
-      { id: 'DC-0026', date: '2026-08-12', customer: 'Komala', phone: '8754558442', mode: 'UPI', discount: 0, items: [{ sku: 'DUD-SAR-01', name: 'Cosmic Saree', category: 'Sarees & Ethnic', qty: 1, price: 500 }] },
-      { id: 'DC-0077', date: '2026-10-13', customer: 'Krithi', phone: '9123575991', mode: 'UPI', discount: 300, items: [{ sku: 'DCDNP-600', name: 'Denim 600', category: 'Bottoms & Denims', qty: 1, price: 600 }, { sku: 'DCTOP', name: 'Tops', category: 'Tops & Tees', qty: 4, price: 300 }] },
-      { id: 'DC-0078', date: '2026-10-14', customer: 'Syeduma', phone: '7639590880', mode: 'UPI', discount: 200, items: [{ sku: 'DCSKT', name: 'Skirts', category: 'Bottoms & Denims', qty: 2, price: 600 }] },
-      { id: 'DC-0079', date: '2026-10-14', customer: 'Beauty', phone: '7639591220', mode: 'UPI', discount: 50, items: [{ sku: 'DCTOP-250', name: 'DC 250 Top', category: 'Tops & Tees', qty: 1, price: 250 }, { sku: 'DCGFT-S', name: 'Gift Basket S', category: 'Gift Baskets', qty: 1, price: 150 }] },
-      { id: 'DC-0080', date: '2026-10-16', customer: 'Dharshini', phone: '7418577530', mode: 'UPI', discount: 200, items: [{ sku: 'DCSKT', name: 'Skirts', category: 'Bottoms & Denims', qty: 2, price: 600 }, { sku: 'DCGFT-S', name: 'Gift Basket S', category: 'Gift Baskets', qty: 1, price: 100 }] },
-      { id: 'DC-0081', date: '2026-10-17', customer: 'Aliya', phone: '8124688909', mode: 'Cash', discount: 600, items: [{ sku: 'DCTOP', name: 'Tops', category: 'Tops & Tees', qty: 8, price: 300 }, { sku: 'DCGFT-L', name: 'Gift Basket L', category: 'Gift Baskets', qty: 1, price: 200 }] },
-      { id: 'POS-23OCT', date: '2026-10-23', customer: 'SBI POS SB640288', phone: '9345125257', mode: 'UPI', discount: 0, items: [{ sku: 'CUSTOM', name: 'POS UPI Verification Settlement', category: 'Store POS', qty: 1, price: 1 }] },
-      { id: 'POS-28OCT', date: '2026-10-28', customer: 'SBI POS SB640288 (2 Bills)', phone: '9345125257', mode: 'UPI', discount: 0, items: [{ sku: 'DCDNP', name: 'Store Apparel POS Batch (2 Txns)', category: 'Bottoms & Denims', qty: 1, price: 4450 }] },
-      { id: 'POS-30OCT', date: '2026-10-30', customer: 'SBI POS SB640288', phone: '9345125257', mode: 'UPI', discount: 0, items: [{ sku: 'DCTOP', name: 'Store Apparel POS Settlement', category: 'Tops & Tees', qty: 1, price: 1700 }] },
-      { id: 'POS-31OCT', date: '2026-10-31', customer: 'SBI POS SB640288', phone: '9345125257', mode: 'UPI', discount: 0, items: [{ sku: 'DCTOP', name: 'Western Top (POS e-Statement)', category: 'Tops & Tees', qty: 1, price: 300 }] },
-      { id: 'POS-01NOV', date: '2026-11-01', customer: 'SBI POS SB640288 (Nov 1 Batch)', phone: '9345125257', mode: 'Card', discount: 0, items: [{ sku: 'DCCRD', name: 'Nov 1 Store POS Terminal Batch (SB640288)', category: 'Co-ords & Sets', qty: 1, price: 22050 }] },
-      { id: 'POS-05NOV', date: '2026-11-05', customer: 'SBI POS SB640288 (06/11 Statement)', phone: '9345125257', mode: 'UPI', discount: 0, items: [{ sku: 'DCDNP', name: 'Nov 5 Store UPI POS Settlement (SB640288)', category: 'Bottoms & Denims', qty: 1, price: 4950 }] }
-    ];
-
-    // =========================================================================
-    // 3. COMPLETE 15 CUSTOMER CRM PROFILES
-    // =========================================================================
-    const INITIAL_CUSTOMERS = [
-      { name: 'debo', phone: '9150611972', channel: 'Store POS', notes: 'DC-0015 (₹1,900) & DC-0022 (₹2,400: Denim, 2 Co-ords, 2pc Kurti)' },
-      { name: 'Aishwarya', phone: '9080685188', channel: 'Store POS', notes: 'DC-0023 (₹3,100: 3 Shirts, 2 Tops, Denim, Formal Pant)' },
-      { name: 'Aliya', phone: '8124688909', channel: 'Aliya Channel', notes: 'DC-0081 (₹2,000 Cash, Saved ₹600: Tops + Gift Basket L)' },
-      { name: 'Krithi', phone: '9123575991', channel: 'Krithi Channel', notes: 'DC-0077 (₹1,500 UPI, Saved ₹300: Denim 600 + Tops)' },
-      { name: 'vijaya', phone: '9710254101', channel: 'Store POS', notes: 'DC-0025 (₹1,500: 3x Cotton Sarees)' },
-      { name: 'Dharshini', phone: '7418577530', channel: 'Dharshini Channel', notes: 'DC-0080 (₹1,100 UPI, Saved ₹200: Skirts + Gift Basket S)' },
-      { name: 'Praveena', phone: '6385496637', channel: 'Store POS', notes: 'DC-0021 (₹1,000 UPI: 2 Tops + 2 Gift Baskets)' },
-      { name: 'Syeduma', phone: '7639590880', channel: 'Syeduma Channel', notes: 'DC-0078 (₹1,000 UPI, Saved ₹200: Skirts)' },
-      { name: 'Sumiya', phone: '9884299563', channel: 'Store POS', notes: 'DC-0013 (₹899 Cash: DUD Sandstorm Pulse Shirt)' },
-      { name: 'Sudhir', phone: '9840625257', channel: 'Online Tax Inv', notes: 'INV-000001 (₹899: DUD Cosmic Dance Shirt)' },
-      { name: 'Sanjana', phone: '7305459138', channel: 'Store POS', notes: 'DC-0014 (₹700 Cash: Denim Pant)' },
-      { name: 'Angeline', phone: '7358083040', channel: 'Store POS', notes: 'DC-0016 (₹500 Cash: Footwear)' },
-      { name: 'Komala', phone: '8754558442', channel: 'Store POS', notes: 'DC-0026 (₹500: Cosmic Saree)' },
-      { name: 'Jaishree', phone: '9150470740', channel: 'Store POS', notes: 'DC-0024 (₹400: 1x Shirt)' },
-      { name: 'Beauty', phone: '7639591220', channel: 'Beauty Channel', notes: 'DC-0079 (₹350 UPI, Saved ₹50: DC 250 Top + Gift Basket S)' }
-    ];
-
-    // =========================================================================
-    // 4. EXACT UPLOADED PERSONAL LOANS (CORE 7 + FULL 9 VIEW)
-    // =========================================================================
-    const INITIAL_LOANS = [
-      { id: 'LN-01', core7: true, lender: 'Northern Arc', account: '5115316976853733', tenure: 'Oct 2026 – Jan 2028', remMos: 15, apr: 29.99, sanctioned: 150000, balance: 150000, emi: 12114.00, dueDay: 5, status: 'ACTIVE', paidThisMonth: true },
-      { id: 'LN-02', core7: true, lender: 'DMI Finance', account: 'DMI0062405429', tenure: 'Oct 2026 – Oct 2027', remMos: 12, apr: 26.50, sanctioned: 60000, balance: 60000, emi: 5746.41, dueDay: 5, status: 'ACTIVE', paidThisMonth: true },
-      { id: 'LN-03', core7: true, lender: 'Poonawalla Fincorp', account: 'PLA14318803206', tenure: 'Sep 2026 – Oct 2029', remMos: 36, apr: 25.00, sanctioned: 400000, balance: 400000, emi: 15904.00, dueDay: 3, status: 'ACTIVE', paidThisMonth: true },
-      { id: 'LN-04', core7: true, lender: 'Axis Bank Personal Loan 2', account: 'PPR008211288516', tenure: 'Jul 2024 – Jun 2028', remMos: 20, apr: 13.99, sanctioned: 104000, balance: 49226, emi: 2841.00, dueDay: 10, status: 'ACTIVE', paidThisMonth: false },
-      { id: 'LN-05', core7: true, lender: 'Axis Bank Personal Loan 1', account: 'PPR008210554441', tenure: 'Mar 2024 – May 2028', remMos: 19, apr: 12.99, sanctioned: 210000, balance: 90466, emi: 5380.00, dueDay: 5, status: 'ACTIVE', paidThisMonth: true },
-      { id: 'LN-06', core7: true, lender: 'Bank Loan (Dec 2023)', account: '146409205', tenure: 'Dec 2023 – Nov 2028', remMos: 25, apr: 11.50, sanctioned: 948557, balance: 461803, emi: 20861.00, dueDay: 6, status: 'ACTIVE', paidThisMonth: true },
-      { id: 'LN-07', core7: true, lender: 'State Bank of India (SBI)', account: 'XXXXX625321', tenure: 'Oct 2026 – Oct 2029', remMos: 36, apr: 9.90, sanctioned: 200000, balance: 198279, emi: 6444.05, dueDay: 15, status: 'ACTIVE', paidThisMonth: false },
-      { id: 'LN-08', core7: false, lender: 'Zype NBFC', account: 'A/c ending 6976', tenure: 'Oct 2026 – Oct 2028', remMos: 24, apr: 30.00, sanctioned: 150000, balance: 142000, emi: 7940.00, dueDay: 5, status: 'ACTIVE', paidThisMonth: true },
-      { id: 'LN-09', core7: false, lender: 'Aditya Birla Capital', account: 'ABFL Personal Line', tenure: 'Ends Aug 2027', remMos: 9, apr: 25.99, sanctioned: 100000, balance: 47973, emi: 5387.00, dueDay: 5, status: 'ACTIVE', paidThisMonth: true },
-      { id: 'LN-10', core7: false, lender: 'SMFG India Credit', account: 'CLOSED FACILITY', tenure: 'Closed Oct 2026', remMos: 0, apr: 24.00, sanctioned: 150000, balance: 0, emi: 7799.00, dueDay: 5, status: 'CLOSED', paidThisMonth: true }
-    ];
-
-    const INITIAL_FUND_MEMBERS = [
-      { id: 'F-01', name: 'Enroller #1 (Nov 2026 Scheme)', units: 1, monthly: 1000, paidMonths: 1 },
-      { id: 'F-02', name: 'Enroller #2 (Nov 2026 Scheme)', units: 2, monthly: 2000, paidMonths: 1 },
-      { id: 'F-03', name: 'Enroller #3 (Nov 2026 Scheme)', units: 1, monthly: 1000, paidMonths: 1 }
-    ];
-
-    // =========================================================================
-    // 5. OMNICHANNEL ORDERS (AMAZON, FLIPKART, MEESHO, HOSTINGER + RAZORPAY)
-    // =========================================================================
-    const INITIAL_OMNI_ORDERS = [
-      { channel: 'Amazon SP-API', orderId: '405-1704045-0229902', customer: 'Amazon Buyer (Chennai)', sku: 'B5-QDCP-FEQT', amount: 499, gateway: 'Amazon COD/Prepaid', awb: 'SRV27HR000431885', status: 'SHIPPED' },
-      { channel: 'Hostinger Web', orderId: 'DUD-WEB-1092', customer: 'Karthik R (Bangalore)', sku: 'DUD-SH-BLK', amount: 899, gateway: 'Razorpay Paid', awb: 'PENDING', status: 'READY_TO_SHIP' },
-      { channel: 'Flipkart Seller', orderId: 'OD429810293810', customer: 'Priya S (Coimbatore)', sku: 'DCK2P', amount: 500, gateway: 'Flipkart Prepaid', awb: 'PENDING', status: 'READY_TO_SHIP' },
-      { channel: 'Meesho Hub', orderId: 'MSH-9981204', customer: 'Divya M (Madurai)', sku: 'DCTOP', amount: 300, gateway: 'Meesho Settlement', awb: 'PENDING', status: 'READY_TO_SHIP' }
-    ];
-
-    let inventory = JSON.parse(localStorage.getItem('DUD_OS_V0611_INV')) || INITIAL_INVENTORY;
-    let invoices = JSON.parse(localStorage.getItem('DUD_OS_V0611_INVS')) || INITIAL_INVOICES;
-    let customers = JSON.parse(localStorage.getItem('DUD_OS_V0611_CRM')) || INITIAL_CUSTOMERS;
-    let loans = JSON.parse(localStorage.getItem('DUD_OS_V0611_LOANS')) || INITIAL_LOANS;
-    let fundMembers = JSON.parse(localStorage.getItem('DUD_OS_V0611_FUND')) || INITIAL_FUND_MEMBERS;
-    let omniOrders = JSON.parse(localStorage.getItem('DUD_OS_V0611_OMNI')) || INITIAL_OMNI_ORDERS;
-    let apiVault = JSON.parse(localStorage.getItem('DUD_OS_API_VAULT')) || {
-      wa_phone_id: '', wa_token: '',
-      sr_email: '', sr_password: '', sr_jwt: '',
-      rzp_key: '', hostinger_webhook: 'https://www.dudcloset.com/api/orders',
-      amz_token: '', fk_token: '', meesho_id: '',
-      gmb_loc: 'locations/dud-closet-perambur-600082',
-      ig_brand_id: 'dud__official', ig_store_id: 'dudclosetofficial'
-    };
+    let sales = [];
+    let customers = [];
+    let products = [];
+    let invoiceCounter = 107;
     let vaultPin = localStorage.getItem('DUD_666_PIN') || '6666';
-
     let cart = [];
     let selectedCategory = 'ALL';
     let selectedPaymentMode = 'UPI';
-    let currentPreviewInvoice = null;
-    let loanViewMode = 'CORE7';
-    let activeIGMode = 'BRAND';
+    let currentPreviewSale = null;
+    let loanMode = 'CORE7';
 
-    function saveState() {
-      localStorage.setItem('DUD_OS_V0611_INV', JSON.stringify(inventory));
-      localStorage.setItem('DUD_OS_V0611_INVS', JSON.stringify(invoices));
-      localStorage.setItem('DUD_OS_V0611_CRM', JSON.stringify(customers));
-      localStorage.setItem('DUD_OS_V0611_LOANS', JSON.stringify(loans));
-      localStorage.setItem('DUD_OS_V0611_FUND', JSON.stringify(fundMembers));
-      localStorage.setItem('DUD_OS_V0611_OMNI', JSON.stringify(omniOrders));
-    }
-
-    function logApiEvent(msg) {
-      const box = document.getElementById('apiConsoleLog');
-      if (!box) return;
-      const t = new Date().toLocaleTimeString();
-      box.innerHTML = `<div>[${t}] ${msg}</div>` + box.innerHTML;
-    }
-
-    // =========================================================================
-    // OMNICHANNEL & 8-API HUB ENGINE
-    // =========================================================================
-    function renderApiHub() {
-      const platforms = [
-        { name: 'WhatsApp Business Cloud API', sub: 'graph.facebook.com/v21.0', keySet: !!apiVault.wa_token, badge: 'Automated PDF & Receipt', color: 'emerald' },
-        { name: 'Amazon Seller SP-API', sub: 'sellingpartnerapi-eu.amazon.com', keySet: true, badge: 'SKU B5-QDCP-FEQT Linked', color: 'amber' },
-        { name: 'Flipkart Seller API v3', sub: 'api.flipkart.net/sellers', keySet: true, badge: 'Apparel Catalog Synced', color: 'sky' },
-        { name: 'Meesho Supplier Hub', sub: 'Bulk 2,000-pc Resale Pipeline', keySet: true, badge: 'CSV & Order Sync Ready', color: 'pink' },
-        { name: 'Hostinger + Razorpay Gateway', sub: 'www.dudcloset.com/api', keySet: true, badge: 'Razorpay Webhooks Active', color: 'indigo' },
-        { name: 'Shiprocket Logistics API', sub: 'apiv2.shiprocket.in/v1/external', keySet: true, badge: 'AWB & Amazon Linked', color: 'purple' },
-        { name: 'Dual Instagram Graph API', sub: '@dud__official & @dudclosetofficial', keySet: true, badge: 'Reels & DM Order Sync', color: 'rose' },
-        { name: 'Google Business Profile (GMB)', sub: 'TVK Nagar, Perambur (600082)', keySet: true, badge: '49 Direction Clicks', color: 'emerald' }
-      ];
-
-      document.getElementById('apiConnectorCards').innerHTML = platforms.map(p => `
-        <div class="glass rounded-2xl p-4 border-l-4 border-l-${p.color}-400 flex flex-col justify-between gap-2">
-          <div>
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] font-bold uppercase mono px-2 py-0.5 rounded bg-${p.color}-500/20 text-${p.color}-300">${p.badge}</span>
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            </div>
-            <h4 class="font-bold text-sm mt-2">${p.name}</h4>
-            <p class="text-[11px] mono text-slate-400 truncate">${p.sub}</p>
-          </div>
-          <div class="pt-2 border-t border-white/10 flex items-center justify-between text-[11px]">
-            <span class="text-slate-400">Status: <strong class="text-emerald-400">Connected</strong></span>
-            <button onclick="openApiConfigModal()" class="text-amber-300 hover:underline">Configure</button>
-          </div>
-        </div>
-      `).join('');
-
-      renderOmnichannelOrders();
-      switchIGAccount(activeIGMode);
-    }
-
-    function renderOmnichannelOrders() {
-      const tbody = document.getElementById('omnichannelOrdersBody');
-      if (!tbody) return;
-      tbody.innerHTML = omniOrders.map((o, idx) => `
-        <tr class="hover:bg-white/5">
-          <td class="py-2.5 px-2 font-bold text-amber-300">${o.channel}</td>
-          <td class="py-2.5 px-2">${o.orderId}</td>
-          <td class="py-2.5 px-2 font-sans">${o.customer}</td>
-          <td class="py-2.5 px-2 text-emerald-300">${o.sku}</td>
-          <td class="py-2.5 px-2 text-right font-bold">₹${o.amount}</td>
-          <td class="py-2.5 px-2 text-center"><span class="px-2 py-0.5 rounded bg-white/10 text-[10px]">${o.gateway}</span></td>
-          <td class="py-2.5 px-2 text-center">
-            ${o.awb !== 'PENDING'
-              ? `<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">AWB: ${o.awb}</span>`
-              : `<button onclick="assignShiprocketAWB(${idx})" class="px-2.5 py-1 rounded bg-purple-600 hover:bg-purple-500 text-white font-bold">⚡ Assign Shiprocket AWB</button>`
-            }
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function assignShiprocketAWB(idx) {
-      const ord = omniOrders[idx];
-      if (!ord) return;
-      const generatedAwb = 'SR' + Math.floor(100000000 + Math.random() * 900000000);
-      ord.awb = generatedAwb;
-      ord.status = 'SHIPPED';
-
-      // Deduct stock from master inventory
-      const skuItem = inventory.find(x => x.sku === ord.sku);
-      if (skuItem) skuItem.stock = Math.max(0, skuItem.stock - 1);
-
-      saveState();
-      renderOmnichannelOrders();
-      renderInventoryTable();
-      renderPOSCatalog();
-      logApiEvent(`Shiprocket API: Assigned AWB ${generatedAwb} for ${ord.channel} Order ${ord.orderId} & deducted 1x ${ord.sku}`);
-    }
-
-    function pullSimulatedMarketplaceOrder() {
-      const channels = ['Hostinger Web (Razorpay)', 'Amazon SP-API', 'Flipkart Seller', 'Meesho Hub'];
-      const skus = ['DUD-SH-BLK', 'DCTOP', 'DCDNP', 'B5-QDCP-FEQT', 'DCK2P'];
-      const ch = channels[Math.floor(Math.random() * channels.length)];
-      const sku = skus[Math.floor(Math.random() * skus.length)];
-      const prod = inventory.find(x => x.sku === sku) || { price: 500 };
-      const newOrd = {
-        channel: ch,
-        orderId: 'ORD-' + Math.floor(100000 + Math.random() * 900000),
-        customer: 'Online Buyer (Chennai)',
-        sku,
-        amount: prod.price,
-        gateway: ch.includes('Razorpay') ? 'Razorpay Live' : 'Marketplace Escrow',
-        awb: 'PENDING',
-        status: 'READY_TO_SHIP'
-      };
-      omniOrders.unshift(newOrd);
-      saveState();
-      renderOmnichannelOrders();
-      logApiEvent(`Pulled new ${ch} order ${newOrd.orderId} for SKU ${sku} (₹${prod.price})`);
-    }
-
-    function importMarketplaceCSV(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      logApiEvent(`Imported marketplace manifest "${file.name}" into unified order queue.`);
-      pullSimulatedMarketplaceOrder();
-    }
-
-    async function authenticateShiprocketLive() {
-      const email = apiVault.sr_email;
-      const password = apiVault.sr_password;
-      if (!email || !password) {
-        logApiEvent('Shiprocket API: Open "Configure API Keys" and enter your Shiprocket API user email & password first.');
-        openApiConfigModal();
-        return;
-      }
-      logApiEvent(`Calling POST https://apiv2.shiprocket.in/v1/external/auth/login for ${email}...`);
-      try {
-        const res = await fetch('https://apiv2.shiprocket.in/v1/external/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
-        });
-        const data = await res.json();
-        if (data && data.token) {
-          apiVault.sr_jwt = data.token;
-          localStorage.setItem('DUD_OS_API_VAULT', JSON.stringify(apiVault));
-          logApiEvent('✅ Shiprocket JWT Bearer Token authenticated & cached for 10 days!');
-        } else {
-          logApiEvent('⚠️ Shiprocket response: ' + JSON.stringify(data));
-        }
-      } catch (err) {
-        logApiEvent('ℹ️ Shiprocket API endpoint verified (`apiv2.shiprocket.in/v1/external/auth/login`). Ready for token dispatch.');
-      }
-    }
-
-    async function createShiprocketShipment() {
-      const cust = document.getElementById('srOrderCustomer').value || 'Walk-in / Online Buyer';
-      const pin = document.getElementById('srOrderPincode').value || '600082';
-      const sku = document.getElementById('srOrderSku').value || 'DUD-SH-BLK';
-      const amt = Number(document.getElementById('srOrderAmount').value) || 899;
-
-      const awb = 'SR' + Math.floor(100000000 + Math.random() * 900000000);
-      omniOrders.unshift({
-        channel: 'Direct Shiprocket',
-        orderId: 'SR-ADHOC-' + Math.floor(1000 + Math.random() * 9000),
-        customer: `${cust} (${pin})`,
-        sku,
-        amount: amt,
-        gateway: 'Prepaid / Razorpay',
-        awb,
-        status: 'SHIPPED'
-      });
-      saveState();
-      renderOmnichannelOrders();
-      logApiEvent(`Shiprocket Adhoc Order created for ${cust} (${pin}) — Assigned AWB ${awb}`);
-    }
-
-    function generateRazorpayCheckoutLink() {
-      const name = document.getElementById('rzpCustName').value || 'Customer';
-      const amt = document.getElementById('rzpAmount').value || '899';
-      const linkId = 'plink_' + Math.random().toString(36).substring(2, 10);
-      const url = `https://rzp.io/i/${linkId}`;
-      logApiEvent(`Razorpay API: Generated Payment Link ${url} for ${name} (₹${amt})`);
-      const waMsg = `Hi ${encodeURIComponent(name)}! Complete your DUD CLOSET order of ₹${amt} securely via Razorpay on our official store: ${encodeURIComponent(url)}`;
-      window.open(`https://wa.me/?text=${waMsg}`, '_blank');
-    }
-
-    function switchIGAccount(mode) {
-      activeIGMode = mode;
-      document.getElementById('btnIgBrand').className = mode === 'BRAND' ? 'px-3 py-1 rounded-lg text-xs font-bold accent-btn' : 'px-3 py-1 rounded-lg text-xs font-bold bg-white/10 text-slate-300';
-      document.getElementById('btnIgStore').className = mode === 'STORE' ? 'px-3 py-1 rounded-lg text-xs font-bold accent-btn' : 'px-3 py-1 rounded-lg text-xs font-bold bg-white/10 text-slate-300';
-
-      const data = mode === 'BRAND'
-        ? { handle: '@dud__official', focus: 'Stitching Statements (Cosmic, Espresso, Eternal Dance Ltd 60)', reach: '18.4K', reels: '12 Active Drops', dmLeads: '9 Online Orders' }
-        : { handle: '@dudclosetofficial', focus: 'TVK Nagar Perambur Foot-Traffic & 3-for-₹999 Combos', reach: '24.7K Local Chennai', reels: '19 Store Reels', dmLeads: '14 Walk-in Inquiries' };
-
-      document.getElementById('igDashboardContent').innerHTML = `
-        <div class="bg-black/40 border border-white/10 rounded-xl p-3.5">
-          <span class="text-[11px] text-slate-400">Active Handle</span>
-          <h4 class="text-base font-extrabold mono text-pink-400 mt-0.5">${data.handle}</h4>
-          <p class="text-[11px] text-slate-400 mt-1">${data.focus}</p>
-        </div>
-        <div class="bg-black/40 border border-white/10 rounded-xl p-3.5">
-          <span class="text-[11px] text-slate-400">30-Day Reels Reach</span>
-          <h4 class="text-base font-extrabold mono text-emerald-400 mt-0.5">${data.reach}</h4>
-          <p class="text-[11px] text-slate-400 mt-1">${data.reels}</p>
-        </div>
-        <div class="bg-black/40 border border-white/10 rounded-xl p-3.5">
-          <span class="text-[11px] text-slate-400">IG DM Order Leads</span>
-          <h4 class="text-base font-extrabold mono text-amber-300 mt-0.5">${data.dmLeads}</h4>
-          <p class="text-[11px] text-slate-400 mt-1">Synced to Razorpay & POS CRM</p>
-        </div>
-      `;
-    }
-
-    function publishIGMediaContainer() {
-      const cap = document.getElementById('igReelCaption').value || 'New drop live at DUD CLOSET!';
-      const handle = activeIGMode === 'BRAND' ? '@dud__official' : '@dudclosetofficial';
-      logApiEvent(`Instagram Graph API: Created Media Container for ${handle} ("${cap.slice(0, 35)}...")`);
-      document.getElementById('igReelCaption').value = '';
-    }
-
-    function publishGMBPost() {
-      const post = document.getElementById('gmbPostInput').value || 'New Western Tops & Sarees in stock at TVK Nagar, Perambur!';
-      const inter = document.getElementById('gmbInteractions');
-      inter.textContent = String(Number(inter.textContent) + 1);
-      logApiEvent(`Google Business Profile API: Published Local Offer Post to Perambur Store ("${post.slice(0, 35)}...")`);
-      document.getElementById('gmbPostInput').value = '';
-    }
-
-    function syncAllChannelsNow() {
-      logApiEvent('🔄 Syncing inventory stock across Hostinger (dudcloset.com), Amazon SP-API, Flipkart v3 & Meesho...');
-      setTimeout(() => logApiEvent('✅ All 26 SKUs & price slabs synchronized across all 8 connected channels!'), 400);
-    }
-
-    function openApiConfigModal() {
-      document.getElementById('cfg_wa_phone_id').value = apiVault.wa_phone_id || '';
-      document.getElementById('cfg_wa_token').value = apiVault.wa_token || '';
-      document.getElementById('cfg_sr_email').value = apiVault.sr_email || '';
-      document.getElementById('cfg_sr_password').value = apiVault.sr_password || '';
-      document.getElementById('cfg_rzp_key').value = apiVault.rzp_key || '';
-      document.getElementById('cfg_hostinger_webhook').value = apiVault.hostinger_webhook || 'https://www.dudcloset.com/api/orders';
-      document.getElementById('cfg_amz_token').value = apiVault.amz_token || '';
-      document.getElementById('cfg_fk_token').value = apiVault.fk_token || '';
-      document.getElementById('cfg_meesho_id').value = apiVault.meesho_id || '';
-      document.getElementById('cfg_gmb_loc').value = apiVault.gmb_loc || 'locations/dud-closet-perambur-600082';
-      document.getElementById('cfg_ig_brand_id').value = apiVault.ig_brand_id || 'dud__official';
-      document.getElementById('cfg_ig_store_id').value = apiVault.ig_store_id || 'dudclosetofficial';
-
-      document.getElementById('apiConfigModal').classList.remove('hidden');
-      document.getElementById('apiConfigModal').classList.add('flex');
-    }
-
-    function closeApiConfigModal() {
-      document.getElementById('apiConfigModal').classList.add('hidden');
-      document.getElementById('apiConfigModal').classList.remove('flex');
-    }
-
-    function saveApiConfigVault() {
-      apiVault = {
-        ...apiVault,
-        wa_phone_id: document.getElementById('cfg_wa_phone_id').value.trim(),
-        wa_token: document.getElementById('cfg_wa_token').value.trim(),
-        sr_email: document.getElementById('cfg_sr_email').value.trim(),
-        sr_password: document.getElementById('cfg_sr_password').value.trim(),
-        rzp_key: document.getElementById('cfg_rzp_key').value.trim(),
-        hostinger_webhook: document.getElementById('cfg_hostinger_webhook').value.trim(),
-        amz_token: document.getElementById('cfg_amz_token').value.trim(),
-        fk_token: document.getElementById('cfg_fk_token').value.trim(),
-        meesho_id: document.getElementById('cfg_meesho_id').value.trim(),
-        gmb_loc: document.getElementById('cfg_gmb_loc').value.trim(),
-        ig_brand_id: document.getElementById('cfg_ig_brand_id').value.trim(),
-        ig_store_id: document.getElementById('cfg_ig_store_id').value.trim()
-      };
-      localStorage.setItem('DUD_OS_API_VAULT', JSON.stringify(apiVault));
-      closeApiConfigModal();
-      renderApiHub();
-      logApiEvent('✅ Saved API credentials to local browser vault (`DUD_OS_API_VAULT`).');
-    }
-
-    // =========================================================================
-    // TAX-INCLUSIVE REVERSE GST & DISCOUNT ENGINE
-    // =========================================================================
-    function calculateInvoiceMetrics(items, explicitDiscount = 0) {
-      let gross = 0;
-      items.forEach(it => { gross += (it.qty * it.price); });
-      const totalDiscount = Number(explicitDiscount) || 0;
-      const netTotal = Math.max(0, gross - totalDiscount);
-
-      let taxable = 0;
-      let gst = 0;
-      items.forEach(it => {
-        const lineGross = it.qty * it.price;
-        const share = gross > 0 ? (lineGross / gross) * netTotal : 0;
-        const rate = it.price > 1000 ? 0.12 : 0.05;
-        const lineTaxable = share / (1 + rate);
-        taxable += lineTaxable;
-        gst += (share - lineTaxable);
-      });
-
+    function normalizeSale(s) {
+      const invNo = String(s.invoiceNo || s.id || 'DC-0000').trim();
+      const custName = String(s.customerName || s.customer || 'Walk-in').trim();
+      const custPhone = String(s.customerPhone || s.phone || '').trim();
+      const mode = String(s.payMode || s.mode || 'Cash').trim();
+      const items = (s.items || []).map(it => ({
+        sku: it.sku || 'ITEM',
+        name: it.name || 'Apparel',
+        qty: Number(it.qty) || 1,
+        price: Number(it.price ?? it.sell ?? it.basePrice) || 0
+      }));
+      const sub = items.reduce((sum, i) => sum + (i.qty * i.price), 0);
+      const disc = Number(s.discount ?? s.discAmt ?? s.savings) || 0;
+      const total = Number(s.total) || Math.max(0, sub - disc);
       return {
-        gross,
-        totalDiscount,
-        netTotal,
-        taxable: Number(taxable.toFixed(2)),
-        gst: Number(gst.toFixed(2))
+        ...s,
+        id: s.id || invNo,
+        invoiceNo: invNo,
+        date: s.date || '2026-11-06',
+        customerName: custName,
+        customerPhone: custPhone,
+        payMode: mode,
+        items,
+        sub,
+        discount: disc,
+        total
       };
     }
 
-    function getNextInvoiceNumber() {
-      let maxNum = 81;
-      invoices.forEach(inv => {
-        const m = String(inv.id).match(/^DC-(\d+)$/);
-        if (m) {
-          const n = parseInt(m[1], 10);
-          if (n > maxNum) maxNum = n;
+    function loadOriginalStoreData() {
+      const mapByInv = new Map();
+
+      // Step A: Scan ALL localStorage keys so zero bills from any build are missed
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        try {
+          const parsed = JSON.parse(localStorage.getItem(key));
+          if (Array.isArray(parsed)) {
+            parsed.forEach(entry => {
+              if (entry && (entry.invoiceNo || (entry.id && String(entry.id).startsWith('DC-'))) && Array.isArray(entry.items)) {
+                // Skip old synthetic POS- placeholder entries if real DC- bills exist
+                if (String(entry.id).startsWith('POS-')) return;
+                const norm = normalizeSale(entry);
+                mapByInv.set(norm.invoiceNo, norm);
+              }
+            });
+          }
+        } catch (e) {}
+      }
+
+      // Step B: Specifically prioritize `dc_sales`
+      try {
+        const rawDcSales = JSON.parse(localStorage.getItem('dc_sales') || '[]');
+        if (Array.isArray(rawDcSales)) {
+          rawDcSales.forEach(s => {
+            const norm = normalizeSale(s);
+            mapByInv.set(norm.invoiceNo, norm);
+          });
+        }
+      } catch (e) {}
+
+      // Step C: Merge verified PDF bills (`DC-0095`, `DC-0103`..`DC-0107`, etc.)
+      VERIFIED_BILLS_SEED.forEach(s => {
+        const norm = normalizeSale(s);
+        if (!mapByInv.has(norm.invoiceNo)) {
+          mapByInv.set(norm.invoiceNo, norm);
         }
       });
-      return `DC-${String(maxNum + 1).padStart(4, '0')}`;
+
+      sales = Array.from(mapByInv.values()).sort((a, b) => a.invoiceNo.localeCompare(b.invoiceNo));
+
+      // Step D: Load `dc_cust` + auto-discover customers from all bills
+      const custMap = new Map();
+      try {
+        const rawDcCust = JSON.parse(localStorage.getItem('dc_cust') || '[]');
+        if (Array.isArray(rawDcCust)) {
+          rawDcCust.forEach(c => {
+            if (c && (c.phone || c.name)) {
+              const k = (c.phone || c.name).toLowerCase();
+              custMap.set(k, {
+                id: c.id || 'C-' + Math.random().toString(36).slice(2, 7),
+                name: c.name || 'Customer',
+                phone: c.phone || '',
+                createdAt: c.createdAt || '2026-10-01'
+              });
+            }
+          });
+        }
+      } catch (e) {}
+
+      sales.forEach(s => {
+        if (s.customerName && s.customerName !== 'Walk-in') {
+          const k = (s.customerPhone || s.customerName).toLowerCase();
+          if (!custMap.has(k)) {
+            custMap.set(k, {
+              id: 'C-' + Math.random().toString(36).slice(2, 7),
+              name: s.customerName,
+              phone: s.customerPhone || '',
+              createdAt: s.date
+            });
+          }
+        }
+      });
+      customers = Array.from(custMap.values());
+
+      // Step E: Load `dc_prod`
+      try {
+        const rawDcProd = JSON.parse(localStorage.getItem('dc_prod') || '[]');
+        if (Array.isArray(rawDcProd) && rawDcProd.length > 0) {
+          products = rawDcProd.map(p => ({
+            ...p,
+            sku: p.sku || 'SKU',
+            name: p.name || 'Apparel',
+            cat: p.cat || p.category || 'Apparel',
+            cost: Number(p.cost) || 150,
+            sell: Number(p.sell ?? p.price) || 300,
+            stock: Number(p.stock) || 50
+          }));
+        } else {
+          products = DEFAULT_PRODUCTS;
+        }
+      } catch (e) {
+        products = DEFAULT_PRODUCTS;
+      }
+
+      // Step F: Load `dc_ic` invoice counter
+      const rawIc = parseInt(localStorage.getItem('dc_ic') || '107', 10);
+      let maxFromSales = 107;
+      sales.forEach(s => {
+        const m = String(s.invoiceNo).match(/^DC-(\d+)$/);
+        if (m && parseInt(m[1], 10) > maxFromSales) maxFromSales = parseInt(m[1], 10);
+      });
+      invoiceCounter = Math.max(rawIc || 107, maxFromSales);
+
+      saveToOriginalKeys();
+      updateHeaderCounts();
+    }
+
+    function saveToOriginalKeys() {
+      localStorage.setItem('dc_sales', JSON.stringify(sales));
+      localStorage.setItem('dc_cust', JSON.stringify(customers));
+      localStorage.setItem('dc_prod', JSON.stringify(products));
+      localStorage.setItem('dc_ic', String(invoiceCounter));
+    }
+
+    function updateHeaderCounts() {
+      document.getElementById('navSalesCount').textContent = sales.length;
+      document.getElementById('navCustCount').textContent = customers.length;
+      document.getElementById('navProdCount').textContent = products.length;
+      document.getElementById('nextInvoiceLabel').textContent = `DC-${String(invoiceCounter + 1).padStart(4, '0')}`;
     }
 
     // =========================================================================
-    // POS TERMINAL
+    // 3. POS TERMINAL
     // =========================================================================
     function renderPOSCategories() {
-      const cats = ['ALL', ...new Set(inventory.map(i => i.category))];
+      const cats = ['ALL', ...new Set(products.map(p => p.cat))];
       document.getElementById('posCategoryFilters').innerHTML = cats.map(c => `
         <button onclick="selectedCategory='${c}'; renderPOSCategories(); renderPOSCatalog();"
           class="px-3 py-1.5 rounded-xl text-xs font-semibold transition ${selectedCategory === c ? 'accent-btn' : 'bg-white/5 hover:bg-white/15 text-slate-300'}">
@@ -1337,45 +763,44 @@
 
     function renderPOSCatalog() {
       const q = (document.getElementById('posSearch').value || '').toLowerCase().trim();
-      const filtered = inventory.filter(item => {
-        const matchCat = selectedCategory === 'ALL' || item.category === selectedCategory;
-        const matchQ = !q || item.sku.toLowerCase().includes(q) || item.name.toLowerCase().includes(q);
+      const filtered = products.filter(p => {
+        const matchCat = selectedCategory === 'ALL' || p.cat === selectedCategory;
+        const matchQ = !q || p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q);
         return matchCat && matchQ;
       });
-
-      document.getElementById('posProductGrid').innerHTML = filtered.map(item => `
-        <div onclick="addToCart('${item.sku}')" class="glass rounded-2xl p-3.5 cursor-pointer hover:scale-[1.02] transition flex flex-col justify-between gap-2 group">
+      document.getElementById('posProductGrid').innerHTML = filtered.map(p => `
+        <div onclick="addToCart('${p.sku}')" class="glass rounded-2xl p-3.5 cursor-pointer hover:scale-[1.02] transition flex flex-col justify-between gap-2 group">
           <div>
-            <div class="flex items-center justify-between gap-1">
-              <span class="text-[11px] font-bold mono px-2 py-0.5 rounded bg-white/10 text-amber-300">${item.sku}</span>
-              <span class="text-[11px] mono ${item.stock < 15 ? 'text-rose-400 font-bold' : 'text-slate-400'}">${item.stock} left</span>
+            <div class="flex justify-between text-[11px] mono">
+              <span class="px-2 py-0.5 rounded bg-white/10 text-amber-300 font-bold">${p.sku}</span>
+              <span class="text-slate-400">${p.stock} in stock</span>
             </div>
-            <h4 class="font-bold text-sm mt-2 group-hover:text-amber-300 transition">${item.name}</h4>
-            <p class="text-[11px] text-slate-400">${item.category}</p>
+            <h4 class="font-bold text-sm mt-2 group-hover:text-amber-300 transition">${p.name}</h4>
+            <p class="text-[11px] text-slate-400">${p.cat}</p>
           </div>
-          <div class="flex items-center justify-between pt-2 border-t border-white/10">
-            <span class="text-base font-extrabold mono text-emerald-400">₹${item.price}</span>
-            <span class="text-[10px] text-slate-400 mono">Cost: ₹${item.cost}</span>
+          <div class="pt-2 border-t border-white/10 flex justify-between items-center">
+            <span class="text-base font-extrabold mono text-emerald-400">₹${p.sell}</span>
+            <span class="text-[10px] text-slate-400 mono">Tap to Bill</span>
           </div>
         </div>
       `).join('');
     }
 
     function addToCart(sku) {
-      const prod = inventory.find(x => x.sku === sku);
-      if (!prod) return;
-      const existing = cart.find(x => x.sku === sku);
-      if (existing) existing.qty += 1;
-      else cart.push({ sku: prod.sku, name: prod.name, category: prod.category, price: prod.price, qty: 1 });
+      const p = products.find(x => x.sku === sku);
+      if (!p) return;
+      const ex = cart.find(x => x.sku === sku);
+      if (ex) ex.qty += 1;
+      else cart.push({ sku: p.sku, name: p.name, price: p.sell, qty: 1 });
       renderCart();
     }
 
     function openCustomItemModal() {
-      const name = prompt('Enter Item Name:', 'Custom Apparel');
+      const name = prompt('Enter Item Name:', 'Tops');
       if (!name) return;
-      const price = parseFloat(prompt('Enter Selling Price (₹):', '500'));
-      if (isNaN(price) || price <= 0) return;
-      cart.push({ sku: 'CUSTOM', name, category: 'Custom POS', price, qty: 1 });
+      const price = parseFloat(prompt('Enter Selling Price (₹):', '300'));
+      if (!price) return;
+      cart.push({ sku: 'CUSTOM', name, price, qty: 1 });
       renderCart();
     }
 
@@ -1386,40 +811,41 @@
     }
 
     function renderCart() {
-      document.getElementById('nextInvoiceLabel').textContent = getNextInvoiceNumber();
       const wrap = document.getElementById('cartContainer');
       if (cart.length === 0) {
-        wrap.innerHTML = `<div class="text-center py-8 text-xs text-slate-500">Tap any SKU card on the left to add items.</div>`;
+        wrap.innerHTML = `<div class="text-center py-8 text-xs text-slate-500">Tap any product card on the left to add to bill.</div>`;
       } else {
-        wrap.innerHTML = cart.map((it, idx) => `
+        wrap.innerHTML = cart.map((it, i) => `
           <div class="flex items-center justify-between bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs">
             <div>
-              <div class="font-bold">${it.name} <span class="text-[10px] mono text-amber-300">(${it.sku})</span></div>
+              <div class="font-bold">${it.name}</div>
               <div class="text-slate-400 mono">₹${it.price} × ${it.qty} = ₹${it.price * it.qty}</div>
             </div>
             <div class="flex items-center gap-1.5">
-              <button onclick="updateCartQty(${idx}, -1)" class="w-6 h-6 rounded bg-white/10 hover:bg-white/20 font-bold">-</button>
+              <button onclick="updateCartQty(${i}, -1)" class="w-6 h-6 rounded bg-white/10 font-bold">-</button>
               <span class="w-5 text-center mono font-bold">${it.qty}</span>
-              <button onclick="updateCartQty(${idx}, 1)" class="w-6 h-6 rounded bg-white/10 hover:bg-white/20 font-bold">+</button>
+              <button onclick="updateCartQty(${i}, 1)" class="w-6 h-6 rounded bg-white/10 font-bold">+</button>
             </div>
           </div>
         `).join('');
       }
-
-      const manualDisc = parseFloat(document.getElementById('manualDiscount').value) || 0;
-      const m = calculateInvoiceMetrics(cart, manualDisc);
-      document.getElementById('cartGross').textContent = `₹${m.gross.toFixed(2)}`;
-      document.getElementById('cartTaxable').textContent = `₹${m.taxable.toFixed(2)}`;
-      document.getElementById('cartGST').textContent = `₹${m.gst.toFixed(2)}`;
-      document.getElementById('cartNetTotal').textContent = `₹${m.netTotal}`;
+      const sub = cart.reduce((s, i) => s + (i.qty * i.price), 0);
+      const disc = parseFloat(document.getElementById('manualDiscount').value) || 0;
+      const net = Math.max(0, sub - disc);
+      const taxable = net / 1.05;
+      const gst = net - taxable;
+      document.getElementById('cartGross').textContent = `₹${sub}`;
+      document.getElementById('cartTaxable').textContent = `₹${taxable.toFixed(2)}`;
+      document.getElementById('cartGST').textContent = `₹${gst.toFixed(2)}`;
+      document.getElementById('cartNetTotal').textContent = `₹${net}`;
     }
 
-    function setPaymentMode(mode) {
-      selectedPaymentMode = mode;
-      ['UPI', 'Cash', 'Card', 'Razorpay'].forEach(m => {
-        const el = document.getElementById(`pay-${m}`);
+    function setPaymentMode(m) {
+      selectedPaymentMode = m;
+      ['UPI', 'Cash', 'Card', 'Razorpay'].forEach(mode => {
+        const el = document.getElementById(`pay-${mode}`);
         if (el) {
-          el.className = m === mode
+          el.className = mode === m
             ? 'py-2 rounded-xl text-xs font-bold border border-emerald-500 bg-emerald-500/20 text-emerald-300'
             : 'py-2 rounded-xl text-xs font-bold border border-white/15 bg-black/40 text-slate-300';
         }
@@ -1428,7 +854,7 @@
 
     function populateCRMQuickSelect() {
       const sel = document.getElementById('crmQuickSelect');
-      sel.innerHTML = `<option value="">⚡ Select Customer (${customers.length})...</option>` +
+      sel.innerHTML = `<option value="">⚡ Select Customer from dc_cust (${customers.length})...</option>` +
         customers.map((c, i) => `<option value="${i}">${c.name} (${c.phone})</option>`).join('');
     }
 
@@ -1441,36 +867,43 @@
       }
     }
 
-    function completeSale(sendWhatsApp) {
-      if (cart.length === 0) return alert('Add at least one item to cart!');
-      const invId = getNextInvoiceNumber();
-      const billDate = document.getElementById('posBillDate').value || '2026-11-07';
-      const custName = (document.getElementById('custName').value || 'Walk-in Customer').trim();
-      const custPhone = (document.getElementById('custPhone').value || '').trim();
-      const manualDisc = parseFloat(document.getElementById('manualDiscount').value) || 0;
+    function completeSale(sendWA) {
+      if (cart.length === 0) return alert('Add at least one item to the bill!');
+      invoiceCounter += 1;
+      const invNo = `DC-${String(invoiceCounter).padStart(4, '0')}`;
+      const date = document.getElementById('posBillDate').value || '2026-11-07';
+      const customerName = (document.getElementById('custName').value || 'Walk-in').trim();
+      const customerPhone = (document.getElementById('custPhone').value || '').trim();
+      const sub = cart.reduce((s, i) => s + (i.qty * i.price), 0);
+      const discount = parseFloat(document.getElementById('manualDiscount').value) || 0;
+      const total = Math.max(0, sub - discount);
 
-      const newInvoice = {
-        id: invId,
-        date: billDate,
-        customer: custName,
-        phone: custPhone,
-        mode: selectedPaymentMode,
-        discount: manualDisc,
-        items: JSON.parse(JSON.stringify(cart))
-      };
-
-      cart.forEach(it => {
-        const prod = inventory.find(x => x.sku === it.sku);
-        if (prod) prod.stock = Math.max(0, prod.stock - it.qty);
+      const newSale = normalizeSale({
+        id: invNo,
+        invoiceNo: invNo,
+        date,
+        customerName,
+        customerPhone,
+        payMode: selectedPaymentMode,
+        items: JSON.parse(JSON.stringify(cart)),
+        sub,
+        discount,
+        total
       });
 
-      if (custName && custName !== 'Walk-in Customer') {
-        const ex = customers.find(c => c.name.toLowerCase() === custName.toLowerCase());
-        if (!ex) customers.unshift({ name: custName, phone: custPhone || 'N/A', channel: 'Store POS', notes: `Bill ${invId}` });
+      cart.forEach(it => {
+        const p = products.find(x => x.sku === it.sku);
+        if (p) p.stock = Math.max(0, p.stock - it.qty);
+      });
+
+      if (customerName !== 'Walk-in') {
+        const exists = customers.some(c => c.phone === customerPhone && c.name.toLowerCase() === customerName.toLowerCase());
+        if (!exists) customers.unshift({ id: 'C-' + Date.now(), name: customerName, phone: customerPhone, createdAt: date });
       }
 
-      invoices.push(newInvoice);
-      saveState();
+      sales.push(newSale);
+      saveToOriginalKeys();
+      updateHeaderCounts();
 
       cart = [];
       document.getElementById('manualDiscount').value = '0';
@@ -1479,561 +912,435 @@
       renderPOSCatalog();
       renderCart();
       populateCRMQuickSelect();
-      openInvoicePreview(invId, true, sendWhatsApp);
+      openInvoicePreview(invNo, true, sendWA);
     }
 
     // =========================================================================
-    // PDF & WHATSAPP BUSINESS CLOUD API DISPATCH
+    // 4. EXACT THERMAL RECEIPT PDF (`<Invoice_No>.pdf`) + WHATSAPP
     // =========================================================================
-    function openInvoicePreview(invId, autoDownload = false, autoWhatsApp = false) {
-      const inv = invoices.find(x => x.id === invId);
-      if (!inv) return;
-      currentPreviewInvoice = inv;
+    function openInvoicePreview(invNo, autoDownload = false, autoWA = false) {
+      const s = sales.find(x => x.invoiceNo === invNo);
+      if (!s) return;
+      currentPreviewSale = s;
 
-      const m = calculateInvoiceMetrics(inv.items, inv.discount || 0);
-      document.getElementById('pdfInvNo').textContent = inv.id;
-      document.getElementById('pdfInvDate').textContent = inv.date;
-      document.getElementById('pdfCustName').textContent = inv.customer;
-      document.getElementById('pdfCustPhone').textContent = inv.phone ? `Ph: ${inv.phone}` : '';
-      document.getElementById('pdfPayMode').textContent = inv.mode;
-      document.getElementById('btnPdfFileName').textContent = `${inv.id}.pdf`;
+      document.getElementById('modalInvTitle').textContent = s.invoiceNo;
+      document.getElementById('pdfInvLine').textContent = `Inv: ${s.invoiceNo} | ${s.date}`;
+      document.getElementById('pdfCustLine').textContent = `${s.customerName} (${s.customerPhone || 'N/A'})`;
+      document.getElementById('pdfTotalLabel').textContent = `TOTAL (${s.payMode})`;
+      document.getElementById('pdfGrandTotal').textContent = `₹${s.total}`;
+      document.getElementById('btnPdfFileName').textContent = `${s.invoiceNo}.pdf`;
 
-      document.getElementById('pdfItemsBody').innerHTML = inv.items.map(it => `
-        <tr>
-          <td class="py-1.5 font-semibold">${it.name} <span class="text-[10px] mono text-slate-500">(${it.sku})</span></td>
-          <td class="py-1.5 text-center mono">${it.qty}</td>
-          <td class="py-1.5 text-right mono">₹${it.price}</td>
-          <td class="py-1.5 text-right mono font-bold">₹${it.qty * it.price}</td>
-        </tr>
+      document.getElementById('pdfItemsBody').innerHTML = s.items.map(it => `
+        <div class="flex justify-between">
+          <span>${it.name} x${it.qty}</span>
+          <span class="mono font-semibold">₹${it.qty * it.price}</span>
+        </div>
       `).join('');
-
-      document.getElementById('pdfGross').textContent = `₹${m.gross.toFixed(2)}`;
-      document.getElementById('pdfSaved').textContent = `-₹${m.totalDiscount.toFixed(2)}`;
-      document.getElementById('pdfTaxable').textContent = `₹${m.taxable.toFixed(2)}`;
-      document.getElementById('pdfGST').textContent = `₹${m.gst.toFixed(2)}`;
-      document.getElementById('pdfGrandTotal').textContent = `₹${m.netTotal.toFixed(2)}`;
 
       const modal = document.getElementById('invoiceModal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
 
-      if (autoDownload) setTimeout(() => downloadCurrentInvoicePDF(autoWhatsApp), 250);
+      if (autoDownload) setTimeout(() => downloadCurrentInvoicePDF(autoWA), 250);
     }
 
     function closeInvoiceModal() {
-      const modal = document.getElementById('invoiceModal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      document.getElementById('invoiceModal').classList.add('hidden');
+      document.getElementById('invoiceModal').classList.remove('flex');
     }
 
-    function downloadCurrentInvoicePDF(triggerWA = false) {
-      if (!currentPreviewInvoice) return;
+    function downloadCurrentInvoicePDF(sendWA = false) {
+      if (!currentPreviewSale) return;
+      const s = currentPreviewSale;
       const el = document.getElementById('printableInvoiceArea');
       html2pdf().set({
-        margin: 0.3,
-        filename: `${currentPreviewInvoice.id}.pdf`,
+        margin: 0.25,
+        filename: `${s.invoiceNo}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a5', orientation: 'portrait' }
+        jsPDF: { unit: 'in', format: [3.2, 5.5], orientation: 'portrait' }
       }).from(el).save().then(() => {
-        if (triggerWA) shareCurrentInvoiceWhatsApp(false);
-      });
-    }
-
-    async function shareCurrentInvoiceWhatsApp(alsoDownload = true) {
-      if (!currentPreviewInvoice) return;
-      if (alsoDownload) downloadCurrentInvoicePDF(false);
-      const inv = currentPreviewInvoice;
-      const m = calculateInvoiceMetrics(inv.items, inv.discount || 0);
-      const cleanPhone = (inv.phone || '').replace(/\D/g, '').slice(-10);
-
-      // If WhatsApp Business Cloud API credentials are set, dispatch via Graph API v21.0 first
-      if (apiVault.wa_phone_id && apiVault.wa_token && cleanPhone.length === 10) {
-        try {
-          await fetch(`https://graph.facebook.com/v21.0/${apiVault.wa_phone_id}/messages`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${apiVault.wa_token}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              messaging_product: 'whatsapp',
-              to: `91${cleanPhone}`,
-              type: 'text',
-              text: { body: `DUD CLOSET Tax Invoice ${inv.id} (${inv.date}) — Total Paid: ₹${m.netTotal} (Saved ₹${m.totalDiscount}). Thank you for shopping with us!` }
-            })
-          });
-          logApiEvent(`✅ Sent WhatsApp Cloud API receipt for ${inv.id} to +91${cleanPhone}`);
-        } catch (e) {
-          logApiEvent(`ℹ️ WhatsApp Cloud API fallback triggered for ${inv.id}`);
+        if (sendWA) {
+          const itemLines = s.items.map(i => `${i.name} x${i.qty} | ₹${i.qty * i.price}`).join('%0A');
+          const msg = `*DUD CLOSET*%0ANo.441, 21st Street, Thiru Vi Ka Nagar Quarters, Sembiyan, Perambur, Chennai - 600011%0APh: 93451 25257%0AInv: *${s.invoiceNo}* | ${s.date}%0A${s.customerName} (${s.customerPhone})%0A----------------%0A${itemLines}%0A----------------%0A*TOTAL (${s.payMode}): ₹${s.total}*%0AAll prices inclusive of tax%0A"When in doubt, wear DUD"`;
+          const ph = (s.customerPhone || '').replace(/\D/g, '').slice(-10);
+          window.open(ph.length === 10 ? `https://wa.me/91${ph}?text=${msg}` : `https://wa.me/?text=${msg}`, '_blank');
         }
-      }
-
-      const lines = inv.items.map(i => `• ${i.name} x${i.qty} = ₹${i.qty * i.price}`).join('%0A');
-      const msg = `*DUD CLOSET — OFFICIAL BILL*%0AInvoice: *${inv.id}*%0ADate: ${inv.date}%0ACustomer: ${inv.customer}%0A----------------%0A${lines}%0A----------------%0ASaved: ₹${m.totalDiscount}%0A*Total Paid: ₹${m.netTotal}*%0APayment: ${inv.mode}`;
-      const url = cleanPhone.length === 10 ? `https://wa.me/91${cleanPhone}?text=${msg}` : `https://wa.me/?text=${msg}`;
-      window.open(url, '_blank');
+      });
     }
 
     // =========================================================================
-    // MULTI-DIMENSIONAL ANALYTICS
-    // =========================================================================
-    function renderAnalytics() {
-      const selectedYear = document.getElementById('analyticsYearFilter').value;
-      const inspectDate = document.getElementById('analyticsDateFilter').value;
-      const filteredInvs = invoices.filter(inv => selectedYear === 'ALL' || inv.date.startsWith(selectedYear));
-
-      let totalRevenue = 0, totalTaxable = 0, totalGST = 0, totalSaved = 0, inspectRev = 0, inspectBills = 0;
-      const dayMap = {}, monthMap = {}, yearMap = {}, catMap = {};
-
-      filteredInvs.forEach(inv => {
-        const m = calculateInvoiceMetrics(inv.items, inv.discount || 0);
-        totalRevenue += m.netTotal;
-        totalTaxable += m.taxable;
-        totalGST += m.gst;
-        totalSaved += m.totalDiscount;
-
-        if (inspectDate && inv.date === inspectDate) {
-          inspectRev += m.netTotal;
-          inspectBills += 1;
-        }
-
-        const units = inv.items.reduce((s, i) => s + i.qty, 0);
-        if (!dayMap[inv.date]) dayMap[inv.date] = { bills: 0, units: 0, upi: 0, cash: 0, saved: 0, total: 0 };
-        dayMap[inv.date].bills += 1;
-        dayMap[inv.date].units += units;
-        if (inv.mode === 'UPI') dayMap[inv.date].upi += m.netTotal;
-        else dayMap[inv.date].cash += m.netTotal;
-        dayMap[inv.date].saved += m.totalDiscount;
-        dayMap[inv.date].total += m.netTotal;
-
-        const ym = inv.date.slice(0, 7);
-        if (!monthMap[ym]) monthMap[ym] = { bills: 0, taxable: 0, gst: 0, total: 0 };
-        monthMap[ym].bills += 1;
-        monthMap[ym].taxable += m.taxable;
-        monthMap[ym].gst += m.gst;
-        monthMap[ym].total += m.netTotal;
-
-        inv.items.forEach(it => {
-          const cat = it.category || 'Apparel';
-          if (!catMap[cat]) catMap[cat] = { qty: 0, rev: 0 };
-          catMap[cat].qty += it.qty;
-          catMap[cat].rev += (it.qty * it.price);
-        });
-      });
-
-      invoices.forEach(inv => {
-        const yr = inv.date.slice(0, 4);
-        const m = calculateInvoiceMetrics(inv.items, inv.discount || 0);
-        if (!yearMap[yr]) yearMap[yr] = { bills: 0, gst: 0, total: 0 };
-        yearMap[yr].bills += 1;
-        yearMap[yr].gst += m.gst;
-        yearMap[yr].total += m.netTotal;
-      });
-
-      document.getElementById('analyticsKPICards').innerHTML = `
-        <div class="glass rounded-2xl p-4 border-l-4 border-l-emerald-400">
-          <span class="text-xs text-slate-400">Total Verified Revenue (${selectedYear})</span>
-          <h3 class="text-2xl font-extrabold mono text-emerald-400 mt-1">₹${totalRevenue.toLocaleString('en-IN')}</h3>
-          <p class="text-[11px] text-slate-400 mt-1">${filteredInvs.length} Records (Invoices + SBI POS SB640288)</p>
-        </div>
-        <div class="glass rounded-2xl p-4 border-l-4 border-l-amber-400">
-          <span class="text-xs text-slate-400">Selected Date (${inspectDate})</span>
-          <h3 class="text-2xl font-extrabold mono text-amber-300 mt-1">₹${inspectRev.toLocaleString('en-IN')}</h3>
-          <p class="text-[11px] text-slate-400 mt-1">${inspectBills} Record(s) on this date</p>
-        </div>
-        <div class="glass rounded-2xl p-4 border-l-4 border-l-sky-400">
-          <span class="text-xs text-slate-400">Net Taxable Sales</span>
-          <h3 class="text-2xl font-extrabold mono text-sky-300 mt-1">₹${totalTaxable.toFixed(2)}</h3>
-          <p class="text-[11px] text-slate-400 mt-1">Total Customer Discounts Given: ₹${totalSaved}</p>
-        </div>
-        <div class="glass rounded-2xl p-4 border-l-4 border-l-purple-400">
-          <span class="text-xs text-slate-400">Total Output GST</span>
-          <h3 class="text-2xl font-extrabold mono text-purple-300 mt-1">₹${totalGST.toFixed(2)}</h3>
-          <p class="text-[11px] text-slate-400 mt-1">CGST: ₹${(totalGST/2).toFixed(2)} | SGST: ₹${(totalGST/2).toFixed(2)}</p>
-        </div>
-      `;
-
-      document.getElementById('dayWiseTableBody').innerHTML = Object.keys(dayMap).sort((a,b) => b.localeCompare(a)).map(d => {
-        const r = dayMap[d];
-        return `
-          <tr onclick="document.getElementById('analyticsDateFilter').value='${d}'; renderAnalytics();" class="hover:bg-white/5 cursor-pointer">
-            <td class="py-2.5 px-2 font-bold text-amber-300">${d}</td>
-            <td class="py-2.5 px-2">${r.bills}</td>
-            <td class="py-2.5 px-2">${r.units}</td>
-            <td class="py-2.5 px-2 text-emerald-400">₹${r.upi.toLocaleString('en-IN')}</td>
-            <td class="py-2.5 px-2 text-slate-300">₹${r.cash.toLocaleString('en-IN')}</td>
-            <td class="py-2.5 px-2 text-rose-300">₹${r.saved}</td>
-            <td class="py-2.5 px-2 text-right font-bold text-white">₹${r.total.toLocaleString('en-IN')}</td>
-          </tr>
-        `;
-      }).join('');
-
-      const sortedCats = Object.entries(catMap).sort((a, b) => b[1].rev - a[1].rev);
-      const maxCat = sortedCats.length ? sortedCats[0][1].rev : 1;
-      document.getElementById('categorySalesList').innerHTML = sortedCats.map(([cat, info]) => `
-        <div class="space-y-1">
-          <div class="flex justify-between text-xs">
-            <span class="font-semibold">${cat} <span class="text-slate-400 mono">(${info.qty} pcs)</span></span>
-            <span class="mono font-bold text-emerald-400">₹${info.rev.toLocaleString('en-IN')}</span>
-          </div>
-          <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-            <div class="h-full accent-btn rounded-full" style="width:${Math.round((info.rev/maxCat)*100)}%"></div>
-          </div>
-        </div>
-      `).join('');
-
-      document.getElementById('monthlyTableBody').innerHTML = Object.keys(monthMap).sort((a,b) => b.localeCompare(a)).map(ym => {
-        const m = monthMap[ym];
-        return `
-          <tr class="hover:bg-white/5">
-            <td class="py-2.5 px-2 font-bold text-white">${ym}</td>
-            <td class="py-2.5 px-2">${m.bills}</td>
-            <td class="py-2.5 px-2">₹${m.taxable.toFixed(2)}</td>
-            <td class="py-2.5 px-2 text-purple-300">₹${m.gst.toFixed(2)}</td>
-            <td class="py-2.5 px-2 text-right font-bold text-emerald-400">₹${m.total.toLocaleString('en-IN')}</td>
-          </tr>
-        `;
-      }).join('');
-
-      document.getElementById('yearlySummaryCards').innerHTML = Object.keys(yearMap).sort((a,b) => b.localeCompare(a)).map(yr => {
-        const y = yearMap[yr];
-        return `
-          <div class="bg-black/40 border border-white/10 rounded-xl p-4 flex items-center justify-between">
-            <div>
-              <span class="text-xs text-slate-400 uppercase">Year</span>
-              <h4 class="text-lg font-extrabold mono text-amber-300">${yr}</h4>
-              <p class="text-xs text-slate-400">${y.bills} Records • Output GST: ₹${y.gst.toFixed(2)}</p>
-            </div>
-            <div class="text-right">
-              <span class="text-xs text-slate-400">Total Sales</span>
-              <div class="text-xl font-extrabold mono text-emerald-400">₹${y.total.toLocaleString('en-IN')}</div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    // =========================================================================
-    // INVOICES TABLE & EXCEL EXPORT
+    // 5. SALES TABLE, CRM, INVENTORY, ANALYTICS & 4-SHEET GST EXCEL
     // =========================================================================
     function renderInvoiceTable() {
       const q = (document.getElementById('invSearch').value || '').toLowerCase().trim();
-      const list = [...invoices].reverse().filter(inv =>
-        !q || inv.id.toLowerCase().includes(q) || inv.customer.toLowerCase().includes(q) || (inv.phone || '').includes(q)
+      const list = [...sales].reverse().filter(s =>
+        !q || s.invoiceNo.toLowerCase().includes(q) || s.customerName.toLowerCase().includes(q) || (s.customerPhone || '').includes(q) || (s.date || '').includes(q)
       );
-
-      document.getElementById('invoiceTableBody').innerHTML = list.map(inv => {
-        const m = calculateInvoiceMetrics(inv.items, inv.discount || 0);
-        const itemSummary = inv.items.map(i => `${i.name} (${i.sku}) ×${i.qty}`).join(', ');
+      document.getElementById('invoiceTableBody').innerHTML = list.map(s => {
+        const taxable = (s.total / 1.05).toFixed(2);
+        const gst = (s.total - Number(taxable)).toFixed(2);
+        const itemsText = s.items.map(i => `${i.name} x${i.qty} (₹${i.qty * i.price})`).join(', ');
         return `
           <tr class="hover:bg-white/5">
-            <td class="py-3 px-4 font-bold mono text-amber-300">${inv.id}</td>
-            <td class="py-3 px-4 mono">${inv.date}</td>
-            <td class="py-3 px-4 font-semibold">${inv.customer}</td>
-            <td class="py-3 px-4 mono text-slate-300">${inv.phone || '—'}</td>
-            <td class="py-3 px-4 text-slate-300 max-w-xs truncate" title="${itemSummary}">${itemSummary}</td>
-            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-white/10 mono text-[11px]">${inv.mode}</span></td>
-            <td class="py-3 px-4 text-right mono text-rose-300">${m.totalDiscount > 0 ? `-₹${m.totalDiscount}` : '₹0'}</td>
-            <td class="py-3 px-4 text-right mono">₹${m.taxable.toFixed(2)}</td>
-            <td class="py-3 px-4 text-right mono text-purple-300">₹${m.gst.toFixed(2)}</td>
-            <td class="py-3 px-4 text-right mono font-bold text-emerald-400">₹${m.netTotal.toLocaleString('en-IN')}</td>
+            <td class="py-3 px-4 font-bold mono text-amber-300">${s.invoiceNo}</td>
+            <td class="py-3 px-4 mono">${s.date}</td>
+            <td class="py-3 px-4 font-bold">${s.customerName}</td>
+            <td class="py-3 px-4 mono text-slate-300">${s.customerPhone || '—'}</td>
+            <td class="py-3 px-4 text-slate-300 max-w-md truncate" title="${itemsText}">${itemsText}</td>
+            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-white/10 mono text-[11px]">${s.payMode}</span></td>
+            <td class="py-3 px-4 text-right mono text-rose-300">${s.discount > 0 ? `-₹${s.discount}` : '₹0'}</td>
+            <td class="py-3 px-4 text-right mono">₹${taxable}</td>
+            <td class="py-3 px-4 text-right mono text-purple-300">₹${gst}</td>
+            <td class="py-3 px-4 text-right mono font-bold text-emerald-400">₹${s.total.toLocaleString('en-IN')}</td>
             <td class="py-3 px-4 text-center">
-              <button onclick="openInvoicePreview('${inv.id}')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-semibold">📄 ${inv.id}.pdf</button>
+              <button onclick="openInvoicePreview('${s.invoiceNo}')" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-semibold">📄 ${s.invoiceNo}.pdf</button>
             </td>
           </tr>
         `;
       }).join('');
     }
 
-    function exportFullGSTR1Excel() {
-      const wb = XLSX.utils.book_new();
-      const salesRows = invoices.map(inv => {
-        const m = calculateInvoiceMetrics(inv.items, inv.discount || 0);
-        return {
-          'Invoice No': inv.id,
-          'Date': inv.date,
-          'Customer': inv.customer,
-          'Phone': inv.phone || '',
-          'GSTIN': '33CVFPP9066H1Z7',
-          'Payment Mode': inv.mode,
-          'Items': inv.items.map(i => `${i.sku}:${i.name}(x${i.qty})`).join(' | '),
-          'Gross Amount': m.gross,
-          'Discount / Saved': m.totalDiscount,
-          'Taxable Value': m.taxable,
-          'CGST': Number((m.gst / 2).toFixed(2)),
-          'SGST': Number((m.gst / 2).toFixed(2)),
-          'Total GST': m.gst,
-          'Final Invoice Total': m.netTotal
-        };
-      });
-      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(salesRows), 'Sales_Register_GSTR1');
-      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(inventory), 'Master_SKU_Inventory');
-      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(omniOrders), 'Omnichannel_Orders');
-      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(loans), 'Personal_Loan_Ledger');
-      XLSX.writeFile(wb, `DUD_CLOSET_COMPLETE_OMNI_2026.xlsx`);
-    }
-
-    // =========================================================================
-    // INVENTORY & CRM
-    // =========================================================================
-    function renderInventoryTable() {
-      document.getElementById('inventoryTableBody').innerHTML = inventory.map((item, idx) => `
-        <tr class="hover:bg-white/5">
-          <td class="py-3 px-4 font-bold mono text-amber-300">${item.sku}</td>
-          <td class="py-3 px-4 font-semibold">${item.name}</td>
-          <td class="py-3 px-4 text-slate-300">${item.category}</td>
-          <td class="py-3 px-4 mono text-slate-400">${item.hsn}</td>
-          <td class="py-3 px-4 text-right mono text-slate-400">₹${item.cost}</td>
-          <td class="py-3 px-4 text-right mono font-bold text-emerald-400">₹${item.price}</td>
-          <td class="py-3 px-4 text-center mono text-slate-400">${item.openingStock || item.stock}</td>
-          <td class="py-3 px-4 text-center mono font-bold ${item.stock < 15 ? 'text-rose-400' : 'text-white'}">${item.stock}</td>
-          <td class="py-3 px-4 text-center">
-            <button onclick="adjustStock(${idx}, -1)" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 font-bold">-</button>
-            <button onclick="adjustStock(${idx}, 1)" class="px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 font-bold ml-1">+</button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function adjustStock(idx, delta) {
-      inventory[idx].stock = Math.max(0, inventory[idx].stock + delta);
-      saveState();
-      renderInventoryTable();
-      renderPOSCatalog();
-    }
-
-    function openAddInventoryModal() {
-      const sku = prompt('Enter SKU Code:');
-      if (!sku) return;
-      const name = prompt('Enter Product Name:');
-      if (!name) return;
-      const category = prompt('Enter Category:', 'Tops & Tees');
-      const cost = parseFloat(prompt('Purchase Cost (₹):', '150')) || 150;
-      const price = parseFloat(prompt('Selling Price (₹):', '300')) || 300;
-      const stock = parseInt(prompt('Opening Stock:', '50'), 10) || 50;
-      inventory.push({ sku: sku.toUpperCase().trim(), name, category, hsn: '6204', cost, price, openingStock: stock, stock, combo: 'NONE' });
-      saveState();
-      renderInventoryTable();
-      renderPOSCategories();
-      renderPOSCatalog();
-    }
-
     function renderCRM() {
       const q = (document.getElementById('crmSearch').value || '').toLowerCase().trim();
-      const enriched = customers.map(c => {
-        const custInvs = invoices.filter(inv => inv.customer.toLowerCase() === c.name.toLowerCase() || (c.phone && inv.phone === c.phone));
-        const totalSpend = custInvs.reduce((s, inv) => s + calculateInvoiceMetrics(inv.items, inv.discount || 0).netTotal, 0);
-        return { ...c, invIds: custInvs.map(i => i.id), totalSpend };
+      const list = customers.map(c => {
+        const bills = sales.filter(s => (c.phone && s.customerPhone === c.phone) || s.customerName.toLowerCase() === c.name.toLowerCase());
+        const spend = bills.reduce((sum, b) => sum + b.total, 0);
+        return { ...c, bills: bills.map(b => b.invoiceNo), spend };
       }).filter(c => !q || c.name.toLowerCase().includes(q) || (c.phone || '').includes(q));
 
-      document.getElementById('crmGrid').innerHTML = enriched.map(c => `
+      document.getElementById('crmGrid').innerHTML = list.map(c => `
         <div class="glass rounded-2xl p-4 flex flex-col justify-between gap-3">
           <div>
-            <div class="flex items-center justify-between">
+            <div class="flex justify-between items-center">
               <h4 class="font-bold text-base">${c.name}</h4>
-              <span class="text-xs mono px-2 py-0.5 rounded bg-white/10 text-amber-300">${c.channel}</span>
+              <span class="text-xs mono px-2 py-0.5 rounded bg-white/10 text-amber-300">${c.bills.length} Bill(s)</span>
             </div>
-            <p class="text-xs mono text-slate-300 mt-1">📞 ${c.phone}</p>
-            <p class="text-xs text-slate-400 mt-1">${c.notes || ''}</p>
+            <p class="text-xs mono text-slate-300 mt-1">📞 ${c.phone || 'N/A'}</p>
+            <p class="text-xs text-slate-400 mt-2">Invoices: <span class="text-white mono">${c.bills.join(', ') || '—'}</span></p>
           </div>
-          <div class="pt-3 border-t border-white/10 flex items-center justify-between text-xs">
-            <div>
-              <span class="text-slate-400 block">Bills: <strong class="text-white mono">${c.invIds.join(', ') || '—'}</strong></span>
-              <span class="text-emerald-400 font-bold mono text-sm">Total Paid: ₹${c.totalSpend.toLocaleString('en-IN')}</span>
-            </div>
+          <div class="pt-2 border-t border-white/10 flex justify-between items-center text-xs">
+            <span class="font-bold mono text-emerald-400 text-sm">Total Spend: ₹${c.spend.toLocaleString('en-IN')}</span>
             <a href="https://wa.me/91${(c.phone || '').replace(/\D/g, '').slice(-10)}" target="_blank" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold">💬 WhatsApp</a>
           </div>
         </div>
       `).join('');
     }
 
+    function renderInventoryTable() {
+      document.getElementById('inventoryTableBody').innerHTML = products.map((p, idx) => `
+        <tr class="hover:bg-white/5">
+          <td class="py-3 px-4 font-bold mono text-amber-300">${p.sku}</td>
+          <td class="py-3 px-4 font-bold">${p.name}</td>
+          <td class="py-3 px-4 text-slate-300">${p.cat}</td>
+          <td class="py-3 px-4 text-right mono text-slate-400">₹${p.cost}</td>
+          <td class="py-3 px-4 text-right mono font-bold text-emerald-400">₹${p.sell}</td>
+          <td class="py-3 px-4 text-center mono font-bold">${p.stock}</td>
+          <td class="py-3 px-4 text-center">
+            <button onclick="products[${idx}].stock=Math.max(0,products[${idx}].stock-1);saveToOriginalKeys();renderInventoryTable();" class="px-2 py-0.5 rounded bg-white/10 font-bold">-</button>
+            <button onclick="products[${idx}].stock+=1;saveToOriginalKeys();renderInventoryTable();" class="px-2 py-0.5 rounded bg-white/10 font-bold ml-1">+</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openAddInventoryModal() {
+      const sku = prompt('Enter SKU Code:'); if (!sku) return;
+      const name = prompt('Enter Product Name:'); if (!name) return;
+      const cat = prompt('Enter Category:', 'Tops & Tees') || 'Apparel';
+      const cost = parseFloat(prompt('Purchase Cost (₹):', '150')) || 150;
+      const sell = parseFloat(prompt('Selling Price (₹):', '300')) || 300;
+      const stock = parseInt(prompt('Opening Stock:', '50'), 10) || 50;
+      products.push({ id: 'P' + Date.now(), sku: sku.toUpperCase().trim(), name, cat, cost, sell, stock });
+      saveToOriginalKeys();
+      updateHeaderCounts();
+      renderInventoryTable();
+      renderPOSCategories();
+      renderPOSCatalog();
+    }
+
+    function renderAnalytics() {
+      const inspectDate = document.getElementById('analyticsDateFilter').value || '2026-11-06';
+      let totalRev = 0, cashRev = 0, upiRev = 0, inspectRev = 0, inspectBills = 0;
+      const dayMap = {}, monthMap = {}, yearMap = {}, itemMap = {};
+
+      sales.forEach(s => {
+        totalRev += s.total;
+        if (s.payMode.toLowerCase() === 'cash') cashRev += s.total;
+        else upiRev += s.total;
+
+        if (s.date === inspectDate) {
+          inspectRev += s.total;
+          inspectBills += 1;
+        }
+
+        const units = s.items.reduce((sum, i) => sum + i.qty, 0);
+        if (!dayMap[s.date]) dayMap[s.date] = { bills: 0, units: 0, cash: 0, upi: 0, total: 0 };
+        dayMap[s.date].bills += 1;
+        dayMap[s.date].units += units;
+        if (s.payMode.toLowerCase() === 'cash') dayMap[s.date].cash += s.total;
+        else dayMap[s.date].upi += s.total;
+        dayMap[s.date].total += s.total;
+
+        const ym = s.date.slice(0, 7);
+        if (!monthMap[ym]) monthMap[ym] = { bills: 0, total: 0 };
+        monthMap[ym].bills += 1;
+        monthMap[ym].total += s.total;
+
+        const yr = s.date.slice(0, 4);
+        if (!yearMap[yr]) yearMap[yr] = { bills: 0, total: 0 };
+        yearMap[yr].bills += 1;
+        yearMap[yr].total += s.total;
+
+        s.items.forEach(it => {
+          const k = it.name;
+          if (!itemMap[k]) itemMap[k] = { qty: 0, rev: 0 };
+          itemMap[k].qty += it.qty;
+          itemMap[k].rev += (it.qty * it.price);
+        });
+      });
+
+      document.getElementById('analyticsKPICards').innerHTML = `
+        <div class="glass rounded-2xl p-4 border-l-4 border-l-emerald-400">
+          <span class="text-xs text-slate-400">Total Store Revenue (dc_sales)</span>
+          <h3 class="text-2xl font-extrabold mono text-emerald-400 mt-1">₹${totalRev.toLocaleString('en-IN')}</h3>
+          <p class="text-[11px] text-slate-400 mt-1">${sales.length} Verified Invoices</p>
+        </div>
+        <div class="glass rounded-2xl p-4 border-l-4 border-l-amber-400">
+          <span class="text-xs text-slate-400">Selected Date (${inspectDate})</span>
+          <h3 class="text-2xl font-extrabold mono text-amber-300 mt-1">₹${inspectRev.toLocaleString('en-IN')}</h3>
+          <p class="text-[11px] text-slate-400 mt-1">${inspectBills} Invoices on ${inspectDate}</p>
+        </div>
+        <div class="glass rounded-2xl p-4 border-l-4 border-l-sky-400">
+          <span class="text-xs text-slate-400">Total UPI Collections</span>
+          <h3 class="text-2xl font-extrabold mono text-sky-300 mt-1">₹${upiRev.toLocaleString('en-IN')}</h3>
+        </div>
+        <div class="glass rounded-2xl p-4 border-l-4 border-l-purple-400">
+          <span class="text-xs text-slate-400">Total Cash Collections</span>
+          <h3 class="text-2xl font-extrabold mono text-purple-300 mt-1">₹${cashRev.toLocaleString('en-IN')}</h3>
+        </div>
+      `;
+
+      document.getElementById('dayWiseTableBody').innerHTML = Object.keys(dayMap).sort((a,b) => b.localeCompare(a)).map(d => `
+        <tr onclick="document.getElementById('analyticsDateFilter').value='${d}'; renderAnalytics();" class="hover:bg-white/5 cursor-pointer">
+          <td class="py-2.5 px-2 font-bold text-amber-300">${d}</td>
+          <td class="py-2.5 px-2">${dayMap[d].bills}</td>
+          <td class="py-2.5 px-2">${dayMap[d].units} pcs</td>
+          <td class="py-2.5 px-2">₹${dayMap[d].cash.toLocaleString('en-IN')}</td>
+          <td class="py-2.5 px-2 text-emerald-400">₹${dayMap[d].upi.toLocaleString('en-IN')}</td>
+          <td class="py-2.5 px-2 text-right font-bold text-white">₹${dayMap[d].total.toLocaleString('en-IN')}</td>
+        </tr>
+      `).join('');
+
+      const sortedItems = Object.entries(itemMap).sort((a,b) => b[1].rev - a[1].rev);
+      const maxRev = sortedItems.length ? sortedItems[0][1].rev : 1;
+      document.getElementById('categorySalesList').innerHTML = sortedItems.map(([name, info]) => `
+        <div class="space-y-1">
+          <div class="flex justify-between text-xs">
+            <span class="font-semibold">${name} <span class="text-slate-400 mono">(${info.qty} pcs)</span></span>
+            <span class="mono font-bold text-emerald-400">₹${info.rev.toLocaleString('en-IN')}</span>
+          </div>
+          <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+            <div class="h-full accent-btn rounded-full" style="width:${Math.round((info.rev/maxRev)*100)}%"></div>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('monthlyTableBody').innerHTML = Object.keys(monthMap).sort((a,b) => b.localeCompare(a)).map(ym => {
+        const tot = monthMap[ym].total;
+        const tax = (tot / 1.05).toFixed(2);
+        const gst = (tot - Number(tax)).toFixed(2);
+        return `
+          <tr>
+            <td class="py-2 font-bold text-white">${ym}</td>
+            <td class="py-2">${monthMap[ym].bills}</td>
+            <td class="py-2">₹${tax}</td>
+            <td class="py-2 text-purple-300">₹${gst}</td>
+            <td class="py-2 text-right font-bold text-emerald-400">₹${tot.toLocaleString('en-IN')}</td>
+          </tr>
+        `;
+      }).join('');
+
+      document.getElementById('yearlySummaryCards').innerHTML = Object.keys(yearMap).sort((a,b) => b.localeCompare(a)).map(yr => `
+        <div class="bg-black/40 border border-white/10 rounded-xl p-4 flex justify-between items-center">
+          <div>
+            <span class="text-xs text-slate-400 uppercase">Year</span>
+            <h4 class="text-lg font-extrabold mono text-amber-300">${yr}</h4>
+            <p class="text-xs text-slate-400">${yearMap[yr].bills} Invoices</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-slate-400">Total Revenue</span>
+            <div class="text-xl font-extrabold mono text-emerald-400">₹${yearMap[yr].total.toLocaleString('en-IN')}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function exportFullGSTR1Excel() {
+      const wb = XLSX.utils.book_new();
+      const salesRows = sales.map(s => {
+        const taxable = Number((s.total / 1.05).toFixed(2));
+        const gst = Number((s.total - taxable).toFixed(2));
+        return {
+          'Invoice No': s.invoiceNo,
+          'Date': s.date,
+          'Customer Name': s.customerName,
+          'Customer Phone': s.customerPhone,
+          'GSTIN': '33CVFPP9066H1Z7',
+          'Items Purchased': s.items.map(i => `${i.name} x${i.qty} (₹${i.qty * i.price})`).join(' | '),
+          'Payment Mode': s.payMode,
+          'Discount / Saved': s.discount || 0,
+          'Taxable Value (INR)': taxable,
+          'CGST (2.5%)': Number((gst / 2).toFixed(2)),
+          'SGST (2.5%)': Number((gst / 2).toFixed(2)),
+          'Total GST (INR)': gst,
+          'Final Total (INR)': s.total
+        };
+      });
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(salesRows), 'Sales_Register_GSTR1');
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(customers), 'Customers_dc_cust');
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(products), 'Inventory_dc_prod');
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(UPLOADED_LOANS), 'Personal_Loans');
+      XLSX.writeFile(wb, `DUD_CLOSET_GST_SALES_${new Date().toISOString().slice(0,10)}.xlsx`);
+    }
+
     // =========================================================================
-    // PERSONAL VAULT: EXACT UPLOADED LOANS (CORE 7 & FULL 9 VIEW)
+    // 6. OMNICHANNEL API HUB & PERSONAL LOAN VAULT
     // =========================================================================
+    function renderApiHub() {
+      const apis = [
+        { name: 'WhatsApp Business Cloud API', endpoint: '/api/webhook?action=send_whatsapp', status: 'Ready' },
+        { name: 'Shiprocket Logistics API', endpoint: '/api/webhook?action=shiprocket_create_order', status: 'Ready' },
+        { name: 'Hostinger + Razorpay Webhook', endpoint: '/api/webhook (x-razorpay-signature)', status: 'Ready' },
+        { name: 'Amazon Seller SP-API', endpoint: '/api/webhook?action=marketplace_order_webhook', status: 'Ready' },
+        { name: 'Flipkart Seller API v3', endpoint: '/api/webhook?action=marketplace_order_webhook', status: 'Ready' },
+        { name: 'Meesho Supplier Hub', endpoint: '/api/webhook?action=marketplace_order_webhook', status: 'Ready' },
+        { name: 'Instagram @dud__official & @dudclosetofficial', endpoint: '/api/webhook?action=instagram_publish', status: 'Ready' },
+        { name: 'Google Business Profile (Perambur)', endpoint: 'No.441, 21st Street, TVK Nagar - 600011', status: 'Verified' }
+      ];
+      document.getElementById('apiHubCards').innerHTML = apis.map(a => `
+        <div class="glass rounded-2xl p-4 border-l-4 border-l-emerald-400 space-y-1">
+          <div class="flex justify-between items-center">
+            <span class="text-[10px] font-bold uppercase mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">${a.status}</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          </div>
+          <h4 class="font-bold text-sm pt-1">${a.name}</h4>
+          <p class="text-[11px] mono text-slate-400 truncate">${a.endpoint}</p>
+        </div>
+      `).join('');
+    }
+
+    async function testServerlessWebhook() {
+      try {
+        const res = await fetch('/api/webhook');
+        const data = await res.json();
+        alert('✅ Serverless Webhook Online:\n' + JSON.stringify(data, null, 2));
+      } catch (e) {
+        alert('ℹ️ Deploy api/webhook.js on Vercel to activate live background webhooks.');
+      }
+    }
+
     function unlockVault() {
       if (document.getElementById('vaultPinInput').value === vaultPin) {
         document.getElementById('vaultLockScreen').classList.add('hidden');
         document.getElementById('vaultUnlockedContent').classList.remove('hidden');
-        document.getElementById('vaultPinError').classList.add('hidden');
-        document.getElementById('vaultPinInput').value = '';
-        renderPersonalVault();
+        renderLoans();
       } else {
-        document.getElementById('vaultPinError').classList.remove('hidden');
+        alert('Incorrect PIN! Default is 6666.');
       }
     }
 
-    function lockVault() {
-      document.getElementById('vaultUnlockedContent').classList.add('hidden');
-      document.getElementById('vaultLockScreen').classList.remove('hidden');
+    function setLoanMode(m) {
+      loanMode = m;
+      document.getElementById('btnCore7').className = m === 'CORE7' ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-300';
+      document.getElementById('btnFull9').className = m === 'FULL9' ? 'px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'px-3 py-1.5 rounded-lg text-xs font-bold bg-white/10 text-slate-300';
+      renderLoans();
     }
 
-    function setLoanViewMode(mode) {
-      loanViewMode = mode;
-      document.getElementById('btnLoanCore7').className = mode === 'CORE7'
-        ? 'px-3 py-1.5 rounded-lg font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-        : 'px-3 py-1.5 rounded-lg font-bold bg-white/10 text-slate-300';
-      document.getElementById('btnLoanFull9').className = mode === 'FULL9'
-        ? 'px-3 py-1.5 rounded-lg font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-        : 'px-3 py-1.5 rounded-lg font-bold bg-white/10 text-slate-300';
-      renderPersonalVault();
-    }
-
-    function toggleLoanPaid(id) {
-      const ln = loans.find(x => x.id === id);
-      if (ln) {
-        ln.paidThisMonth = !ln.paidThisMonth;
-        saveState();
-        renderPersonalVault();
-      }
-    }
-
-    function openAddLoanModal() {
-      const lender = prompt('Enter Lender Name:');
-      if (!lender) return;
-      const account = prompt('Enter Loan Account No:', 'N/A');
-      const apr = parseFloat(prompt('APR %:', '14.0')) || 14;
-      const balance = parseFloat(prompt('Current Balance (₹):', '100000')) || 100000;
-      const emi = parseFloat(prompt('Monthly EMI (₹):', '5000')) || 5000;
-      const dueDay = parseInt(prompt('Due Day (1-31):', '5'), 10) || 5;
-      loans.push({ id: `LN-${loans.length+1}`, core7: true, lender, account, tenure: 'Custom', remMos: 12, apr, sanctioned: balance, balance, emi, dueDay, status: 'ACTIVE', paidThisMonth: false });
-      saveState();
-      renderPersonalVault();
-    }
-
-    function renderPersonalVault() {
-      const visibleLoans = loans.filter(l => loanViewMode === 'FULL9' ? true : l.core7);
-      const activeVisible = visibleLoans.filter(l => l.status === 'ACTIVE');
-      const totalBal = activeVisible.reduce((s, l) => s + l.balance, 0);
-      const totalEMI = activeVisible.reduce((s, l) => s + l.emi, 0);
-      const weightedApr = totalBal > 0 ? activeVisible.reduce((s, l) => s + (l.balance * l.apr), 0) / totalBal : 0;
+    function renderLoans() {
+      const list = UPLOADED_LOANS.filter(l => loanMode === 'FULL9' ? true : l.core7);
+      const active = list.filter(l => l.dueDay !== 'CLOSED');
+      const bal = active.reduce((s, l) => s + l.balance, 0);
+      const emi = active.reduce((s, l) => s + l.emi, 0);
 
       document.getElementById('loanSummaryCards').innerHTML = `
         <div class="glass rounded-2xl p-4 border-l-4 border-l-rose-500">
-          <span class="text-xs text-slate-400">Outstanding Principal (${loanViewMode === 'CORE7' ? 'Core 7 Uploaded' : 'Full 9 Active'})</span>
-          <h4 class="text-2xl font-extrabold mono text-rose-400 mt-1">₹${totalBal.toLocaleString('en-IN')}</h4>
-          <p class="text-[11px] text-slate-400 mt-1">Weighted Avg APR: <strong>${weightedApr.toFixed(2)}%</strong></p>
+          <span class="text-xs text-slate-400">Outstanding Principal</span>
+          <h4 class="text-2xl font-extrabold mono text-rose-400 mt-1">₹${bal.toLocaleString('en-IN')}</h4>
         </div>
         <div class="glass rounded-2xl p-4 border-l-4 border-l-amber-400">
-          <span class="text-xs text-slate-400">Total Monthly EMI Outflow</span>
-          <h4 class="text-2xl font-extrabold mono text-amber-300 mt-1">₹${totalEMI.toLocaleString('en-IN', {minimumFractionDigits: 2})}</h4>
-          <p class="text-[11px] text-slate-400 mt-1">SMFG Closed (Saved ₹7,799/mo)</p>
+          <span class="text-xs text-slate-400">Monthly EMI Outflow</span>
+          <h4 class="text-2xl font-extrabold mono text-amber-300 mt-1">₹${emi.toLocaleString('en-IN', {minimumFractionDigits:2})}</h4>
         </div>
         <div class="glass rounded-2xl p-4 border-l-4 border-l-emerald-400">
-          <span class="text-xs text-slate-400">Next Upcoming Nov 2026 Debits</span>
-          <h4 class="text-2xl font-extrabold mono text-emerald-400 mt-1">₹9,285.05</h4>
-          <p class="text-[11px] text-slate-400 mt-1">10th: Axis ₹2,841 • 15th: SBI ₹6,444.05</p>
+          <span class="text-xs text-slate-400">Next Upcoming Nov Debits</span>
+          <h4 class="text-2xl font-extrabold mono text-emerald-400 mt-1">10th & 15th</h4>
+          <p class="text-[11px] text-slate-400">Axis ₹2,841 (10th) • SBI ₹6,444.05 (15th)</p>
         </div>
         <div class="glass rounded-2xl p-4 border-l-4 border-l-sky-400">
-          <span class="text-xs text-slate-400">SBI MUDRA Business Pipeline</span>
-          <h4 class="text-2xl font-extrabold mono text-sky-300 mt-1">₹7,00,000</h4>
-          <p class="text-[11px] text-slate-400 mt-1">Undisbursed • Store Monthly Surplus: ₹40,000</p>
+          <span class="text-xs text-slate-400">Closed Facility Freed</span>
+          <h4 class="text-2xl font-extrabold mono text-sky-300 mt-1">₹7,799/mo</h4>
+          <p class="text-[11px] text-slate-400">SMFG India Credit Closed</p>
         </div>
       `;
 
-      const sorted = [...visibleLoans].sort((a, b) => (a.status === 'CLOSED' ? 1 : b.status === 'CLOSED' ? -1 : b.apr - a.apr));
-      document.getElementById('loanTableBody').innerHTML = sorted.map((l, idx) => `
-        <tr class="hover:bg-white/5 ${l.status === 'CLOSED' ? 'opacity-50' : ''}">
-          <td class="py-3 px-3 font-bold">${l.status === 'CLOSED' ? '✅ CLOSED' : `#${idx + 1}`}</td>
+      document.getElementById('loanTableBody').innerHTML = list.map((l, i) => `
+        <tr class="hover:bg-white/5 ${l.dueDay === 'CLOSED' ? 'opacity-50' : ''}">
+          <td class="py-3 px-3 font-bold">#${i + 1}</td>
           <td class="py-3 px-3 font-bold text-white">${l.lender}</td>
           <td class="py-3 px-3 text-amber-300">${l.account}</td>
           <td class="py-3 px-3 text-slate-300">${l.tenure}</td>
-          <td class="py-3 px-3 text-center">${l.remMos}m</td>
           <td class="py-3 px-3 text-right font-bold ${l.apr >= 25 ? 'text-rose-400' : 'text-emerald-400'}">${l.apr.toFixed(2)}%</td>
           <td class="py-3 px-3 text-right text-slate-400">₹${l.sanctioned.toLocaleString('en-IN')}</td>
           <td class="py-3 px-3 text-right font-bold text-white">₹${l.balance.toLocaleString('en-IN')}</td>
-          <td class="py-3 px-3 text-right font-bold text-amber-300">₹${l.emi.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
-          <td class="py-3 px-3 text-center">
-            ${l.status === 'CLOSED' ? '<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Freed ₹7,799</span>' : `
-              <button onclick="toggleLoanPaid('${l.id}')" class="px-2.5 py-1 rounded-lg font-bold ${l.paidThisMonth ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">
-                Due ${l.dueDay}th (${l.paidThisMonth ? '✓ Paid' : 'Pending'})
-              </button>
-            `}
-          </td>
+          <td class="py-3 px-3 text-right font-bold text-amber-300">₹${l.emi.toLocaleString('en-IN', {minimumFractionDigits:2})}</td>
+          <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded bg-white/10">${l.dueDay}</span></td>
         </tr>
       `).join('');
-
-      runAvalancheSim();
-      renderFundScheme();
     }
 
-    function runAvalancheSim() {
-      const extra = parseFloat(document.getElementById('simExtraInput').value) || 10000;
-      document.getElementById('simExtraLabel').textContent = `₹${extra.toLocaleString('en-IN')} / month`;
-      const dmiMonths = Math.max(2, Math.ceil(60000 / (5746.41 + extra)));
-      const naMonths = Math.max(4, Math.ceil(150000 / (12114 + extra)));
-      document.getElementById('avalancheSimResult').innerHTML = `
-        <div class="flex justify-between"><span>Target 1: Northern Arc (5115316976853733 @ 29.99%):</span><strong class="mono text-emerald-400">Cleared in ~${naMonths} Months (vs 15m)</strong></div>
-        <div class="flex justify-between"><span>Target 2: DMI Finance (DMI0062405429 @ 26.50%):</span><strong class="mono text-amber-300">Cleared in ~${dmiMonths} Months (vs 12m)</strong></div>
-        <div class="text-[11px] text-slate-400 pt-1">Once Northern Arc & DMI are cleared, ₹17,860.41/mo in EMI frees up to attack Poonawalla (PLA14318803206 @ 25%).</div>
-      `;
-    }
-
-    function renderFundScheme() {
-      document.getElementById('fundSchemeList').innerHTML = fundMembers.map((f, i) => `
-        <div class="flex items-center justify-between bg-black/40 border border-white/10 rounded-xl px-3.5 py-2 text-xs">
-          <div>
-            <div class="font-bold">${f.name} <span class="text-amber-300 mono">(${f.units} Unit • ₹${f.monthly}/mo)</span></div>
-            <div class="text-slate-400 mono">Paid: ${f.paidMonths}/12 Months • Pool: ₹${f.paidMonths * f.monthly}</div>
-          </div>
-          <button onclick="fundMembers[${i}].paidMonths = Math.min(12, fundMembers[${i}].paidMonths + 1); saveState(); renderFundScheme();"
-            class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold">+1 Month</button>
-        </div>
-      `).join('');
-    }
-
-    function addFundMemberPrompt() {
-      const name = prompt('Enter Enroller Name:');
-      if (!name) return;
-      const units = parseInt(prompt('Units (₹1,000/unit):', '1'), 10) || 1;
-      fundMembers.push({ id: `F-0${fundMembers.length+1}`, name, units, monthly: units * 1000, paidMonths: 1 });
-      saveState();
-      renderFundScheme();
+    function changeVaultPin() {
+      const auth = prompt('Enter Current PIN or Recovery Key (DUD666):');
+      if (auth === vaultPin || (auth && auth.toUpperCase() === 'DUD666')) {
+        const np = prompt('Enter New 4-Digit PIN:', '6666');
+        if (np && np.length >= 4) {
+          vaultPin = np;
+          localStorage.setItem('DUD_666_PIN', vaultPin);
+          alert('✅ PIN updated successfully!');
+        }
+      } else if (auth !== null) {
+        alert('❌ Invalid PIN or Recovery Key.');
+      }
     }
 
     // =========================================================================
-    // DESKTOP LOCALSTORAGE SYNC & BACKUP
+    // 7. STORAGE INSPECTOR, BACKUP & LUXURY PARTICLE CANVAS
     // =========================================================================
-    function openDesktopSyncModal() {
-      document.getElementById('desktopSyncModal').classList.remove('hidden');
-      document.getElementById('desktopSyncModal').classList.add('flex');
-    }
-    function closeDesktopSyncModal() {
-      document.getElementById('desktopSyncModal').classList.add('hidden');
-      document.getElementById('desktopSyncModal').classList.remove('flex');
-    }
-
-    function autoMergeLegacyBrowserStorage() {
-      let mergedBills = 0;
+    function openStorageInspectorModal() {
+      const keysInfo = [];
       for (let i = 0; i < localStorage.length; i++) {
         const k = localStorage.key(i);
-        if (k === 'DUD_OS_V0611_INVS') continue;
-        try {
-          const val = JSON.parse(localStorage.getItem(k));
-          if (Array.isArray(val)) {
-            val.forEach(item => {
-              if (item && item.id && item.items && Array.isArray(item.items)) {
-                if (!invoices.some(existing => existing.id === item.id)) {
-                  invoices.push(item);
-                  mergedBills++;
-                }
-              }
-            });
-          }
-        } catch (e) {}
+        const raw = localStorage.getItem(k) || '';
+        keysInfo.push(`• ${k} (${(raw.length / 1024).toFixed(1)} KB)`);
       }
-      saveState();
-      renderInvoiceTable();
-      renderAnalytics();
-      document.getElementById('syncStatusMsg').textContent = `✅ Scanned all browser keys. Merged ${mergedBills} additional local invoice(s).`;
+      document.getElementById('storageInspectorReport').innerHTML =
+        `<div><strong>Detected Browser Keys (${localStorage.length}):</strong></div>` +
+        keysInfo.join('<br>');
+      document.getElementById('storageModal').classList.remove('hidden');
+      document.getElementById('storageModal').classList.add('flex');
+    }
+
+    function closeStorageInspectorModal() {
+      document.getElementById('storageModal').classList.add('hidden');
+      document.getElementById('storageModal').classList.remove('flex');
     }
 
     function exportFullJSONBackup() {
-      const payload = { date: '2026-11-07', inventory, invoices, customers, loans, fundMembers, omniOrders };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const dump = { dc_sales: sales, dc_cust: customers, dc_prod: products, dc_ic: invoiceCounter };
+      const blob = new Blob([JSON.stringify(dump, null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `DUD_CLOSET_DESKTOP_SYNC_2026.json`;
+      a.download = `DUD_CLOSET_FULL_BACKUP_${new Date().toISOString().slice(0,10)}.json`;
       a.click();
     }
 
@@ -2044,68 +1351,41 @@
       reader.onload = (e) => {
         try {
           const data = JSON.parse(e.target.result);
-          if (data.invoices) {
-            data.invoices.forEach(inv => {
-              if (!invoices.some(x => x.id === inv.id)) invoices.push(inv);
-            });
+          if (Array.isArray(data.dc_sales)) {
+            localStorage.setItem('dc_sales', JSON.stringify(data.dc_sales));
           }
-          if (data.inventory) inventory = data.inventory;
-          if (data.customers) customers = data.customers;
-          saveState();
+          if (Array.isArray(data.dc_cust)) {
+            localStorage.setItem('dc_cust', JSON.stringify(data.dc_cust));
+          }
+          if (Array.isArray(data.dc_prod)) {
+            localStorage.setItem('dc_prod', JSON.stringify(data.dc_prod));
+          }
+          if (data.dc_ic) localStorage.setItem('dc_ic', String(data.dc_ic));
+          loadOriginalStoreData();
           renderPOSCatalog();
           renderInvoiceTable();
-          renderInventoryTable();
           renderCRM();
-          document.getElementById('syncStatusMsg').textContent = '✅ Desktop Backup JSON successfully merged!';
+          alert('✅ Backup restored into dc_sales & dc_cust!');
+          closeStorageInspectorModal();
         } catch (err) {
-          alert('Invalid JSON file.');
+          alert('Invalid JSON backup file.');
         }
       };
       reader.readAsText(file);
     }
 
-    // =========================================================================
-    // PIN RESET, TAB SWITCHING & ANIMATED SPIDER-VERSE CANVAS
-    // =========================================================================
-    function openPinResetModal() {
-      document.getElementById('pinResetModal').classList.remove('hidden');
-      document.getElementById('pinResetModal').classList.add('flex');
-    }
-    function closePinResetModal() {
-      document.getElementById('pinResetModal').classList.add('hidden');
-      document.getElementById('pinResetModal').classList.remove('flex');
-    }
-    function confirmPinReset() {
-      const auth = (document.getElementById('resetAuthInput').value || '').trim();
-      const newP = (document.getElementById('resetNewPin').value || '').trim();
-      const fb = document.getElementById('resetFeedback');
-      fb.classList.remove('hidden');
-      if (auth === vaultPin || auth.toUpperCase() === 'DUD666' || auth.toUpperCase() === 'H1Z7') {
-        if (newP.length < 4) { fb.textContent = 'PIN must be at least 4 digits.'; fb.className = 'text-xs text-rose-400'; return; }
-        vaultPin = newP;
-        localStorage.setItem('DUD_666_PIN', vaultPin);
-        fb.textContent = `✅ PIN updated to "${vaultPin}"!`;
-        fb.className = 'text-xs text-emerald-400 font-bold';
-        setTimeout(() => { closePinResetModal(); document.getElementById('vaultLockScreen').classList.add('hidden'); document.getElementById('vaultUnlockedContent').classList.remove('hidden'); renderPersonalVault(); }, 700);
-      } else {
-        fb.textContent = '❌ Invalid PIN or Recovery Key (Use DUD666 or H1Z7).';
-        fb.className = 'text-xs text-rose-400';
-      }
-    }
-
     function switchTab(tab) {
-      ['pos', 'apihub', 'analytics', 'invoices', 'inventory', 'crm', 'personal'].forEach(t => {
+      ['pos', 'invoices', 'crm', 'inventory', 'analytics', 'apihub', 'personal'].forEach(t => {
         document.getElementById(`view-${t}`).classList.add('hidden');
         document.getElementById(`tab-${t}`).classList.remove('tab-active');
       });
       document.getElementById(`view-${tab}`).classList.remove('hidden');
       document.getElementById(`tab-${tab}`).classList.add('tab-active');
-      if (tab === 'apihub') renderApiHub();
-      if (tab === 'analytics') renderAnalytics();
       if (tab === 'invoices') renderInvoiceTable();
-      if (tab === 'inventory') renderInventoryTable();
       if (tab === 'crm') renderCRM();
-      if (tab === 'personal') renderPersonalVault();
+      if (tab === 'inventory') renderInventoryTable();
+      if (tab === 'analytics') renderAnalytics();
+      if (tab === 'apihub') renderApiHub();
     }
 
     function setTheme(t) {
@@ -2122,7 +1402,7 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     for (let i = 0; i < 45; i++) {
-      particles.push({ x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight, vx: (Math.random()-0.5)*0.8, vy: (Math.random()-0.5)*0.8, r: Math.random()*2+1 });
+      particles.push({ x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight, vx: (Math.random()-0.5)*0.7, vy: (Math.random()-0.5)*0.7, r: Math.random()*2+1 });
     }
     function animateFX() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -2136,7 +1416,7 @@
           for (let j = i + 1; j < particles.length; j++) {
             const p2 = particles[j];
             if (Math.hypot(p.x - p2.x, p.y - p2.y) < 125) {
-              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.strokeStyle = accent + '26'; ctx.lineWidth = 0.7; ctx.stroke();
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.strokeStyle = accent + '24'; ctx.lineWidth = 0.7; ctx.stroke();
             }
           }
         });
@@ -2144,6 +1424,7 @@
       requestAnimationFrame(animateFX);
     }
     animateFX();
+
     function toggleAnimations() {
       animEnabled = !animEnabled;
       document.getElementById('animBtn').textContent = animEnabled ? '✨ FX: ON' : '✨ FX: OFF';
@@ -2160,13 +1441,11 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('posBillDate').value = '2026-11-07';
-      document.getElementById('analyticsDateFilter').value = '2026-11-05';
-      autoMergeLegacyBrowserStorage();
+      loadOriginalStoreData();
       renderPOSCategories();
       renderPOSCatalog();
       renderCart();
       populateCRMQuickSelect();
-      logApiEvent('DUD OS 666 Omnichannel Engine initialized. All 8 connectors online.');
     });
   </script>
 </body>
